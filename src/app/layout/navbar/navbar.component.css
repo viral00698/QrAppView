@@ -1,0 +1,8 @@
+.container-fluid{
+    background-color: white; 
+    /* border-radius: 20px; */
+}
+
+.fixed-component{
+    position: static;
+}

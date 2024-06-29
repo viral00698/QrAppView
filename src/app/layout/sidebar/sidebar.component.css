@@ -1,0 +1,122 @@
+::ng-deep .p-sidebar {
+    background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);
+    position: fixed !important;
+    width: 15rem;
+}
+
+::ng-deep .p-sidebar .p-sidebar-header+.p-sidebar-content {
+    padding: .1rem !important;
+}
+
+ul {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.list-group-item .list-group-item-action .list-group {
+
+    margin: 0;
+    padding: 0;
+}
+
+.sidebarHeight {
+    height: 100vh;
+}
+
+/* ::ng-deep .btnSize{
+    width: 100% !important;
+    border: 0;
+} */
+
+.p-btn:hover {
+    background-color: #f4f4f4;
+    /* background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%); */
+    transform: scale(1.05);
+}
+
+.p-btn{
+    width: 14rem !important;
+    border: 0;
+    /* background-color: #f4f4f4; */
+    background-color:white;
+    border-radius:25px;
+    font-size: large;
+    font-weight: 200;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: .5rem;
+
+}
+
+.h6-titel{
+    display: flex;
+    justify-content: center;
+    font-size: large;
+    align-content: center;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    padding: .5rem;
+    /* padding-bottom: .5rem ; */
+
+}
+
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+
+
+.main-content {
+    flex-grow: 1;
+    /* This makes the main content take up the remaining space */
+    padding: 1rem;
+    overflow-y: auto;
+    /* Makes the content scrollable if needed */
+}
+
+.layout-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 15rem;
+    /* background-color: #f4f4f4; */
+    background-color:white;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: .5rem;
+    padding-right: 0;
+    overflow-y: auto;
+}
+
+.main-content {
+    
+    margin-left: 15rem;
+    padding: 0;
+    flex: 1;
+    overflow-y: auto;
+
+}
+
+
+
+.header{
+    width: 100%;
+    background-color: #cecccc;
+}
+
+
