@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 
 interface City {
@@ -17,7 +17,8 @@ interface item {
 @Component({
   selector: 'app-ongoing',
   templateUrl: './ongoing.component.html',
-  styleUrls: ['./ongoing.component.css']
+  styleUrls: ['./ongoing.component.css'],
+ 
 })
 export class OngoingComponent {
   cities!: City[];

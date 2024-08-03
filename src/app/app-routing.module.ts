@@ -5,6 +5,8 @@ import { Test1Component } from './test1/test1.component';
 import { OrderComponent } from './menu/order/order.component';
 import { ProductComponent } from './menu/product/product.component';
 import { OngoingComponent } from './menu/ongoing/ongoing.component';
+import { ProductAnalyticsComponent } from './menu/product-analytics/product-analytics.component';
+import { LoginComponent } from './login/login/login.component';
 
 const routes: Routes = [
   {path:'test',component:TestComponent},
@@ -12,6 +14,8 @@ const routes: Routes = [
   {path:'menu/order',component:OrderComponent},
   {path:'menu/product',component:ProductComponent},
   {path:'menu/ongoing',component:OngoingComponent},
+  {path:'menu/productAnalytics',component:ProductAnalyticsComponent},
+  {path:'',component:LoginComponent},
 ];
 
 @NgModule({

@@ -29,6 +29,79 @@
     padding: .5rem;
     width: 10rem;
 }
-.btn-icon{
+
+.btn-icon {
     font-size: x-large;
+}
+
+.product_image {
+    height: 8rem;
+    padding: .2rem;
+    border-radius: .5rem;
+}
+
+
+.confrom_btn {
+    background-color: #f4f4f4 !important;
+    border-radius: 25px !important;
+    cursor: pointer;
+    font-size: .9rem;
+    color: black;
+    font-weight: 500;
+    width: 60%;
+    height: 2rem;
+    border: none;
+}
+
+.cancel_btn {
+    background-color: #f4f4f4 !important;
+    border-radius: 25px !important;
+    cursor: pointer;
+    font-size: .9rem;
+    color: black;
+    font-weight: 500;
+    width: 60%;
+    height: 2rem;
+    border: none;
+}
+
+.card_col {
+    padding: .2rem;
+}
+.menu_item{
+    padding: 1rem;
+}
+
+:host {
+
+    .p-inputSwitch{
+        font-size: medium; padding: .3rem; place-self: center;
+    }
+
+    .p-card {
+        border-radius: .3rem;
+        margin-top: .2rem;
+
+    }
+
+    .p-card-title {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .p-card .p-card-footer .p-card-content {
+        padding: 0;
+    }
+
+}
+
+.confrom_btn:hover {
+    color: rgb(31, 13, 144);
+    /* background-color: rgb(164, 9, 9); */
+    transition: background-color 0.8s, color 0.3s
+}
+
+.scroll_bar{
+    display: flex; flex-wrap: wrap; height: 75vh; overflow-y: scroll;
+    scroll-behavior: smooth;
 }

@@ -1,59 +1,280 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6 col-md-6">
+    <div class="col-sm-6 col-md-6 cols-12">
       <div class="d-flex justify-content-start">
-        <input class="inputText" type="text" pInputText formControlName="text" placeholder="Search by Token..." />
+        <input class="inputText" type="text" pInputText formControlName="text" placeholder="Search by Name..." />
       </div>
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-sm-6 col-md-6 cols-12">
       <div class="d-flex justify-content-end">
         <button pTooltip="Create Order" (click)="showDialog()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
       </div>
     </div>
+    <!-- <div>
+      <input [(ngModel)]="message" placeholder="Enter message" />
+      <button (click)="sendMessage()">Send</button>
+    </div>
+    <div *ngFor="let msg of messages">
+      {{ msg }}
+    </div> -->
+  </div>
+
+  <p-dialog header="Add Menu Item" [(visible)]="visible" [style]="{width: '60vw'}">
+    <form>
+      <div class="row menu_item">
+        <div class="col-sm-6 col-md-6 col-12">
+          <input type="text" placeholder="Enter item name.." pInputText formControlName="text" />
+        </div>
+        <div class="col-sm-6 col-md-6 col-12">
+          <input type="text" placeholder="Enter Qty..." pInputText formControlName="text" />
+        </div>
+      </div>
+      <div class="row menu_item">
+        <div class="col-sm-6 col-md-6 col-12">
+          <input type="text" placeholder="Enter Gram..." pInputText formControlName="text" />
+        </div>
+        <div class="col-sm-6 col-md-6 col-12">
+          <textarea rows="5" cols="30" pInputTextarea placeholder="Enter Description.."></textarea>
+        </div>
+      </div>
+      <div class="row menu_item">
+        <div class="col-sm-6 col-md-6">
+          <p-fileUpload
+            mode="basic"
+            name="demo[]"
+            chooseIcon="pi pi-upload"
+            url="https://www.primefaces.org/cdn/api/upload.php"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            (onUpload)="onBasicUploadAuto($event)"
+            [auto]="true"
+            chooseLabel="Browse"
+          />
+        </div>
+     
+      </div>
+      <div class="row menu_item">
+        <div class="col-sm-6 col-md-6 col-12 d-flex">
+          <span id="switch2" style="font-size: medium; padding: 0.3rem; place-self: center;">Jain: </span>
+          <p-inputSwitch ariaLabelledBy="switch2" />
+        </div>
+      </div>
+      <div class="row menu_item">
+        <div class="col-sm-12 col-md-12 col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary">submit</button>
+        </div>
+      </div>
+    </form>
+  </p-dialog>
+</div>
+
+
+<div class="container-fluid" >
+  <div class="row">
+    <div class="scroll_bar">
+    <div class="col-sm-3 col-md-3 col-lg-3 cols-12 card_col">
+      <p-card header="Paneer" ngClass="p-card_test">
+        <ng-template pTemplate="header">
+          <img alt="Card" class="product_image" src="../../../assets/images.jpeg" />
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Gram: 23</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Qty: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-12 col-md-12 col-lg-12 cols-12">
+              <p>Description: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Jain: Yes/No</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Last Update: Yes/No</p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
+              <button class="btn confrom_btn">Available</button>
+            </div>
+            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
+              <button class="btn cancel_btn" severity="danger">Exit</button>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 cols-12 card_col">
+      <p-card header="Paneer" [style.width.em]="30">
+        <ng-template pTemplate="header">
+          <img alt="Card" class="product_image" src="../../../assets/images.jpeg" />
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Gram: 23</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Qty: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-12 col-md-12 col-lg-12 cols-12">
+              <p>Description: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Jain: Yes/No</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Last Update: Yes/No</p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
+              <button class="btn confrom_btn">Available</button>
+            </div>
+            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
+              <button class="btn cancel_btn" severity="danger">Exit</button>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 cols-12 card_col">
+      <p-card header="Paneer" [style.width.em]="30">
+        <ng-template pTemplate="header">
+          <img alt="Card" class="product_image" src="../../../assets/images.jpeg" />
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Gram: 23</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Qty: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-12 col-md-12 col-lg-12 cols-12">
+              <p>Description: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Jain: Yes/No</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Last Update: Yes/No</p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
+              <button class="btn confrom_btn">Available</button>
+            </div>
+            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
+              <button class="btn cancel_btn" severity="danger">Exit</button>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 cols-12 card_col">
+      <p-card header="Paneer" [style.width.em]="30">
+        <ng-template pTemplate="header">
+          <img alt="Card" class="product_image" src="../../../assets/images.jpeg" />
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Gram: 23</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Qty: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-12 col-md-12 col-lg-12 cols-12">
+              <p>Description: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Jain: Yes/No</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Last Update: Yes/No</p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
+              <button class="btn confrom_btn">Available</button>
+            </div>
+            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
+              <button class="btn cancel_btn" severity="danger">Exit</button>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 cols-12 card_col">
+      <p-card header="Paneer" [style.width.em]="30">
+        <ng-template pTemplate="header">
+          <img alt="Card" class="product_image" src="../../../assets/images.jpeg" />
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Gram: 23</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Qty: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-12 col-md-12 col-lg-12 cols-12">
+              <p>Description: 23</p>
+            </div>
+          </div>
+          <div class="row p-0">
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Jain: Yes/No</p>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 cols-12">
+              <p>Last Update: Yes/No</p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
+              <button class="btn confrom_btn">Available</button>
+            </div>
+            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
+              <button class="btn cancel_btn" severity="danger">Exit</button>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    </div>
   </div>
 </div>
-<!-- 
-<p-dialog header="Add Item" [(visible)]="visible" [style]="{width: '60vw'}">
-    <form>
-       <div class="row">
-        <div class="col-sm-6 col-md-6">  
-            <input type="text" placeholder="Enter item name.." pInputText formControlName="text"/>
-        </div>
-        <div class="col-sm-6 col-md-6">  
-            <input type="text" pInputText formControlName="text"/>
-        </div>
-       </div>
-       <div class="row">
-        <div class="col-sm-6 col-md-6">  
-            <input type="text" placeholder="Enter item name.." pInputText formControlName="text"/>
-        </div>
-       </div>
-       
-    </form>
-</p-dialog> -->
 
-<div class="container-fluid">
-    
-<p-table [value]="products" [tableStyle]="{'min-width': '60rem'}">
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="code" style="width:20%">ProductName <p-sortIcon field="code"></p-sortIcon></th>
-            <th pSortableColumn="name" style="width:20%">ByGram <p-sortIcon field="name"></p-sortIcon></th>
-            <th pSortableColumn="category" style="width:20%">Category <p-sortIcon field="category"></p-sortIcon></th>
-            <th pSortableColumn="quantity" style="width:20%">Quantity <p-sortIcon field="quantity"></p-sortIcon></th>
-            <th pSortableColumn="price" style="width:20%">Price <p-sortIcon field="price"></p-sortIcon></th>
-            <th pSortableColumn="quantity" style="width:20%">status <p-sortIcon field="quantity"></p-sortIcon></th>
-            <th pSortableColumn="price" style="width:20%">Edit<p-sortIcon field="price"></p-sortIcon></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-product>
-        <tr>
-            <td>{{product.ProductName}}</td>
-            <td>{{product.ByGram}}</td>
-            <td>{{product.category}}</td>
-            <td>{{product.quantity}}</td>
-            <td>{{product.price | currency: 'USD'}}</td>
-        </tr>
-    </ng-template>
-</p-table>
-</div>
+
+

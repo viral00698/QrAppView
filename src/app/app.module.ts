@@ -20,9 +20,17 @@ import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
 import { ProductComponent } from './menu/product/product.component';
 import { DialogModule } from 'primeng/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OngoingComponent } from './menu/ongoing/ongoing.component';
-
+import { ProductAnalyticsComponent } from './menu/product-analytics/product-analytics.component';
+import { ChartModule } from 'primeng/chart';
+import { KnobModule } from 'primeng/knob';
+import { LoginComponent } from './login/login/login.component';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +40,9 @@ import { OngoingComponent } from './menu/ongoing/ongoing.component';
     NavbarComponent,
     OrderComponent,
     ProductComponent,
-    OngoingComponent
+    OngoingComponent,
+    ProductAnalyticsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,10 +59,24 @@ import { OngoingComponent } from './menu/ongoing/ongoing.component';
     TableModule,
     DividerModule,
     DialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    ChartModule,
+    KnobModule,
+    CalendarModule,
+    DropdownModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    FileUploadModule
+    
     
   ],
-  providers: [],
+  providers: [
+    //  {
+    //   provide: RxStompService,
+    //   useFactory:rxStompServiceFactory
+    //  },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
