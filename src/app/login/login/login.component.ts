@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Login } from 'src/app/model/login';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -6,5 +9,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  loginForm!: FormGroup;
+  login!:Login
+  constructor(private fb: FormBuilder , private auth:AuthenticationService) {
+    this.createForm();
+  }
+  createForm() {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+    });
+  }
 
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.login = new Login( );
+      this.login.username = this.loginForm.get('username')?.value
+      this.login.password = this.loginForm.get('password')?.value
+      this.auth.login(this.login);
+    } else {
+      console.log('Form not valid');
+    }
+  }
 }

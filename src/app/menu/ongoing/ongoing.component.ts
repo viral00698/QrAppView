@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 
 interface City {
@@ -20,13 +21,13 @@ interface item {
   styleUrls: ['./ongoing.component.css'],
  
 })
-export class OngoingComponent {
+export class OngoingComponent  implements OnInit{
   cities!: City[];
   selectedCities: any=[];
 
   order!:item[];
 
-  constructor() {
+  constructor(private http:HttpClient) {
       this.cities = [
           {name: 'New York', code: 'NY'},
           {name: 'Rome', code: 'RM'},
@@ -39,5 +40,11 @@ export class OngoingComponent {
         { id:'1',Name: 'Gathiya', Qty: 1,Amount:23.43},
         { id:'1',Name: 'Gathiya', Qty: 1,Amount:23.43},
     ];
+  }
+  ngOnInit(): void {
+    this.http.get('testSecureAdmin1/viral').subscribe((res:any)=>{
+      debugger
+      console.log(res);
+    })
   }
 }

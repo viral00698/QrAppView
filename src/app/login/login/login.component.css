@@ -1,0 +1,74 @@
+.login_gird {
+    /* display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr; */
+}
+
+.login_container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.card_headder {
+    text-align: start;
+}
+
+.card_content {
+    /* display: flex; */
+}
+
+.flex_item_1 {
+    flex: 1;
+}
+
+.flex_item_2 {
+    flex: 2;
+}
+
+.form_element {
+    margin: 1rem;
+    /* width: 100%; */
+
+}
+
+.label_fied {
+    margin-bottom: .3rem;
+    font-weight: 500;
+    font-size: medium;
+}
+
+.message_font_1 {
+    font-weight: 900;
+    font-size: x-large;
+    margin-bottom: .3rem;
+}
+
+.message_font_2 {
+    font-weight: 500;
+    font-size: medium;
+}
+
+.formInput {
+    width: 100%;
+    border-radius: 10px;
+}
+
+:host {
+
+    .login_btn {
+        width: 100%;
+        text-align: center;
+        font-size: medium;
+        font-weight: 500;
+        border-radius: 10px;
+    }
+
+    .p-card{
+        border-radius: 10px;
+    }
+
+}
+

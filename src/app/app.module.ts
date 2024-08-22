@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-import { TestComponent } from './test/test.component';
-import { Test1Component } from './test1/test1.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { OrderComponent } from './menu/order/order.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -31,12 +29,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
+import { HTTP_INTERCEPTORS, HttpClientModule ,HttpClientXsrfModule} from '@angular/common/http';
+import { BaseUrlInterceptor } from './auth/base-url.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    TestComponent,
-    Test1Component,
     NavbarComponent,
     OrderComponent,
     ProductComponent,
@@ -67,15 +66,24 @@ import { FileUploadModule } from 'primeng/fileupload';
     DropdownModule,
     InputSwitchModule,
     InputTextareaModule,
-    FileUploadModule
+    FileUploadModule,
+    HttpClientModule,
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
+      headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in
+    })
     
-    
+
   ],
   providers: [
     //  {
     //   provide: RxStompService,
     //   useFactory:rxStompServiceFactory
     //  },
+
+    {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}
+    
   ],
   bootstrap: [AppComponent]
 })

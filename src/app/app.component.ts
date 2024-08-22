@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent {
 
-flag:boolean = true
+flag:boolean = false
   title = 'MyQrApp';
   constructor() { }
 

@@ -25,6 +25,7 @@
     "bootstrap": "^5.2.3",
     "chart.js": "^4.4.3",
     "global": "^4.4.0",
+    "my-qr-app": "file:",
     "ngx-bootstrap": "^11.0.2",
     "primeicons": "^7.0.0",
     "primeng": "^16.4.4",
