@@ -3,6 +3,7 @@ import { Client, Message } from '@stomp/stompjs';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import * as Stomp from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
+import { AuthenticationService } from './authentication.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class SocketConfigService {
   private messageSubject: Subject<string> = new Subject<string>();
 
 
-  constructor() {
+  constructor(private authService:AuthenticationService) {
     this.initializeWebSocketConnection();
   }
 
@@ -20,8 +21,7 @@ export class SocketConfigService {
     this.client = new Client({
       brokerURL: 'ws://localhost:8080/ws',
       connectHeaders: {
-        // Add any necessary headers here
-        // Authorization:'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6ImFkbWluQGdtYWlsLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9BRE1JTiIsInN1YiI6IkpXVCBUb2tlbiIsImlzcyI6IkxlZ2lvbiIsImlhdCI6MTcyMDI4NTQ5MCwiZXhwIjoxNzIwMjg2MzkwfQ.ZRe8jYiUIf8z1XcNJ5GmOdGlkIt0TCDark3DTwZiHB0NYt7MIGrqIBFcNjyX5k3djU-UJFheGYv3BooxGkp3TA'
+        Authorization:`${this.authService.getJwtToken()}`
       },
       debug: function (str) {
         console.log(str);
