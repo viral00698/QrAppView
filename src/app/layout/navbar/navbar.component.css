@@ -1,8 +1,34 @@
-.container-fluid{
-    background-color: white; 
+.container-fluid {
+    background-color: white;
     /* border-radius: 20px; */
 }
 
-.fixed-component{
+.fixed-component {
     position: static;
+}
+
+.img {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: .3rem;
+    border-radius: 50%;
+}
+
+.logout_btn {
+    height: 2.3rem;
+    width: 2.5rem;
+    padding: .3rem;
+    border: 0;
+    border-radius: 50%;
+    margin-left: 2rem;
+}
+
+.logout_btn:hover {
+    background-color: #630a0a;
+    color: rgb(244, 244, 244);
+  }
+.btn_icon{
+    font-size: large;
+    font-weight: 700;
+    color: rgb(230, 38, 38);
 }

@@ -11,7 +11,7 @@ export class AuthenticationService {
 
 
   private jwtToken: string | undefined
-  private isLogedIn: boolean = false;
+  private isLogedIn: boolean = true;
 
   private loginResponse: any;
   xsrfToken: any;
@@ -44,6 +44,16 @@ export class AuthenticationService {
   }
   getJwtToken() {
     return this.jwtToken;
+  }
+
+  logout(){
+    this.http.get('logout').subscribe((res:any)=>{
+        if(res.status == 'success'){
+          this.jwtToken = undefined;
+          this.router.navigate(['/login'])
+          
+        }
+    })
   }
 
 }
