@@ -31,6 +31,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HTTP_INTERCEPTORS, HttpClientModule ,HttpClientXsrfModule} from '@angular/common/http';
 import { BaseUrlInterceptor } from './auth/base-url.interceptor';
+import { rxStompServiceFactory } from './services/rx-stomp-service-factory.service';
+import { RxStompService } from './services/rx-stomp.service';
+import { SocketConfigService } from './services/socket-config.service';
 
 @NgModule({
   declarations: [
@@ -77,11 +80,8 @@ import { BaseUrlInterceptor } from './auth/base-url.interceptor';
 
   ],
   providers: [
-    //  {
-    //   provide: RxStompService,
-    //   useFactory:rxStompServiceFactory
-    //  },
-
+    RxStompService,
+    SocketConfigService,
     {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}
     
   ],

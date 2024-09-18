@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
 
+  private isSocketSecure:boolean = false
   private jwtToken: string | undefined
   private isLogedIn: boolean = true;
 
@@ -46,12 +47,15 @@ export class AuthenticationService {
     return this.jwtToken;
   }
 
+  getSocketSecure(){
+    return this.isSocketSecure;
+  }
+
   logout(){
     this.http.get('logout').subscribe((res:any)=>{
         if(res.status == 'success'){
           this.jwtToken = undefined;
           this.router.navigate(['/login'])
-          
         }
     })
   }
