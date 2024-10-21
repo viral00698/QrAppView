@@ -16,6 +16,8 @@
 html, body {
     height: 100%;
     background-color: #f4f4f4;
+    /* background-color:#0b91a6; */
+    /* background: linear-gradient(109.6deg, rgb(223, 234, 247) 11.2%, rgb(244, 248, 252) 91.1%); */
 }
 
 body {

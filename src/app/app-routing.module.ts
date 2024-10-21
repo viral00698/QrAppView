@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login/login.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { authGuard } from './gard/auth.guard';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { TableOrdersComponent } from './table-orders/table-orders.component';
 
 const routes: Routes = [
   {path:'dashboard', component:SidebarComponent,children:[
@@ -15,6 +16,7 @@ const routes: Routes = [
     {path:'menu/product',component:ProductComponent},
     {path:'menu/ongoing',component:OngoingComponent},
     {path:'menu/productAnalytics',component:ProductAnalyticsComponent},
+    {path:'menu/tableOrder',component:TableOrdersComponent},
   ],canActivate:[authGuard]},
   {path:'',component:LoginComponent},
 ];

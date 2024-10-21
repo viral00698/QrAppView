@@ -1,0 +1,38 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<div class="header">
+  <div class="item_A">
+    <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Search by product..." />
+  </div>
+  <div class="item_B">
+    <button id="cashOrderBtn" (click)="addProduct()" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+  </div>
+</div>
+<div>
+  <div class="small_card">
+    <div class="item">
+      <div class="min_card">
+          <p-card class="item">
+            <p class="state_titel">Orders:</p>
+            <p class="state_counter">2523</p>
+          </p-card>
+          <p-card class="item">
+            <p class="state_titel">Ongoing:</p>
+            <p class="state_counter">5</p>
+          </p-card>
+          <p-card class="item">
+            <p class="state_titel">Revenue:</p>
+            <p class="state_counter">2523</p>
+          </p-card>
+          <p-card class="item">
+            <p class="state_titel">Revenue:</p>
+            <p class="state_counter">2523</p>
+          </p-card>
+          <p-card class="item">
+            <p class="state_titel">Revenue:</p>
+            <p class="state_counter">2523</p>
+          </p-card>
+      </div>
+    </div>
+   
+</div>
+</div>

@@ -1,4 +1,4 @@
-.container-fluid {
+/* .container-fluid {
     margin-top: 2rem;
 }
 
@@ -15,12 +15,12 @@
 
     background-image: url(../../../assets/search.svg);
     background-repeat: no-repeat;
-    /* background-position: right; */
+  
     background-position: 20rem;
 
-}
+} */
 
-.p-btn {
+/* .p-btn {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -42,20 +42,20 @@
     justify-content: center;
     font-size: medium !important;
     font-weight: 600 !important;
-}
+} */
 
-.order_detail{
+/* .order_detail{
     margin-bottom: 0rem;
     margin: 1px;
 }
 
 .table_row{
-    /* margin: .5rem; */
+  
     padding: 0rem;
     text-align: center;
-}
+} */
 
-.total_amount{
+/* .total_amount{
     font-size: medium;
     font-weight: 500;
     margin: .2rem;
@@ -66,45 +66,192 @@
     font-size: small;
 }
 .token_content_right{
-    /* padding-right: .4rem; */
+   
     margin: .2rem;
     font-size: small;
-}
+} */
 
 /* ::ng-deep .confrom_btn {
     
 } */
-::ng-deep .p-button{
+/* ::ng-deep .p-button{
     border-radius: 20rem !important;
     background: #f4f4f4 !important;
     color: black;
-    border: 0;
-    /* background-image: linear-gradient( 135deg, #FEB692 10%, #EA5455 100%); */
-} 
-/* ::ng-deep .p-button{
-  
+    
 }  */
 
-::ng-deep .custom-scroll-panel{
+
+/* ::ng-deep .custom-scroll-panel{
     max-height: 60vh;
     overflow-y: auto;
     scroll-behavior: smooth; 
-}
+} */
 
-::ng-deep .confrom_btn{
+/* ::ng-deep .confrom_btn{
     background-color: #f4f4f4;
     border-radius: 50%;
     cursor: pointer;
     border: none;
-}
+} */
 
-.confrom_btn:hover{
+/* .confrom_btn:hover{
     color: black;
     background-color: rgb(164, 9, 9);
     transition: background-color 0.3s, color 0.3s
+} */
+
+/* ::ng-deep .p-panel{
+    overflow-y: hidden !important;
+} */
+
+.titel {
+    display: flex;
+    justify-content: center;
 }
 
-::ng-deep .p-panel{
-    overflow-y: hidden !important;
+.card_titel {
+    font-size: medium;
+    font-weight: 500;
 }
+
+.table_row {
+    padding: 0;
+    font-weight: 500;
+    font-size: medium;
+    text-align: center;
+}
+
+.card_bill_detail {
+
+    margin-bottom: .3rem;
+    font-size: small;
+    font-weight: 500;
+
+}
+
+.cardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    /* Creates flexible columns */
+    gap: .5rem;
+    /* Space between items */
+    padding: .5rem;
+    margin: 2rem;
+}
+
+/* For larger screens */
+@media (min-width: 1200px) {
+    .cardGrid {
+        grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+    }
+}
+
+/* For medium screens (tablets) */
+@media (max-width: 992px) {
+    .cardGrid {
+        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+        /* 3 columns */
+    }
+}
+
+/* For small screens (mobile) */
+@media (max-width: 768px) {
+    .cardGrid {
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+        /* 2 columns */
+    }
+}
+
+/* For extra small screens (small mobile devices) */
+@media (max-width: 576px) {
+    .cardGrid {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+        /* 1 column */
+    }
+}
+
+.scroll {
+    height: calc(100vh - 200px);
+    /* Height based on viewport height minus a fixed amount */
+    overflow-y: auto;
+    /* Adds vertical scrollbar when content overflows */
+    overflow-y: scroll;
+}
+
+#searchInput {
+
+    width: 150%;
+    border: 0;
+    border-radius: 20px;
+    background-image: url(../../../assets/search.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) center;
+    padding-left: 1.5rem;
+    font-weight: 500;
+    font-size: medium;
+}
+
+
+.total_amount {
+    display: flex;
+    justify-content: flex-end;
+    font-size: medium;
+    font-weight: 500;
+    margin: .2rem;
+}
+
+.order_detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+#cashOrderBtn {
+    color: red;
+    width: 10vw;
+    border-radius: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+}
+
+.cancel_btn {
+    /* width: 6rem;
+    height: 2rem; */
+    color: brown;
+    padding: .5rem;
+    border: none;
+    font-weight: 500;
+    font-size: medium;
+    border-radius: 10px;
+}
+
+.acept_btn {
+    /* width: 6rem;
+    height: 2rem; */
+    font-weight: 500;
+    font-size: medium;
+    border: none;
+    padding: .5rem;
+    color: green;
+    border-radius: 10px;
+}
+
+.flex {
+    display: flex;
+}
+
+.tAmountitem1::after {
+    content: " ₹";
+}
+
+.tAmountitem2 {
+    place-self: center;
+    font-weight: 600;
+    font-size: medium;
+}
+
 

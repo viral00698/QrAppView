@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Login } from '../model/login';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { SecureLocalStorageService } from './secure-local-storage.service';
+import { RequestStatus } from '../constent/request-status';
+import { StorageKey } from '../constent/storage-key';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,7 @@ export class AuthenticationService {
 
   private loginResponse: any;
   xsrfToken: any;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router , private localStrorage:SecureLocalStorageService) { }
   login(data: Login) {
     const header = new HttpHeaders({
       Authorization: 'Basic ' + btoa(data.username + ':' + data.password)
@@ -24,15 +27,31 @@ export class AuthenticationService {
     this.loginResponse = this.http.get('login', { headers: header, observe: 'response', withCredentials: true }).pipe(
       map(response => {
         const authToken = response.headers.get('Authorization');
-      
         if (authToken) {
+debugger
+          this.localStrorage.encriptAndSave(authToken,StorageKey.JWT_TOKEN)
           this.jwtToken = authToken;
           this.isLogedIn = true;
           this.router.navigate(['dashboard/menu/order'])
         }
+
+        if(response?.body && response.status === 200){
+          const tmp = response?.body as { data: any };
+          if(tmp){
+            debugger
+            this.localStrorage.encriptAndSave(tmp?.data?.vendorDetails , StorageKey.USER);
+          } else{
+            this.logout()
+          }
+        }
+    
+        debugger
       }),
+      
       catchError(this.handleError)
-    ).subscribe((res: any) => { console.log(res); });
+    ).subscribe((res: any) => { 
+     
+     });
   }
 
 
@@ -55,6 +74,8 @@ export class AuthenticationService {
     this.http.get('logout').subscribe((res:any)=>{
         if(res.status == 'success'){
           this.jwtToken = undefined;
+          localStorage.removeItem(StorageKey.VENDER)
+          localStorage.removeItem(StorageKey.USER)
           this.router.navigate(['/login'])
         }
     })

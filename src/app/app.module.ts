@@ -31,10 +31,15 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HTTP_INTERCEPTORS, HttpClientModule ,HttpClientXsrfModule} from '@angular/common/http';
 import { BaseUrlInterceptor } from './auth/base-url.interceptor';
-import { rxStompServiceFactory } from './services/rx-stomp-service-factory.service';
 import { RxStompService } from './services/rx-stomp.service';
 import { SocketConfigService } from './services/socket-config.service';
-
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InplaceModule } from 'primeng/inplace';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { TableOrdersComponent } from './table-orders/table-orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +50,7 @@ import { SocketConfigService } from './services/socket-config.service';
     OngoingComponent,
     ProductAnalyticsComponent,
     LoginComponent,
+    TableOrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +78,10 @@ import { SocketConfigService } from './services/socket-config.service';
     FileUploadModule,
     HttpClientModule,
     HttpClientModule,
+    SelectButtonModule,
+    InplaceModule,
+    ToastModule,
+    AvatarModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in
@@ -80,6 +90,7 @@ import { SocketConfigService } from './services/socket-config.service';
 
   ],
   providers: [
+    MessageService,
     RxStompService,
     SocketConfigService,
     {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}

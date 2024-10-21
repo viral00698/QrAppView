@@ -1,19 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
-
-interface City {
-  name: string,
-  code: string
-}
-
-interface item {
-  id: string,
-  Name: string,
-  Qty:number,
-  Amount:number
-}
-
+import { OrderStatus } from 'src/app/constent/order-status';
+import { RequestStatus } from 'src/app/constent/request-status';
+import { StorageKey } from 'src/app/constent/storage-key';
+import { Orders } from 'src/app/model/orders';
+import { OrderServiceService } from 'src/app/services/order-service.service';
+import { RxStompService } from 'src/app/services/rx-stomp.service';
+import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
 
 @Component({
   selector: 'app-ongoing',
@@ -22,29 +15,72 @@ interface item {
  
 })
 export class OngoingComponent  implements OnInit{
-  cities!: City[];
-  selectedCities: any=[];
 
-  order!:item[];
 
-  constructor(private http:HttpClient) {
-      this.cities = [
-          {name: 'New York', code: 'NY'},
-          {name: 'Rome', code: 'RM'},
-          {name: 'London', code: 'LDN'},
-          {name: 'Istanbul', code: 'IST'},
-          {name: 'Paris', code: 'PRS'}
-      ];
+  tmpOrderList:any = []
+  OrderList:any =[]  
+  searchField: any;
+  vender:any
 
-      this.order = [
-        { id:'1',Name: 'Gathiya', Qty: 1,Amount:23.43},
-        { id:'1',Name: 'Gathiya', Qty: 1,Amount:23.43},
-    ];
+  
+  constructor(private orderService:OrderServiceService ,
+    private rxStompService:RxStompService,
+    private storageService: SecureLocalStorageService) {
   }
   ngOnInit(): void {
-    this.http.get('testSecureAdmin1/viral').subscribe((res:any)=>{
-      debugger
-      console.log(res);
+    this.getOrderList()
+  }
+
+
+  getOrderList(){
+    this.getVenderDetails()
+    this.orderService.getOrdersCurruntDate(this.vender?.vendorId).subscribe((res:any)=>{
+      if(res.status === RequestStatus.success){
+        this.OrderList = res.data
+        this.tmpOrderList = res.data
+      }
+      
     })
+  }
+
+  getVenderDetails() {
+    const tmp = this.storageService.decryptAndGet(StorageKey.USER);
+    if (tmp) {
+      this.vender = JSON.parse(tmp)
+    }
+  }
+
+  serarchByTokenAndMobile() {
+    if (this.searchField) {
+      const search = this.searchField.toLowerCase();
+      this.tmpOrderList = this.OrderList.filter((item: any) => {
+        return item.customerMobileNo.toLowerCase().includes(search) || item.token_no.toLowerCase().includes(search) ||
+          item.orderId.toLowerCase().includes(search)
+      })
+    } else {
+      this.tmpOrderList = this.OrderList;
+    }
+
+    if (this.tmpOrderList === null) {
+      this.tmpOrderList = this.OrderList;
+    }
+  }
+
+  generateInvoice(item:any){
+
+  }
+  MarkAsCompleted(object:any){
+    let data: Orders = new Orders();
+    data.orderId = object.orderId;
+    data.vendorId = object.vendorId;
+    data.customerUUID = object.customerUUID
+    data.orderStatus = OrderStatus.Complete;
+    // this.updateOrderList(object);
+    this.rxStompService.publish({ destination: '/app/orderStatus', body: JSON.stringify(data) })
+
+  }
+
+  updateOrderList(item: any) {
+    // this.tmpOrderList = this.tmpOrderList.filter((t: any) => { return t.orderId !== item.orderId });
   }
 }

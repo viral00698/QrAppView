@@ -139,6 +139,7 @@
     padding: .5rem;
     margin: 2rem;
 }
+
 /* For larger screens */
 @media (min-width: 1200px) {
     .cardGrid {
@@ -149,27 +150,32 @@
 /* For medium screens (tablets) */
 @media (max-width: 992px) {
     .cardGrid {
-        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr)); /* 3 columns */
+        grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+        /* 3 columns */
     }
 }
 
 /* For small screens (mobile) */
 @media (max-width: 768px) {
     .cardGrid {
-        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr)); /* 2 columns */
+        grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+        /* 2 columns */
     }
 }
 
 /* For extra small screens (small mobile devices) */
 @media (max-width: 576px) {
     .cardGrid {
-        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* 1 column */
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+        /* 1 column */
     }
 }
 
 .scroll {
-    height: calc(100vh - 100px); /* Height based on viewport height minus a fixed amount */
-    overflow-y: auto; /* Adds vertical scrollbar when content overflows */
+    height: calc(100vh - 200px);
+    /* Height based on viewport height minus a fixed amount */
+    overflow-y: auto;
+    /* Adds vertical scrollbar when content overflows */
     overflow-y: scroll;
 }
 
@@ -186,9 +192,10 @@
     font-size: medium;
 }
 
+
 .total_amount {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     font-size: medium;
     font-weight: 500;
     margin: .2rem;
@@ -211,7 +218,7 @@
     margin: 2rem;
 }
 
-.cancel_btn{
+.cancel_btn {
     /* width: 6rem;
     height: 2rem; */
     color: brown;
@@ -222,7 +229,7 @@
     border-radius: 10px;
 }
 
-.acept_btn{
+.acept_btn {
     /* width: 6rem;
     height: 2rem; */
     font-weight: 500;
@@ -232,3 +239,19 @@
     color: green;
     border-radius: 10px;
 }
+
+.flex {
+    display: flex;
+}
+
+.tAmountitem1::after {
+    content: " ₹";
+}
+
+.tAmountitem2 {
+    place-self: center;
+    font-weight: 600;
+    font-size: medium;
+}
+
+

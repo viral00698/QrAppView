@@ -4,7 +4,7 @@ import SockJS from 'sockjs-client';
 
 export const myRxStompConfig: RxStompConfig = {
   // Which server?
-  brokerURL: 'ws://localhost:8080/ws',
+  brokerURL: 'ws://192.168.90.204:8080/ws',
 
   // Headers
   // Typical keys: login, passcode, host
@@ -15,13 +15,13 @@ export const myRxStompConfig: RxStompConfig = {
 
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
-  // Typical value 500 (500 milli seconds)
+  // Typical value 500 (500 milli seconds)  
   reconnectDelay: 200,
 
   // Will log diagnostics on console
   // It can be quite verbose, not recommended in production
   // Skip this key to stop logging to console
-  webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+  webSocketFactory: () => new SockJS('http://192.168.90.204:8080/ws'),
   debug: (msg: string): void => {
     console.log(new Date(), msg);
   },

@@ -7,9 +7,23 @@ import { OrderStatus } from '../constent/order-status';
 })
 export class OrderServiceService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getWAIT_FOR_APPROVE_Order(){
-    return this.http.get('Orders/getbyStatus/'+OrderStatus.WaitForApprove);
+  getWAIT_FOR_APPROVE_Order(vendor_id:any) {
+    return this.http.get('Orders/getbyStatus/' + OrderStatus.WaitForApprove +'/'+vendor_id);
   }
+
+  getOrdersCurruntDate(vendorId:any) {
+    return this.http.get('Orders/getOngoingOrder/'+vendorId);
+  }
+
+  getOrderByDateRange(date: any, vederId: any) {
+    return this.http.get('Orders/getOrderByDateRange/' + date + "/" + vederId);
+  }
+
+  findVendorOrderStatistics(data:any) {
+    return this.http.post('OrderStatstics/daily',data);
+  }
+
+
 }

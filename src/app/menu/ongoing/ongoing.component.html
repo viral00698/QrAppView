@@ -1,9 +1,10 @@
+<!-- 
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 col-md-6">
       <div class="d-flex justify-content-start">
-        <input class="inputText" type="text" pInputText formControlName="text" placeholder="Search by Token..." />
+        <input class="inputText" type="text" pInputText placeholder="Search by Token..." />
       </div>
     </div>
     <div class="col-sm-6 col-md-6">
@@ -12,79 +13,67 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div class="header">
+  <div class="header_item_1">
+    <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText  placeholder="Search by Token..." />
+  </div>
+  <div class="header_item_2">
+    <button id="cashOrderBtn" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+  </div>
 </div>
 
-<div class="container-fluid">
-  <h6 style="margin-left: 0.5rem; font-weight: 600; font-size: 1rem;">Ongoing    Order:</h6>
-  <div class="row">
-    <!-- <p-panel header="Approve Cash Order"  [toggleable]="true" > -->
-    <div style="display: flex; flex-wrap: wrap; height: 75vh; overflow-y: scroll;">
-  
-      <p-card header="Token:12345678">
-        <div class="row">
-          <div class="col-sm-6 col-md-6 d-flex justify-content-start">
-            <p class="token_content">OrderID: 78978</p>
-          </div>
-          <div class="col-sm-6 col-md-6 d-flex justify-content-center">
-            <p class="token_content_right">Payment Mode: Cash</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 col-md-6 d-flex justify-content-start">
-            <p class="token_content">Name: viral</p>
-          </div>
-          <div class="col-sm-6 col-md-6 d-flex justify-content-center">
-            <p class="token_content_right">Txn ID: 8768090989</p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-12 col-md-12 d-flex justify-content-start">
-            <p class="token_content">Date: 10:60:24 13:32:09</p>
-          </div>
-        </div>
-        <!-- <p style="padding: .5rem;"></p> -->
-        <p-table [value]="order">
-          <ng-template pTemplate="header">
-            <tr>
-              <th class="table_row">No.</th>
-              <th class="table_row">Item</th>
-              <th class="table_row">Qty</th>
-              <th class="table_row">Amount</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-product>
-            <tr>
-              <td class="table_row">{{product.id}}</td>
-              <td class="table_row">{{product.Name}}</td>
-              <td class="table_row">{{product.Qty}}</td>
-              <td class="table_row">{{product.Amount}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-
-        <ng-template pTemplate="content">
-          <div class="row">
-            <p-divider class="divider"></p-divider>
-            <div class="col-sm-12 col-md-12 d-flex justify-content-end">
-              <p style="padding-right: 0.6rem;" class="total_amount">Total Amount : 289.00</p>
-            </div>
-            <p-divider class="divider"></p-divider>
-          </div>
-        </ng-template>
-
-        <!-- <ng-template pTemplate="footer">
-          <div class="row">
-            <div class="col-sm-6 col-md-6 d-flex justify-content-start">
-              <p-button label="Accept" class="confrom_btn"></p-button>
-            </div>
-            <div class="col-sm-6 col-md-6 d-flex justify-content-end">
-              <p-button label="Reject" class="cancel_btn" severity="danger"></p-button>
-            </div>
-          </div>
-        </ng-template> -->
-      </p-card>
+<div class="cardGrid scroll" >
+  <!-- [style]="{'width':'50%'}" -->
+  <p-card *ngFor="let item of tmpOrderList" >
+    <div class="titel"><p class="card_titel"> {{item.token_no}}</p></div>
+    <div class="order_detail">
+      <p class="card_bill_detail">OrderID:{{item.orderId|  slice:0:7}}</p>
+      <p class="card_bill_detail">Status: {{item.orderStatus}}</p>
     </div>
-  </div>
-  <!-- </p-panel> -->
+    <div class="order_detail">
+      <!-- <p class="card_bill_detail">Name:Viral</p> -->
+      <p class="card_bill_detail" *ngIf="item.payment_mode !== 'CASH'">Txn ID:{{item.txid}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail">Date: {{item.orderAt | date:'dd-MMM-yyyy HH:mm:a' }}</p>
+      <p class="card_bill_detail">Mobile: {{item.customerMobileNo}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail">Payment Mode: {{item.payment_mode}}</p>
+    </div>
+    <p-table [value]="item.orderDetails" [scrollable]="true" scrollHeight="6rem" [style]="{ 'min-height': '5rem', 'max-height': '5rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="table_row">No.</th>
+          <th scope="col" class="table_row">Item</th>
+          <th scope="col" class="table_row">Qty</th>
+          <th scope="col" class="table_row">Amount</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td class="table_row">1</td>
+          <td class="table_row">{{product.itemName}}</td>
+          <td class="table_row">{{product.quntity}}</td>
+          <td class="table_row tAmountitem1">{{product.amount}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template pTemplate="content">
+      <div class="row">
+        <p-divider class="divider"></p-divider>
+        <div class="order_detail">
+          <p class="tAmountitem2 card_titel" style="margin: .1rem;">Total Amount:</p>
+          <p class="tAmountitem2 tAmountitem1" style="margin: .1rem;">{{item.totelAmount |number:'1.2-2'}}</p>
+        </div>
+        <p-divider class="divider"></p-divider>
+        <div class="order_detail">
+          <p class="card_bill_detail "><button (click)="MarkAsCompleted(item)" class="acept_btn">Mark As Completed</button></p>
+          <p class="card_bill_detail "><button (click)="generateInvoice(item)" class="cancel_btn">Invoice</button></p>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
 </div>
