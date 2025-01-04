@@ -45,3 +45,17 @@ body {
     background: #555; /* Color of the scrollbar thumb when hovered */
 }
 
+
+.icon {
+    width: 24px;       /* Set the icon width */
+    height: 24px;      /* Set the icon height */
+}
+
+.icon_logo {
+    width: 15%;       /* Set the icon width */
+    height: 24px; 
+    margin: 0;
+    padding: 0;
+        /* Set the icon height */
+}
+

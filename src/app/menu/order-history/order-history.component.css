@@ -1,0 +1,33 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+}
+
+th{
+    padding: .5rem;
+}
+td{
+    padding: .5rem;
+}
+#searchInput {
+
+    width: 150%;
+    border: 0;
+    border-radius: 20px;
+    background-image: url(../../../assets/search.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) center;
+    padding-left: 1.5rem;
+    font-weight: 500;
+    font-size: medium;
+}
+
+.sticky-table .p-datatable-thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}

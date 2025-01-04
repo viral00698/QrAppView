@@ -14,7 +14,7 @@
     </div>
   </div>
 </div> -->
-
+<p-toast></p-toast>
 <div class="header">
   <div class="header_item_1">
     <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText  placeholder="Search by Token..." />
@@ -52,9 +52,9 @@
           <th scope="col" class="table_row">Amount</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-product let-index="rowIndex">
         <tr>
-          <td class="table_row">1</td>
+          <td class="table_row">{{index+1}}</td>
           <td class="table_row">{{product.itemName}}</td>
           <td class="table_row">{{product.quntity}}</td>
           <td class="table_row tAmountitem1">{{product.amount}}</td>

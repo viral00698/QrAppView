@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { OrderStatus } from 'src/app/constent/order-status';
 import { StorageKey } from 'src/app/constent/storage-key';
 import { Orders } from 'src/app/model/orders';
@@ -22,7 +23,7 @@ export class OrderComponent implements OnInit {
   createOrderDiallog: boolean = true
   vender:any
   constructor(private rxStompService: RxStompService, private OrderSrvice: OrderServiceService,
-     private cdr: ChangeDetectorRef,
+     private cdr: ChangeDetectorRef,private messageService:MessageService,
      private storageService: SecureLocalStorageService) {
 
   }
@@ -32,13 +33,34 @@ export class OrderComponent implements OnInit {
     this.getVenderDetails()
 
     this.rxStompService.watch('/queue/'+ this.vender?.vendorId +'/messages').subscribe((res: any) => {
-      this.tmpcashOrderList.push(JSON.parse(res.body));
-      this.cashOrderList.push(JSON.parse(res.body));
+      // this.tmpcashOrderList.push(JSON.parse(res.body));
+      // this.cashOrderList.push(JSON.parse(res.body));
+      this.updateOrderList(JSON.parse(res.body))
       // this.tmpcashOrderList = this.cashOrderList
     })
     // this.rxStompService.deactivate();
   }
 
+
+  updateOrderList(newOrder:any){
+     // Check if order already exists in tmpcashOrderList
+  const tmpOrderIndex = this.tmpcashOrderList.findIndex((order: { orderId: any; }) => order.orderId === newOrder.orderId);
+  if (tmpOrderIndex !== -1) {
+    // Update the existing order
+    this.tmpcashOrderList[tmpOrderIndex] = newOrder;
+  } else {
+    // Add as a new order if it doesn't exist
+    this.tmpcashOrderList.push(newOrder);
+  }
+
+  // Similarly, update or add in cashOrderList
+  const cashOrderIndex = this.cashOrderList.findIndex((order: { orderId: any; }) => order.orderId === newOrder.orderId);
+  if (cashOrderIndex !== -1) {
+    this.cashOrderList[cashOrderIndex] = newOrder;
+  } else {
+    this.cashOrderList.push(newOrder);
+  }
+  }
 
   getVenderDetails() {
     const tmp = this.storageService.decryptAndGet(StorageKey.USER);

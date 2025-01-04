@@ -87,3 +87,18 @@ input[type="file"] label{
     height: 20%;
     border-radius: 5px;
 }
+
+.sticky-table .p-datatable-thead > tr > th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}
+
+.errorMeg{
+    font-size: small;
+    font-weight: 500;
+    margin-bottom: .1rem;
+}

@@ -9,6 +9,7 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { authGuard } from './gard/auth.guard';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
+import { OrderHistoryComponent } from './menu/order-history/order-history.component';
 
 const routes: Routes = [
   {path:'dashboard', component:SidebarComponent,children:[
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path:'menu/ongoing',component:OngoingComponent},
     {path:'menu/productAnalytics',component:ProductAnalyticsComponent},
     {path:'menu/tableOrder',component:TableOrdersComponent},
+    {path:'menu/OrderHistory',component:OrderHistoryComponent},
   ],canActivate:[authGuard]},
   {path:'',component:LoginComponent},
 ];

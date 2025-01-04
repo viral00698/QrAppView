@@ -10,7 +10,7 @@
 
 <div class="">
   <!--for scroll-->
-  <p-table [value]="tmpProductList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  scrollHeight="85vh">
+  <p-table [value]="tmpProductList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Sr.</th>
@@ -55,7 +55,12 @@
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" />
+        <div *ngIf="formGroup.controls['itemName'].invalid && formGroup.controls['itemName'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['itemName'].errors?.['required']" style="color: brown;">Note:Item name is required.</span>
+          <span class="errorMeg"  *ngIf="formGroup.controls['itemName'].errors?.['pattern']" style="color: brown;">Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span>
+        </div>
       </div>
+      
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
@@ -63,7 +68,12 @@
       </div>
       <div class="form_item_content">
         <textarea rows="2" cols="40" placeholder="Enter product description..." pInputTextarea formControlName="description"></textarea>
+        <div *ngIf="formGroup.controls['description'].invalid && formGroup.controls['description'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['description'].errors?.['required']" style="color: brown;">Note:quantity is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['description'].errors?.['pattern']" style="color: brown;">Note:only contain letters, numbers, and the symbols: ()_&*."&#64;"</span>
+        </div>
       </div>
+      
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
@@ -71,6 +81,10 @@
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter Amount..." formControlName="amount" />
+        <div *ngIf="formGroup.controls['amount'].invalid && formGroup.controls['amount'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['amount'].errors?.['required']" style="color: brown;">Note:Amount is required.</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['amount'].errors?.['pattern']" style="color: brown;">Note:Amount must be a number and may contain a single decimal point.</span>
+        </div>
       </div>
     </div>
     <div class="form_grid">
@@ -79,6 +93,10 @@
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter gramOrMl..." formControlName="gram" />
+        <div *ngIf="formGroup.controls['gram'].invalid && formGroup.controls['gram'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['gram'].errors?.['pattern']" style="color: brown;">Note:Gram must be a number and may contain a single decimal point.</span>
+          <span class="errorMeg" class="errorMeg" *ngIf="formGroup.controls['gram'].errors?.['required']" style="color: brown;">Note:Gram is required Set Default 0.</span>
+        </div>
       </div>
     </div>
     <div class="form_grid">
@@ -87,6 +105,10 @@
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter quantity..." formControlName="quantity" />
+        <div *ngIf="formGroup.controls['quantity'].invalid && formGroup.controls['quantity'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['quantity'].errors?.['required']" style="color: brown;">Note:quantity is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['quantity'].errors?.['pattern']" style="color: brown;">Note:Only Digit Allowed.</span>
+        </div>
       </div>
     </div>
     <div class="form_grid">
@@ -118,7 +140,7 @@
       </div>
     </div>
     <div class="form_grid form_btn">
-      <button id="cashOrderBtn" type="submit" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+      <button [disabled]="!formGroup.valid" id="cashOrderBtn" type="submit" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
     </div>
   </form>
 </p-dialog>

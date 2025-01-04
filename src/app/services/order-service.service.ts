@@ -25,5 +25,13 @@ export class OrderServiceService {
     return this.http.post('OrderStatstics/daily',data);
   }
 
+  findTop10MostOrderedItems(data:any) {
+    return this.http.post('OrderStatstics/findTop10MostOrderedItems',data);
+  }
+
+  findByVendorId(data:any){
+    return this.http.get('Orders/getbyOrdersByVendorId/'+data);
+  }
+
 
 }

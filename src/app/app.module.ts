@@ -38,8 +38,10 @@ import { InplaceModule } from 'primeng/inplace';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
+import { TagModule } from 'primeng/tag';
+import { OrderHistoryComponent } from './menu/order-history/order-history.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { TableOrdersComponent } from './table-orders/table-orders.component';
     ProductAnalyticsComponent,
     LoginComponent,
     TableOrdersComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,8 @@ import { TableOrdersComponent } from './table-orders/table-orders.component';
     SelectButtonModule,
     InplaceModule,
     ToastModule,
+    TagModule,
+    OverlayPanelModule,
     AvatarModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token

@@ -14,8 +14,7 @@
 }
 
 .item_A {
-    flex: 1;
-    text-align: start;
+    /* flex: 1; */
 }
 
 .item_B {
@@ -54,6 +53,25 @@
     /* box-sizing: border-box; Makes sure padding and borders are included in the item size */
 }
 
+
+:host {
+    .p-dialog-title {
+        font-weight: 500;
+        font-size: medium;
+    }
+    .p-dropdown {
+        /* background-color: #f9f9f9;  */
+        border-radius: 8px; 
+        /* height: 40px;  */
+        width: 70%;
+    }
+   
+}
+
+.inputbox{
+border-radius: 8px;
+}
+
 .state_counter{
     text-align: center;
     font-size: larger;
@@ -71,7 +89,8 @@
 }
 #searchInput {
 
-    width: 60%;
+    width: 20vw;
+    margin-right: .5rem;
     border: 0;
     border-radius: 20px;
     background-image: url(../../assets/search.svg);
@@ -81,3 +100,85 @@
     font-weight: 500;
     font-size: medium;
 }
+
+.form_grid {
+    display: flex;
+    margin: .5rem;
+}
+
+.form_item_titel {
+    flex: 1;
+    place-self: center;
+    font-weight: 500;
+    font-size: small;
+}
+
+.form_item_content {
+    flex: 3;
+    font-weight: 500;
+    font-size: small;
+}
+
+.form_label {
+    margin: 0;
+}
+
+.form_btn {
+    justify-content: center;
+    padding: .5rem;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  
+  }
+
+  grid-container:first-child{
+    padding: 1rem;
+  }
+  .large-box:first-child{
+    font-size: large;
+    font-weight: 900;
+    align-content: space-around;
+    text-align: center;
+  }
+  .large-box {
+    grid-column: span 1; /* Full-width large box */
+    background-color: #d1e7dd;
+    height:  100%;
+    width: 100%;
+    border-radius: 5px;
+    
+
+  }
+  
+  .small-box {
+   
+    /* background-color: #f8d7da; */
+    /* padding: 16px; */
+    /* text-align: center; */
+  }
+
+  
+  .grid-container > .small-box:nth-child(n+2):nth-child(-n+5) {
+    grid-column: span 
+  }
+
+  .cust_detail{
+    display: flex;
+    justify-content: start;
+    font-size: small;
+    font-weight: 500;
+    margin: .2rem 0rem .2rem .5rem 
+}
+.center-content {
+    display: flex;
+    align-items: center;  /* Centers vertically */
+    justify-content: center;  /* Centers horizontally */
+    height: 100%; /* Optional: Adjust the height as needed */
+    
+  }
+

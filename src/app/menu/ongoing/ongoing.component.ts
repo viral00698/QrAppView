@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { OrderStatus } from 'src/app/constent/order-status';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
@@ -25,10 +26,29 @@ export class OngoingComponent  implements OnInit{
   
   constructor(private orderService:OrderServiceService ,
     private rxStompService:RxStompService,
+    private messageService:MessageService,
     private storageService: SecureLocalStorageService) {
   }
   ngOnInit(): void {
     this.getOrderList()
+
+    this.rxStompService.watch('/queue/'+ this.vender?.vendorId +'/messages').subscribe((res: any) => {
+      const tmp = JSON.parse(res.body)
+      // this.OrderList.push(tmp);
+    
+      this.messageService.add({
+        severity: 'info',         // Notification type (success, info, warn, error)
+        summary: 'New item Added',
+        detail: 'New Item Added at Order ID ' + tmp.orderId.substring(0,7),
+        sticky: true              // Keeps the notification visible until manually closed
+      });
+
+      this.updateOrderList(tmp)
+
+      // this.tmpOrderList.push(tmp)
+      // this.tmpOrderList.push(JSON.parse(res.body));
+      // this.tmpcashOrderList = this.cashOrderList
+    })
   }
 
 
@@ -38,8 +58,7 @@ export class OngoingComponent  implements OnInit{
       if(res.status === RequestStatus.success){
         this.OrderList = res.data
         this.tmpOrderList = res.data
-      }
-      
+      }  
     })
   }
 
@@ -80,7 +99,23 @@ export class OngoingComponent  implements OnInit{
 
   }
 
-  updateOrderList(item: any) {
-    // this.tmpOrderList = this.tmpOrderList.filter((t: any) => { return t.orderId !== item.orderId });
-  }
+updateOrderList(newOrder:any){
+    // Check if order already exists in tmpcashOrderList
+ const tmpOrderIndex = this.tmpOrderList.findIndex((order: { orderId: any; }) => order.orderId === newOrder.orderId);
+ if (tmpOrderIndex !== -1) {
+   // Update the existing order
+   this.tmpOrderList[tmpOrderIndex] = newOrder;
+ } else {
+   // Add as a new order if it doesn't exist
+   this.tmpOrderList.push(newOrder);
+ }
+
+ // Similarly, update or add in cashOrderList
+ const cashOrderIndex = this.OrderList.findIndex((order: { orderId: any; }) => order.orderId === newOrder.orderId);
+ if (cashOrderIndex !== -1) {
+   this.OrderList[cashOrderIndex] = newOrder;
+ } else {
+   this.OrderList.push(newOrder);
+ }
+ }
 }

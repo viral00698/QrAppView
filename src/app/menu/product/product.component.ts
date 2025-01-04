@@ -81,13 +81,13 @@ export class ProductComponent implements OnInit {
 
   addProductFormInit() {
     this.formGroup = this.fb.group({
-      itemName: [null, Validators.required],
-      amount: [null, [Validators.required, Validators.min(0)]],
-      quantity: [null, Validators.min(0)],
-      gram: [null, Validators.min(0)],
+      itemName: [null, [Validators.required , Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
+      amount: [null, [Validators.required , Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
+      quantity: [null, [ Validators.pattern('^[0-9]+$')]],
+      gram: [null, [Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
       jain: [false],
-      vegNonVeg: [false, Validators.required],
-      description: [null, Validators.required],
+      vegNonVeg: [false],
+      description: [null, [Validators.required , Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
       // file : [null, [Validators.required, this.fileValidator.bind(this)]],
     })
 
@@ -148,13 +148,14 @@ export class ProductComponent implements OnInit {
 
       this.productService.addProduct(obj).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
+          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== obj.productId);
+          this.productsList = this.tmpProductList
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product added successfully' });
           this.visible = false
         } else {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Failed to add product. Please try again!' });
         }
       })
-
     }
   }
 
@@ -192,10 +193,7 @@ export class ProductComponent implements OnInit {
     this.imageBase64 = product.image
     this.productId = product.productId
 
-
   }
-
-
 
   addProduct() {
     this.tmpImg = null
@@ -213,9 +211,11 @@ export class ProductComponent implements OnInit {
         'vendor': { 'vendorId': product.vendor }
       }
       this.productService.updateProductStatus(data).subscribe((res: any) => {
+        
         if (res.status === RequestStatus.success) {
-
-          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated to Active.' });
+          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
+          this.productsList = this.tmpProductList
+          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated' });
         } else {
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status update failed. Please try again.' });
         }
@@ -230,6 +230,8 @@ export class ProductComponent implements OnInit {
 
       this.productService.updateProductStatus(data).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
+          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
+          this.productsList = this.tmpProductList
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated to In-Active.' });
         } else {
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status update failed. Please try again.' });
@@ -248,6 +250,8 @@ export class ProductComponent implements OnInit {
 
     this.productService.deleteProductByid(data).subscribe((res: any) => {
       if (res.status === RequestStatus.success) {
+        this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
+        this.productsList = this.tmpProductList
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res.message });
       } else {
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res.message });
