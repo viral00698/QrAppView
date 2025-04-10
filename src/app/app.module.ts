@@ -31,7 +31,17 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { HTTP_INTERCEPTORS, HttpClientModule ,HttpClientXsrfModule} from '@angular/common/http';
 import { BaseUrlInterceptor } from './auth/base-url.interceptor';
-
+import { RxStompService } from './services/rx-stomp.service';
+import { SocketConfigService } from './services/socket-config.service';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InplaceModule } from 'primeng/inplace';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { TableOrdersComponent } from './table-orders/table-orders.component';
+import { TagModule } from 'primeng/tag';
+import { OrderHistoryComponent } from './menu/order-history/order-history.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +52,8 @@ import { BaseUrlInterceptor } from './auth/base-url.interceptor';
     OngoingComponent,
     ProductAnalyticsComponent,
     LoginComponent,
+    TableOrdersComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +81,12 @@ import { BaseUrlInterceptor } from './auth/base-url.interceptor';
     FileUploadModule,
     HttpClientModule,
     HttpClientModule,
+    SelectButtonModule,
+    InplaceModule,
+    ToastModule,
+    TagModule,
+    OverlayPanelModule,
+    AvatarModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in
@@ -77,11 +95,9 @@ import { BaseUrlInterceptor } from './auth/base-url.interceptor';
 
   ],
   providers: [
-    //  {
-    //   provide: RxStompService,
-    //   useFactory:rxStompServiceFactory
-    //  },
-
+    MessageService,
+    RxStompService,
+    SocketConfigService,
     {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}
     
   ],

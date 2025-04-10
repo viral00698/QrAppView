@@ -2,19 +2,48 @@
   <div class="row">
     <div class="col-sm-6 col-md-6 cols-6">
       <div class="d-flex justify-content-start">
-        <p-calendar class="inputCalender" [minDate]="minDate" [(ngModel)]="date" formControlName="date" [placeholder]="'Search by Date...'" />
+        <p-calendar class="inputCalender" [readonlyInput]="true" [maxDate]="minDate" selectionMode="range" (onSelect)="getVendorOrderStatistics($event)"  [(ngModel)]="dateRange"  [placeholder]="'Search by Date...'" />
       </div>
     </div>
-    <div class="col-sm-6 col-md-6 cols-6">
+    <!-- <div class="col-sm-6 col-md-6 cols-6">
       <div class="d-flex justify-content-end">
-        <p-dropdown [options]="cities" optionLabel="name" [showClear]="true" placeholder="Select a filter" />
-        <!-- <p-calendar class="inputCalender" [minDate]="minDate" [(ngModel)]="date" formControlName="date" [placeholder]="'Search by Date...'" /> -->
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
-<div class="container-fluid">
+<div class="small_card">
+      <div class="item">
+        <div class="min_card">
+            <p-card class="item">
+              <p class="state_titel">Orders:</p>
+              <p class="state_counter">{{state_Orders}}</p>
+            </p-card>
+            <p-card class="item">
+              <p class="state_titel">Ongoing:</p>
+              <p class="state_counter">{{state_Ongoing}}</p>
+            </p-card>
+            <p-card class="item">
+              <p class="state_titel">Revenue:</p>
+              <p class="state_counter">{{state_Revenue |number:'1.2-2'}}</p>
+            </p-card>
+            <!-- <p-card class="item">
+              <p class="state_titel">Revenue:</p>
+              <p class="state_counter">2523</p>
+            </p-card> -->
+        </div>
+      </div>
+      <div class="small_card">
+          <p-card class="popular_item">
+        <p-chart type="doughnut" [data]="data" ></p-chart>
+          </p-card>
+          <!-- <p-card class="popular_item">
+            <p-chart type="doughnut" [data]="data" ></p-chart>
+          </p-card> -->
+      </div>
+</div>
+
+<!-- <div class="container-fluid">
   <div class="row p-1">
     <div class="col-sm-3 col-md-3 col-lg-3 cardstyle">
       <p-card header="Orders" class="custom-card">
@@ -45,11 +74,11 @@
         <ng-template pTemplate="content">
           <h4>4458</h4>
         </ng-template>
-        <!-- <ng-template pTemplate="footer">
+        <ng-template pTemplate="footer">
                             <div>
                                 <h6 style="color: green;">ongoing:6</h6>
                             </div>
-                 </ng-template> -->
+                 </ng-template>
       </p-card>
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3 cardstyle">
@@ -57,17 +86,17 @@
         <ng-template pTemplate="content">
           <h4>4458</h4>
         </ng-template>
-        <!-- <ng-template pTemplate="footer">
+         <ng-template pTemplate="footer">
                             <div>
                                 <h6 style="color: green;">ongoing:6</h6>
                             </div>
-              </ng-template> -->
+              </ng-template> 
       </p-card>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4 col-md-4 col-lg-4 cols-12">
       <p-chart type="bar" [data]="data" [options]="options" />
@@ -79,4 +108,4 @@
       <p-chart type="pie" [data]="data" [options]="options" />
     </div>
   </div>
-</div>
+</div> -->
