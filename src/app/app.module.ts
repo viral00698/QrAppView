@@ -42,6 +42,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
 import { TagModule } from 'primeng/tag';
 import { OrderHistoryComponent } from './menu/order-history/order-history.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +89,7 @@ import { OrderHistoryComponent } from './menu/order-history/order-history.compon
     TagModule,
     OverlayPanelModule,
     AvatarModule,
+    NgApexchartsModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in

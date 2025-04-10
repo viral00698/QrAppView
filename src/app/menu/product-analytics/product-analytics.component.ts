@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexTitleSubtitle } from 'ng-apexcharts';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
 import { TimeIntrval } from 'src/app/constent/time-intrval';
@@ -6,6 +7,14 @@ import { ChartService } from 'src/app/services/chart.service';
 import { OrderServiceService } from 'src/app/services/order-service.service';
 import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
 import { VenderService } from 'src/app/services/vender.service';
+
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: 'app-product-analytics',
@@ -36,9 +45,46 @@ export class ProductAnalyticsComponent implements OnInit {
   state_Revenue: any
   state_Ongoing: any
 
+  public chartOptions: ChartOptions = {
+    series: [
+      {
+        name: 'Example',
+        data: [10, 20, 15, 30]
+      }
+    ],
+    chart: {
+      type: 'line',
+      height: 350
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr']
+    },
+    title: {
+      text: 'Line Chart Example'
+    }
+  };
+
   constructor(private orderService: OrderServiceService,
     private secureLocalStorageService: SecureLocalStorageService,
-    private dateIntervalService: ChartService) { }
+    private dateIntervalService: ChartService) { 
+      this.chartOptions = {
+        series: [{
+          name: "Example",
+          data: [10, 20, 15, 30]
+        }],
+        chart: {
+          type: "line",
+          height: 350
+        },
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr"]
+        },
+        title: {
+          text: "Line Chart Example"
+        }
+      };
+    
+    }
 
   ngOnInit(): void {
     // this.ordersChart()
