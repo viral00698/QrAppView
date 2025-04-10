@@ -1,4 +1,4 @@
-::ng-deep .p-sidebar {
+/* ::ng-deep .p-sidebar {
     background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);
     position: fixed !important;
     width: 15rem;
@@ -31,21 +31,15 @@ li {
     height: 100vh;
 }
 
-/* ::ng-deep .btnSize{
-    width: 100% !important;
-    border: 0;
-} */
 
 .p-btn:hover {
     background-color: #f4f4f4;
-    /* background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%); */
     transform: scale(1.05);
 }
 
 .p-btn{
     width: 14rem !important;
     border: 0;
-    /* background-color: #f4f4f4; */
     background-color:white;
     border-radius:25px;
     font-size: large;
@@ -65,7 +59,6 @@ li {
     font-weight: 600;
     padding-bottom: 1rem;
     padding: .5rem;
-    /* padding-bottom: .5rem ; */
 
 }
 
@@ -78,10 +71,8 @@ li {
 
 .main-content {
     flex-grow: 1;
-    /* This makes the main content take up the remaining space */
     padding: 1rem;
     overflow-y: auto;
-    /* Makes the content scrollable if needed */
 }
 
 .layout-container {
@@ -91,7 +82,6 @@ li {
 
 .sidebar {
     width: 15rem;
-    /* background-color: #f4f4f4; */
     background-color:white;
     padding: 1rem;
     position: fixed;
@@ -119,4 +109,49 @@ li {
     background-color: #cecccc;
 }
 
+ */
 
+
+.layout-container{
+    display: flex;
+    height: 100vh;
+}
+.sidebar{
+    width: 15%;
+    flex: content;
+    display: flex;
+    flex-direction: column;
+    background:#ffffff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.main-content {
+    flex-grow: 1;
+    width: 85%;
+    overflow-y: auto;
+    background: e8f1f2;
+
+}
+.sidebar-btn{
+    border: none;
+    padding: .5rem;
+    font-size: medium;
+    font-weight: 400;
+    color:black;
+    background: none;
+}
+
+.sidebar-btn:hover{
+    background: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.titel{
+    padding: .5rem;
+    display: flex;
+    place-self: center;
+    color: black;    
+    margin: 0;
+    margin-top: 1rem;
+}

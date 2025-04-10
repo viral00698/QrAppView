@@ -1,5 +1,7 @@
 .container-fluid {
     background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    padding: .3rem;
     /* border-radius: 20px; */
 }
 
@@ -8,7 +10,7 @@
 }
 
 .img {
-    height: 2.5rem;
+    height: 2.8rem;
     width: 2.5rem;
     padding: .3rem;
     border-radius: 50%;
@@ -18,24 +20,32 @@
     height: 2.3rem;
     width: 2.5rem;
     padding: .3rem;
-    border: 0;
+    border: none;
     border-radius: 50%;
+    background: black;
+    color: white;
     margin:0rem 0rem .2rem 2rem;
 }
 
 .logout_btn:hover {
-    background-color: #630a0a;
-    color: rgb(244, 244, 244);
+    background:white;
+    color: black;
+    border: 2px solid black;
+    font-weight: 600;
   }
 .btn_icon{
     font-size: large;
     font-weight: 700;
-    color: rgb(230, 38, 38);
+    color:white;
 }
+.btn_icon:hover{
+    color:black;
+}
+
 
 .date{
     place-self: center;
     margin: 0.5rem;
-    font-size: small;
-    font-weight: 600;
+    font-size: medium;
+    font-weight: 400;
 }
