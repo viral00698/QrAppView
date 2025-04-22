@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 col-md-6 cols-6">
       <div class="d-flex justify-content-start">
@@ -41,4 +41,28 @@
 </apx-chart>
 
 </div>
+ -->
 
+<div class="main-container">
+  <div class="card-group-1">
+    <div class="items">
+      <app-area-plot *ngIf="dataForArea" [data]="this.dataForArea"></app-area-plot>
+    </div>
+    <div class="items">
+      <app-donut-chart *ngIf="dataForArea"></app-donut-chart>
+    </div>
+    <div class="items">
+      <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart>
+    </div>
+    <div class="items">
+      <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart>
+    </div>
+  </div>
+
+  <div class="card-group-1">
+  
+    <div class="items">
+      <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart>
+    </div>
+  </div>
+</div>

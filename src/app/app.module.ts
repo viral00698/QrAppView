@@ -43,6 +43,9 @@ import { TableOrdersComponent } from './table-orders/table-orders.component';
 import { TagModule } from 'primeng/tag';
 import { OrderHistoryComponent } from './menu/order-history/order-history.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { AreaPlotComponent } from './shared/area-plot/area-plot.component';
+import { BarchartComponent } from './shared/barchart/barchart.component';
+import { DonutChartComponent } from './shared/donut-chart/donut-chart.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     LoginComponent,
     TableOrdersComponent,
     OrderHistoryComponent,
+    AreaPlotComponent,
+    BarchartComponent,
+    DonutChartComponent,
   ],
   imports: [
     BrowserModule,

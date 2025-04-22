@@ -1,72 +1,65 @@
-.container-fluid {
+/* .container-fluid {
     margin-top: .5rem;
 }
 
+:host {
 
+    .p-card {
+        margin: 0;
+        padding: 0;
+        border-radius: 8px;
+    }
 
-:host{
+    .p-card-body {
+        margin: 0.1rem .5rem .1rem .5rem;
+        padding: 0;
+    }
 
-.p-card{
-
-    margin: 0;
-    padding: 0;
-    border-radius: 8px;
-}
-
-.p-card-body{
-    margin: 0.1rem .5rem .1rem .5rem;
-    padding: 0;
-}
-.p-calendar .p-inputtext{
-    width: 20rem !important;
-    border-radius: 25px;
-    border: none;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 0;
-    padding: .5rem;
-    background-color: white;
-    padding-left: 2rem !important;
-    background-image: url(../../../assets/search.svg);
-    background-repeat: no-repeat;
-    background-position: right;
-    background-position: 17.5rem;
-}
+    .p-calendar .p-inputtext {
+        width: 20rem !important;
+        border-radius: 25px;
+        border: none;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+        padding: .5rem;
+        background-color: white;
+        padding-left: 2rem !important;
+        background-image: url(../../../assets/search.svg);
+        background-repeat: no-repeat;
+        background-position: right;
+        background-position: 17.5rem;
+    }
 
 }
 
-.small_card{
+.small_card {
     display: flex;
 }
 
-.min_card{
+.min_card {
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap onto multiple lines */
-    /* justify-content: space-between; Evenly spaces the items horizontally */
+    flex-wrap: wrap;
 
 }
 
 
 .popular_item {
-    flex: 0 1 calc(50% - 10px); /* Takes up 50% of the container width minus some spacing */
-    margin: .3rem; /* Adds space around items */
-    /* text-align: left; */
-    box-sizing: border-box; /* Ensures padding and borders are included in the size */
-    
-  }
-.item{
-    /* margin: .5rem;
-    flex-wrap: wrap;
-    flex: 1; */
-    height: 100%;
-    flex: 0 1 calc(50% - 10px); /* Takes up 1/3 of the container width minus some spacing */
-     margin: .3rem; /* Adds space around items */
-    text-align: left;
-    /* box-sizing: border-box; Makes sure padding and borders are included in the item size */
+    flex: 0 1 calc(50% - 10px);
+    margin: .3rem;
+    box-sizing: border-box;
 }
 
-.state_counter{
+.item {
+
+    height: 100%;
+    flex: 0 1 calc(50% - 10px);
+    margin: .3rem;
+    text-align: left;
+}
+
+.state_counter {
     text-align: center;
     font-size: larger;
     font-weight: 700;
@@ -74,46 +67,56 @@
     padding: 0;
 }
 
-.state_titel{
-    
+.state_titel {
+
     font-size: medium;
     font-weight: 500;
     margin: 0;
     padding: 0;
+} */
+
+.main-container{
+    width: 100%;
 }
 
-/* .cardstyle{
-    padding-left: .3rem;
-    padding-right: .3rem;
-
-    margin: 0;
-} */
-/* :host ::ng-deep .custom-card .p-card { 
-    height: 90%;
- 
-    border-radius: .5rem !important;
-} */
-
-/* :host ::ng-deep .custom-card{
-    height: 17rem;
-}
-
-:host ::ng-deep .p-card-title{
-    font-weight: 500;
-    font-size: medium;
-    justify-content: start;
-   
-
-} */
-
-/* :host ::ng-deep .p-card-content{
+.card-group-1 {
     display: flex;
-    justify-content: center;
-    align-content: center;
-    padding: 0;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
 }
 
-:host ::ng-deep p-card-body{
-    padding: .2rem;
+.card-group-1  .items{
+    /* flex-basis: calc(100vw/2); */
+    flex: 1;
+    background:#ffffff;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    filter: brightness(1.2);
+}
+
+.items h6{
+    margin: 0;
+    font-size: medium;
+    margin-left: 5px;
+    padding: 2px;
+    font-weight: 600;
+}
+
+
+
+/* .items-functinality{
+    position: absolute;
+    z-index: 1000;
+    left: 49%;
+    transform: translate(-56%, -4%);
+    background: none;
+}
+.items .items-btn{
+    border: none;
+    background:none;
+    margin-left: 2px;
+    padding: 0;
 } */
 
