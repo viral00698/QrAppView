@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
@@ -27,8 +27,28 @@ export class ProductComponent implements OnInit {
   tmpImg: any;
   productId: any;
   tmpProductList: any;
+  foodTypes: { key: string; label: string; }[];
   constructor(private rxStompService: RxStompService, private productService: ProductService, private fb: FormBuilder,
-    private storageService: SecureLocalStorageService, private messageService: MessageService) { }
+
+    
+    private storageService: SecureLocalStorageService, private messageService: MessageService) {
+
+       this.foodTypes = [
+        { key: 'STARTERS', label: 'Starters' },
+        { key: 'SOUPS', label: 'Soups' },
+        { key: 'SALADS', label: 'Salads' },
+        { key: 'MAIN_COURSE', label: 'Main Course' },
+        { key: 'BREADS', label: 'Breads' },
+        { key: 'RICE_AND_BIRYANI', label: 'Rice & Biryani' },
+        { key: 'DESSERTS', label: 'Desserts' },
+        { key: 'BEVERAGES', label: 'Beverages' },
+        { key: 'COMBO_MEALS', label: 'Combo Meals' },
+        { key: 'KIDS_MENU', label: 'Kids Menu' },
+        { key: 'PIZZA', label: 'Pizza' },
+        { key: 'BURGER', label: 'Burger' },
+        { key: 'CHINESE', label: 'Chinese' }
+      ];
+     }
 
   ngOnInit(): void {
     // this.getProductList()
@@ -86,6 +106,7 @@ export class ProductComponent implements OnInit {
       quantity: [null, [ Validators.pattern('^[0-9]+$')]],
       gram: [null, [Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
       jain: [false],
+      foodCategory:[null,[Validators.required]],
       vegNonVeg: [false],
       description: [null, [Validators.required , Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
       // file : [null, [Validators.required, this.fileValidator.bind(this)]],
@@ -120,6 +141,7 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     if (this.formGroup.valid) {
       console.log('Form Submitted', this.formGroup.value);
       let venderData = null;
@@ -132,6 +154,9 @@ export class ProductComponent implements OnInit {
       //     // If the image is in the form of data URI, strip the metadata part
       //     this.imageBase64 = this.imageBase64.split(",")[1];
       // }
+   
+      console.log(this.formGroup.get('foodCategory')?.value);
+      
       const obj = {
         "itemName": this.formGroup.get('itemName')?.value,
         "amount": this.formGroup.get('amount')?.value,
@@ -141,6 +166,7 @@ export class ProductComponent implements OnInit {
         "vegNonVeg": this.formGroup.get('vegNonVeg')?.value,
         "description": this.formGroup.get('description')?.value,
         "status": true,
+        "foodCategory":this.formGroup.get('foodCategory')?.value?.key,
         "image": this.imageBase64,
         "vendor": venderData,
         "productId": this.productId

@@ -120,15 +120,16 @@ li {
     width: 15%;
     flex: content;
     display: flex;
+    border-right: 1px solid rgb(56, 56, 56);
     flex-direction: column;
-    background:#ffffff;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    background:white;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px; */
 }
 .main-content {
     flex-grow: 1;
     width: 85%;
     overflow-y: auto;
-    background: e8f1f2;
+    background:	#f6f6f6;
 
 }
 .sidebar-btn{
@@ -148,10 +149,13 @@ li {
 }
 
 .titel{
-    padding: .5rem;
+    padding: 1rem;
     display: flex;
     place-self: center;
     color: black;    
     margin: 0;
-    margin-top: 1rem;
+}
+.logo{
+    height: 25px;
+    width: 25px;
 }

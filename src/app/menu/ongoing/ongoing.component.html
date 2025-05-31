@@ -17,19 +17,19 @@
 <p-toast></p-toast>
 <div class="header">
   <div class="header_item_1">
-    <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText  placeholder="Search by Token..." />
+    <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()"  type="text" pInputText  placeholder="Search by Token..." />
   </div>
   <div class="header_item_2">
-    <button id="cashOrderBtn" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+    <!-- <button id="cashOrderBtn" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button> -->
   </div>
 </div>
 
 <div class="cardGrid scroll" >
   <!-- [style]="{'width':'50%'}" -->
-  <p-card *ngFor="let item of tmpOrderList" >
+  <p-card *ngFor="let item of tmpOrderList" styleClass="background:white" >
     <div class="titel"><p class="card_titel"> {{item.token_no}}</p></div>
     <div class="order_detail">
-      <p class="card_bill_detail">OrderID:{{item.orderId|  slice:0:7}}</p>
+      <p class="card_bill_detail">OrderID: {{item.orderId|  slice:0:7}}</p>
       <p class="card_bill_detail">Status: {{item.orderStatus}}</p>
     </div>
     <div class="order_detail">
@@ -40,24 +40,24 @@
       <p class="card_bill_detail">Date: {{item.orderAt | date:'dd-MMM-yyyy HH:mm:a' }}</p>
       <p class="card_bill_detail">Mobile: {{item.customerMobileNo}}</p>
     </div>
-    <div class="order_detail">
+    <!-- <div class="order_detail">
       <p class="card_bill_detail">Payment Mode: {{item.payment_mode}}</p>
-    </div>
-    <p-table [value]="item.orderDetails" [scrollable]="true" scrollHeight="6rem" [style]="{ 'min-height': '5rem', 'max-height': '5rem' }">
+    </div> -->
+    <p-table [value]="item.orderDetails" [scrollable]="true" scrollHeight="6rem" [style]="{ 'min-height': '6rem', 'max-height': '6rem' }">
       <ng-template pTemplate="header">
         <tr>
-          <th scope="col" class="table_row">No.</th>
-          <th scope="col" class="table_row">Item</th>
-          <th scope="col" class="table_row">Qty</th>
-          <th scope="col" class="table_row">Amount</th>
+          <th scope="col" class="table_heading">Sr No.</th>
+          <th scope="col" class="table_heading">Item</th>
+          <th scope="col" class="table_heading">Qty</th>
+          <th scope="col" class="table_heading">Amount</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-product let-index="rowIndex">
         <tr>
-          <td class="table_row">{{index+1}}</td>
-          <td class="table_row">{{product.itemName}}</td>
-          <td class="table_row">{{product.quntity}}</td>
-          <td class="table_row tAmountitem1">{{product.amount}}</td>
+          <td class="table_content">{{index+1}}</td>
+          <td class="table_content">{{product.itemName}}</td>
+          <td class="table_content">{{product.quntity}}</td>
+          <td class="table_content tAmountitem1">{{product.amount}}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -71,7 +71,7 @@
         <p-divider class="divider"></p-divider>
         <div class="order_detail">
           <p class="card_bill_detail "><button (click)="MarkAsCompleted(item)" class="acept_btn">Mark As Completed</button></p>
-          <p class="card_bill_detail "><button (click)="generateInvoice(item)" class="cancel_btn">Invoice</button></p>
+          <!-- <p class="card_bill_detail "><button (click)="generateInvoice(item)" class="cancel_btn">Invoice</button></p> -->
         </div>
       </div>
     </ng-template>

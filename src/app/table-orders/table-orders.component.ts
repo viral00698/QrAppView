@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { RequestStatus } from '../constent/request-status';
 import { TableOrderService } from '../services/table-order.service';
 import { TableStatus } from '../constent/table-status';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-table-orders',
@@ -19,14 +20,14 @@ export class TableOrdersComponent implements OnInit {
   searchField: any;
   vender: any;
   tableTypes: any;
-  tables:any = [];
+  tables: any = [];
   tmpTables: any = [];
-  viewOptions:any=[]
+  viewOptions: any = []
   viewFalg: boolean = false;
-  selectedView:any;
-  tableOrder:any
-  Order:any
-  viewOrder:boolean = false
+  selectedView: any;
+  tableOrder: any
+  Order: any
+  viewOrder: boolean = false
 
   constructor(private fb: FormBuilder,
     private storageService: SecureLocalStorageService,
@@ -44,12 +45,13 @@ export class TableOrdersComponent implements OnInit {
       { name: 'Card', icon: 'bi bi-table' },
     ];
 
-    this.selectedView={ name: 'Card', icon: 'bi bi-table' }
+    this.selectedView = { name: 'Card', icon: 'bi bi-table' }
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.addTableFormInit()
     this.getVenderDetails()
-    this.getTables()
+    await this.getTables()
+
   }
   addProduct() {
   }
@@ -57,15 +59,29 @@ export class TableOrdersComponent implements OnInit {
   }
 
 
-  getTableOrdes(table:any){
-      this.tableOrderService.getbyTableOrders(table.vendorId ,table.tableId).subscribe((res:any)=>{
-        if(res.status === RequestStatus.success){
-          this.Order = res.data[0]
+  async getTableOrdes(table: any): Promise<void> {
+    // this.tableOrderService.getbyTableOrders(table.vendorId ,table.tableId).subscribe((res:any)=>{
+    //   if(res.status === RequestStatus.success){
+    //     this.Order = res.data
+
+    //   }
+    // }) 
+    // this.viewOrder = true
+
+    try {
+      const res: any = await firstValueFrom(
+        this.tableOrderService.getbyTableOrders(table.vendorId, table.tableId)
+      );
+
+      if (res.status === RequestStatus.success) {
+        this.Order = res.data;
         
-        }
-      }) 
-      this.viewOrder = true
-  
+      }
+
+      this.viewOrder = true;
+    } catch (error) {
+      console.error('Error fetching table orders:', error);
+    }
   }
 
   showDialog() {
@@ -79,15 +95,20 @@ export class TableOrdersComponent implements OnInit {
     }
   }
 
-  getTables(){
-    if(this.vender){
-        this.tableOrderService.getTableByVendor(this.vender.vendorId).subscribe((res:any)=>{
-          if(res.status === RequestStatus.success){
-            this.tables = res.data;
-            this.tmpTables = res.data;
-            
-          }
-        })
+  async getTables(): Promise<void> {
+    if (this.vender) {
+      try {
+        const res: any = await firstValueFrom(
+          this.tableOrderService.getTableByVendor(this.vender.vendorId)
+        );
+
+        if (res.status === RequestStatus.success) {
+          this.tables = res.data;
+          this.tmpTables = res.data;
+        }
+      } catch (error) {
+        console.error('Error fetching tables:', error);
+      }
     }
   }
   addTableFormInit() {
@@ -98,10 +119,10 @@ export class TableOrdersComponent implements OnInit {
 
   }
 
-  viewSelect(event:any){
-    if(event.value === 'Table'){
+  viewSelect(event: any) {
+    if (event.value === 'Table') {
       this.viewFalg = false
-    }else{
+    } else {
       this.viewFalg = true
     }
   }
@@ -128,5 +149,8 @@ export class TableOrdersComponent implements OnInit {
       }
     }
   }
+
+  MarkAsCompleted(item: any) { }
+  generateInvoice(item: any) { }
 
 }

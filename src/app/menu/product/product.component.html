@@ -4,18 +4,18 @@
     <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Search by product..." />
   </div>
   <div class="item_B">
-    <button id="cashOrderBtn" (click)="addProduct()" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+    <button id="cashOrderBtn" (click)="addProduct()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
   </div>
 </div>
 
-<div class="">
-  <!--for scroll-->
-  <p-table [value]="tmpProductList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
+<!-- <div class="table-container">
+  <p-table [value]="tmpProductList" [tableStyle]="{ 'width':'87%', 'margin-left':'0.4rem','margin-right':'0.4rem' , 'margin-top':'0.4rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Sr.</th>
         <th scope="col">Image</th>
         <th scope="col">Item Name</th>
+        <th scope="col">Food Category</th>
         <th scope="col">Description</th>
         <th scope="col">Jain</th>
         <th scope="col">Veg/Non-veg</th>
@@ -31,22 +31,62 @@
         <td *ngIf="product.image===null"> <p-avatar label="{{product.itemName.charAt(0)}}" size="normal"></p-avatar></td>
         <td *ngIf="product.image !==null" style="width: 10rem"><img src="{{product.image}}" class="product_img" alt="A"></td>
         <td>{{product.itemName}}</td>
+        <td>{{product.foodCategory}}</td>
         <td>{{product.description}}</td>
         <td>{{product.jain ? 'Yes' : 'No'}}</td>
         <td>{{product.vegNonVeg?'Yes':'No'}}</td>
         <td>{{product.amount}}</td>
         <td>
-        <p-inputSwitch [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td>
+        <p-inputSwitch styleClass="custom-switch" [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td>
         <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td>
         <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td>
+      </tr>
+    </ng-template>    
+  </p-table>
+</div> -->
 
-        <!-- Assuming there is a status field -->
+
+
+<div class="">
+  <p-table  [value]="tmpProductList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  s [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Sr.</th>
+        <th scope="col">Image</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Food Category</th>
+        <th scope="col">Description</th>
+        <th scope="col">Jain</th>
+        <th scope="col">Veg/Non-veg</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td *ngIf="product.image===null"> <p-avatar label="{{product.itemName.charAt(0)}}" size="normal"></p-avatar></td>
+        <td *ngIf="product.image !==null" style="width: 10rem"><img src="{{product.image}}" class="product_img" alt="A"></td>
+        <td>{{product.itemName}}</td>
+        <td>{{product.foodCategory}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.jain ? 'Yes' : 'No'}}</td>
+        <td>{{product.vegNonVeg?'Yes':'No'}}</td>
+        <td>{{product.amount}}</td>
+        <td>
+        <p-inputSwitch styleClass="custom-switch" [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td>
+        <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td>
+        <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td>
       </tr>
     </ng-template>    
   </p-table>
 </div>
 
-<!-- <p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button> -->
+
+
+
 <p-dialog header="{{dialogTitel}}" [(visible)]="visible" [style]="{width: '50vw'}">
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="form_grid">
@@ -62,6 +102,22 @@
       </div>
       
     </div>
+
+    <div class="form_grid">
+      <div class="form_item_titel">
+        <p class="form_label">foodCategory:</p>
+      </div>
+      <div class="form_item_content">
+        <p-dropdown class="inputbox" formControlName="foodCategory" [options]="foodTypes" optionLabel="key" styleClass="inputbox" placeholder="Select a TableType.." />
+        <!-- <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" /> -->
+        <div *ngIf="formGroup.controls['foodCategory'].invalid && formGroup.controls['foodCategory'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['foodCategory'].errors?.['required']" style="color: brown;">Note:Item name is required.</span>
+          <!-- <span class="errorMeg"  *ngIf="formGroup.controls['foodCategory'].errors?.['pattern']" style="color: brown;">Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span> -->
+        </div>
+      </div>
+      
+    </div>
+
     <div class="form_grid">
       <div class="form_item_titel">
         <p class="form_label">Description:</p>
