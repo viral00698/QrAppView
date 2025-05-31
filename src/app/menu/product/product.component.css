@@ -31,6 +31,7 @@
     border-radius: 20px;
     color: white;
     background: black;
+    text-align: center;
 }
 
 #cashOrderBtn:hover {
@@ -155,3 +156,22 @@ input[type="file"] label {
     font-weight: 500;
     margin-bottom: .1rem;
 }
+
+/* .custom-file-upload {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+  } */
+  
+  .custom-file-upload::file-selector-button {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  

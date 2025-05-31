@@ -30,6 +30,16 @@ body {
     background-color: black !important;
 }
 
+
+.isJain .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+.isVegNoVeg .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+
 /* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
 /* ::-webkit-scrollbar {
     width: 12px; 

@@ -105,10 +105,10 @@
 
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">foodCategory:</p>
+        <p class="form_label">FoodCategory:</p>
       </div>
       <div class="form_item_content">
-        <p-dropdown class="inputbox" formControlName="foodCategory" [options]="foodTypes" optionLabel="key" styleClass="inputbox" placeholder="Select a TableType.." />
+        <p-dropdown class="inputbox"  formControlName="foodCategory" [options]="foodTypes" optionLabel="label"  styleClass="inputbox" placeholder="Select a TableType.." />
         <!-- <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" /> -->
         <div *ngIf="formGroup.controls['foodCategory'].invalid && formGroup.controls['foodCategory'].touched" class="error-message">
           <span class="errorMeg" *ngIf="formGroup.controls['foodCategory'].errors?.['required']" style="color: brown;">Note:Item name is required.</span>
@@ -172,7 +172,7 @@
         <p class="form_label">Jain:</p>
       </div>
       <div class="form_item_content">
-        <p-inputSwitch formControlName="jain"></p-inputSwitch>
+        <p-inputSwitch class="isJain" formControlName="jain"></p-inputSwitch>
       </div>
     </div>
 
@@ -181,7 +181,7 @@
         <p class="form_label">Veg/Non-Veg:</p>
       </div>
       <div class="form_item_content">
-        <p-inputSwitch formControlName="vegNonVeg"></p-inputSwitch>
+        <p-inputSwitch class="isVegNoVeg" formControlName="vegNonVeg"></p-inputSwitch>
       </div>
     </div>
     <div class="form_grid">
@@ -189,7 +189,7 @@
         <p class="form_label">Upload Image:</p>
       </div>
       <div class="form_item_content custom-file-upload">
-       <input  id="fileUpload" type="file" (change)="onUpload($event)" name="file" accept="image/*">
+       <input  id="fileUpload" type="file" (change)="onUpload($event)"  class="custom-file-upload" name="file" accept="image/*">
        <img *ngIf="dialogTitel == 'Add Product'"[src]="imageBase64" style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A" >
        <img *ngIf="dialogTitel == 'Edit Product'" [(src)]="tmpImg"  style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A">
 

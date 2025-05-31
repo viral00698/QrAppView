@@ -207,17 +207,20 @@ export class ProductComponent implements OnInit {
     this.dialogTitel = "Edit Product";
     this.visible = true
     this.formGroup.setValue({
-      itemName: product.itemName,
-      amount: product.amount,
+      itemName: product?.itemName,
+      amount: product?.amount,
       quantity: product.quantity,
-      gram: product.gram,
-      jain: product.jain,
-      vegNonVeg: product.vegNonVeg,
-      description: product.description
+      gram: product?.gram,
+      jain: product?.jain,
+      vegNonVeg: product?.vegNonVeg,
+      description: product?.description,
+      foodCategory: this.foodTypes.find(item => item.key === product.foodCategory)
     });
+
+
     this.tmpImg = product.image
-    this.imageBase64 = product.image
-    this.productId = product.productId
+    this.imageBase64 = product?.image
+    this.productId = product?.productId
 
   }
 
