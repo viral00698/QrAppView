@@ -129,9 +129,11 @@
   <div class="order-container">
     <div class="order-table" *ngFor="let item of tmpTables">
       <div class="table-card" (click)="getTableOrdes(item)">
-        <div>{{item.tableName}}</div>
-        <div *ngIf="item.tableStatus === 'BOOK' " style="color: green;">{{item.tableStatus}}</div>
-        <div *ngIf="item.tableStatus !== 'BOOK' ">{{item.tableStatus}}</div>
+        <div *ngIf="item.tableStatus === 'BOOKED' " style="color: green; font-weight: 600;">{{item.tableName}}</div>
+        <div *ngIf="item.tableStatus !== 'BOOKED' ">{{item.tableName}}</div>
+
+        <div *ngIf="item.tableStatus === 'BOOKED' " style="color: green; font-weight: 600;">{{item.tableStatus}}</div>
+        <div *ngIf="item.tableStatus !== 'BOOKED' ">{{item.tableStatus}}</div>
       </div>
     </div>
   </div>

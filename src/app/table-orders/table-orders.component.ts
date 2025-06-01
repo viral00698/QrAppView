@@ -60,14 +60,8 @@ export class TableOrdersComponent implements OnInit {
 
 
   async getTableOrdes(table: any): Promise<void> {
-    // this.tableOrderService.getbyTableOrders(table.vendorId ,table.tableId).subscribe((res:any)=>{
-    //   if(res.status === RequestStatus.success){
-    //     this.Order = res.data
 
-    //   }
-    // }) 
-    // this.viewOrder = true
-
+    if(table?.tableStatus !== 'BOOKED' ) return;
     try {
       const res: any = await firstValueFrom(
         this.tableOrderService.getbyTableOrders(table.vendorId, table.tableId)
