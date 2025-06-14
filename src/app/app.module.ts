@@ -46,6 +46,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { AreaPlotComponent } from './shared/area-plot/area-plot.component';
 import { BarchartComponent } from './shared/barchart/barchart.component';
 import { DonutChartComponent } from './shared/donut-chart/donut-chart.component';
+import { BarGroupchartComponent } from './shared/bar-groupchart/bar-groupchart.component';
+import { OfferPageComponent } from './offer/offer-page/offer-page.component';
+import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,9 @@ import { DonutChartComponent } from './shared/donut-chart/donut-chart.component'
     AreaPlotComponent,
     BarchartComponent,
     DonutChartComponent,
+    BarGroupchartComponent,
+    OfferPageComponent,
+    FeedbackPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,11 @@ import { TimeIntrval } from 'src/app/constent/time-intrval';
 import { BarchartFilterService } from 'src/app/services/barchart-filter.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { CustomFilterService } from 'src/app/services/custom-filter.service';
+import { FilterRevenueByFoodService } from 'src/app/services/filter-revenue-by-food.service';
 import { OrderServiceService } from 'src/app/services/order-service.service';
+import { OrderStaticticsService } from 'src/app/services/order-statictics.service';
 import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
+import { TopAndLowestSellingService } from 'src/app/services/top-and-lowest-selling.service';
 import { VenderService } from 'src/app/services/vender.service';
 
 
@@ -53,18 +56,29 @@ export class ProductAnalyticsComponent implements OnInit {
   state_Orders: any
   state_Revenue: any
   state_Ongoing: any
+  revenueByFoodCetegoryFiter: any;
+  orderStates!: { totalAmount: number; totalOrders: number; ongoingOrders: number; };
+  TopSellingItems: any;
+  LowestSellingItems: any;
 
 
   constructor(private orderService: OrderServiceService,
     private secureLocalStorageService: SecureLocalStorageService,
     private dateIntervalService: ChartService,
     private filter: CustomFilterService,
-    private barchartFilter: BarchartFilterService) { }
+    private barchartFilter: BarchartFilterService,
+    private revenueByFoodCetegory:FilterRevenueByFoodService,
+    private orderStaticticsService:OrderStaticticsService,
+    private topAndLowestSellingService:TopAndLowestSellingService) { }
 
   ngOnInit(): void {
     this.getVenderDetails()
     this.countOrdersGroupByDay();
     this.custmerInsides(1)
+    this.revenueByFoodCategory(0);
+    this.orderStatictics()
+    this.getLowestSellingItems()
+    this.getTopSellingItems()
     
   }
 
@@ -105,6 +119,39 @@ export class ProductAnalyticsComponent implements OnInit {
         lable: tmp?.lable
       }
     })
+  }
+
+  revenueByFoodCategory(filter:any){
+    this.orderService.revenueByFoodCategory(this.vender?.vendorId).subscribe((res: any) => {
+        if(res.status === RequestStatus.success){
+          this.revenueByFoodCetegoryFiter= this.revenueByFoodCetegory.applyCategoryFilter('yearly' , res?.data)
+        }
+       
+    })
+  }
+
+  orderStatictics(){
+      this.orderService.orderStatictics(this.vender?.vendorId).subscribe((res:any)=>{
+        if(res.status === RequestStatus.success){
+        this.orderStates = this.orderStaticticsService.filterAndSummarize('Today' , res.data);     
+        }
+      })
+  }
+
+  getTopSellingItems(){
+      this.orderService.getTopSellingItems(this.vender?.vendorId).subscribe((res:any)=>{
+        if(res.status === RequestStatus.success){
+         this.TopSellingItems = this.topAndLowestSellingService.transform(res.data);
+        }
+      })
+  }
+
+    getLowestSellingItems(){
+      this.orderService.getLowestSellingItems(this.vender?.vendorId).subscribe((res:any)=>{
+        if(res.status === RequestStatus.success){
+         this.LowestSellingItems =  this.topAndLowestSellingService.transform(res.data);
+        }
+      })
   }
 
 
