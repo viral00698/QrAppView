@@ -37,7 +37,7 @@
       <p class="card_bill_detail" *ngIf="item.payment_mode !== 'CASH'">Txn ID:{{item.txid}}</p>
     </div>
     <div class="order_detail">
-      <p class="card_bill_detail">Date: {{item.orderAt | date:'dd-MMM-yyyy HH:mm:a' }}</p>
+      <p class="card_bill_detail">Date: {{item.orderAt | date:'dd-MMM-yyyy hh:mm:a' }}</p>
       <p class="card_bill_detail">Mobile: {{item.customerMobileNo}}</p>
     </div>
     <!-- <div class="order_detail">
