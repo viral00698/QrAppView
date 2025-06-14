@@ -38,6 +38,9 @@ body {
 .isVegNoVeg .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
     background-color: black !important;
 }
+#offer-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
 
 
 /* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
