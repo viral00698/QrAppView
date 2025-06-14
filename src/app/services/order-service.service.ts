@@ -41,4 +41,20 @@ export class OrderServiceService {
     return this.http.get('OrderStatstics/custmerInsides/'+vendorId)
   }
 
+  revenueByFoodCategory(vendorId: any) {
+    return this.http.get('OrderStatstics/revenueByFoodCategory/'+vendorId)
+  }
+
+  orderStatictics(vendorId: any) {
+    return this.http.get('OrderStatstics/orderStatictics/'+vendorId)
+  }
+
+  getTopSellingItems(vendorId: any) {
+    return this.http.get('OrderStatstics/getTopSellingItems/'+vendorId)
+  }
+
+  getLowestSellingItems(vendorId: any) {
+    return this.http.get('OrderStatstics/getLowestSellingItems/'+vendorId)
+  }
+
 }
