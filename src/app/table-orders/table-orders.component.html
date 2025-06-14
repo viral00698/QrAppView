@@ -113,6 +113,11 @@
 
 <div class="header">
   <input id="searchInput" placeholder="Search..." class="header-items" type="text"/>
+  <!-- <p-selectButton [options]="viewOptions" [(ngModel)]="selectedView" (onChange)="viewSelect($event)" optionLabel="icon" optionValue="name">
+    <ng-template let-item pTemplate>
+      <i [class]="item.icon"></i>
+    </ng-template>
+  </p-selectButton> -->
   <button class="header-items header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button>
 </div>
 
@@ -139,7 +144,7 @@
   </div>
 </div>
 
-<p-dialog  id="my-dialog" header="Order at Table" [modal]="true" [(visible)]="viewOrder" [style]="{width: '30vw'}">
+<p-dialog  id="my-dialog" [header]=" 'Table: '+Order?.tableOrder?.tableName" [modal]="true" [(visible)]="viewOrder" [style]="{width: '30vw'}">
 
   <p-card>
     <div class="titel"><p class="card_titel"> {{ Order?.token_no}}</p></div>
