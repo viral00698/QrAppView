@@ -19,7 +19,6 @@ throw new Error('Method not implemented.');
   colors!: { name: string; code: string; }[];
   formGroup!: FormGroup;
   dilogView: boolean = false
-  discountOptions: { label: string; value: string; }[];
   offerTypes: { label: string; value: string; }[];
   vender: any;
   productsList: any;
@@ -27,15 +26,10 @@ throw new Error('Method not implemented.');
   selectOfferType: any
   isSubmitting = false;
   offerList: any;
+  productMap:Map<any,any> = new Map()
   constructor(private fb: FormBuilder, private productService: ProductService, private storageService: SecureLocalStorageService, private offerService: OfferService, private messageService: MessageService) {
 
-    this.discountOptions = [
-      { label: 'Percentage Discount', value: 'discountBypercentage' },
-      { label: 'Fixed Amount Off', value: 'fixAmount' },
-      { label: 'Flat Discount', value: 'flatDiscount' },
-
-    ];
-
+  
     this.offerTypes = [
       { label: 'Flat Discount', value: 'FLAT_DISCOUNT' },
       { label: 'Buy One Get One (BOGO)', value: 'BOGO' },
@@ -53,31 +47,7 @@ throw new Error('Method not implemented.');
     this.getOfferByVendor();
   }
 
-  colorCode() {
-    this.colors = [
-      { name: 'Electric Violet', code: '#8F00FF' },
-      { name: 'Neon Pink', code: '#FF6EC7' },
-      { name: 'Aqua Blue', code: '#00FFFF' },
-      { name: 'Lime Green', code: '#32CD32' },
-      { name: 'Sunset Orange', code: '#FF5E3A' },
-      { name: 'Royal Blue', code: '#4169E1' },
-      { name: 'Crimson Red', code: '#DC143C' },
-      { name: 'Coral', code: '#FF7F50' },
-      { name: 'Turquoise', code: '#40E0D0' },
-      { name: 'Gold', code: '#FFD700' },
-      { name: 'Deep Sky Blue', code: '#00BFFF' },
-      { name: 'Hot Pink', code: '#FF69B4' },
-      { name: 'Medium Slate Blue', code: '#7B68EE' },
-      { name: 'Magenta', code: '#FF00FF' },
-      { name: 'Sea Green', code: '#2E8B57' },
-      { name: 'Orange Red', code: '#FF4500' },
-      { name: 'Mint Green', code: '#98FF98' },
-      { name: 'Peach', code: '#FFE5B4' },
-      { name: 'Sky Magenta', code: '#CF71AF' },
-      { name: 'Light Coral', code: '#F08080' }
-    ];
 
-  }
 
   showDiloag() {
     if (this.dilogView)
@@ -99,19 +69,58 @@ throw new Error('Method not implemented.');
       offerName: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
       offerTypes: [null, [Validators.required]],
       Expires: [null, [Validators.required]],
-      FlatDiscount: [null, [Validators.required]],
-      IsActive: [false],
+      FlatDiscount: [null],
+      IsActive: [true],
       message: [null, [Validators.required]],
+      minOrderAmount:[null],
+      discountBypercentage:[null],
+      freeItem:[null]
     })
 
+
+    this.formGroup.get('offerTypes')?.valueChanges.subscribe(selectedType => {
+      const flatDiscountCtrl = this.formGroup.get('FlatDiscount');
+
+      if (selectedType.value === 'FLAT_DISCOUNT') {
+        flatDiscountCtrl?.setValidators([Validators.required]);
+      } else {
+        flatDiscountCtrl?.clearValidators();
+      }
+      flatDiscountCtrl?.updateValueAndValidity();
+    });
+
+     this.formGroup.get('offerTypes')?.valueChanges.subscribe(selectedType => {
+
+      const flatDiscountCtrl = this.formGroup.get('minOrderAmount');
+      const freeItem = this.formGroup.get('freeItem');
+      if (selectedType?.value === 'BUY_X_GET_Y' || selectedType?.value === 'BOGO') {
+        flatDiscountCtrl?.clearValidators();
+      } else {
+         flatDiscountCtrl?.setValidators([Validators.required]);
+      }
+      flatDiscountCtrl?.updateValueAndValidity();
+
+
+      if (selectedType?.value === 'BUY_X_GET_Y') {
+        flatDiscountCtrl?.setValidators([Validators.required]);
+      } else {
+        flatDiscountCtrl?.clearValidators();    
+      }
+      freeItem?.updateValueAndValidity();
+
+
+    });
   }
 
   getVendorProducts() {
-    this.getVenderDetails();
+    // this.getVenderDetails();
     if (this.vender) {
       this.productService.getVendorProduts(this.vender?.vendorId).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
           this.productsList = res.data
+          for(let item of res?.data){
+            this.productMap.set(item?.productId , item?.itemName)
+          }
         }
       })
     }
@@ -135,7 +144,11 @@ throw new Error('Method not implemented.');
         "flatDiscount": this.formGroup.get('FlatDiscount')?.value,
         "message": this.formGroup.get('message')?.value,
         "vendorId": this.vender.vendorId,
+        "discountBypercentage": this.formGroup.get('discountBypercentage')?.value,
+        "minOrderAmount": this.formGroup.get('minOrderAmount')?.value,
+        "freeItem":this.formGroup.get('freeItem')?.value?.productId,
       }
+    
       this.isSubmitting = true;
       this.offerService.createOffer(obj).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
@@ -148,14 +161,13 @@ throw new Error('Method not implemented.');
     }
   }
 
-  onOfferTypeChange(event: any) {
-    console.log(this.selectOfferType);
-  }
+  // onOfferTypeChange(event: any) {
+  //   console.log(this.selectOfferType);
+  // }
   getOfferByVendor() {
     if (this.vender) {
 
       this.offerService.getOfferByVendor(this.vender.vendorId).subscribe((res: any) => {
-
         if(res.status === RequestStatus.success){
           this.offerList = res.data;         
         }
@@ -163,11 +175,7 @@ throw new Error('Method not implemented.');
     }
   }
 
-copyToClipboard(text: string | null): void {
-  if (text) {
-    navigator.clipboard.writeText(text);
-  }
-}
+ 
 
 
 }

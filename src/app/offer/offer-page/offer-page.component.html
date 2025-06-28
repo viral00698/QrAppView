@@ -19,11 +19,13 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Sr.</th>
-        <th scope="col">OfferId</th>
+        <!-- <th scope="col">OfferId</th> -->
         <th scope="col">Offer Name</th>
         <th scope="col">Offer Type</th>
         <th scope="col">Flat Discount</th>
+        <th scope="col">MIN Order Amount</th>
         <th scope="col">DiscountBy(%)</th>
+        <th scope="col">FreeItem</th>
         <th scope="col">Expiry Date</th>
         <th scope="col">Message</th>
         <th scope="col">Active</th>
@@ -32,18 +34,23 @@
     <ng-template pTemplate="body" let-offer let-i="rowIndex">
       <tr>
         <td>{{i+1}}</td>
-        <td>
-          <span style="user-select:text; cursor: text;" title="{{ offer?.offerId }}">
+        <!-- <td>
+          <span style="user-select: text; cursor: text;" title="{{ offer?.offerId }}">
             {{ offer?.offerId?.substring(0, 7) }}
           </span>
-          <button  class="copyBtn" (click)="copyToClipboard(offer?.offerId)" style="margin-left: 5px;">
-           <i class="bi bi-copy"></i>
+          <button class="copyBtn" (click)="copyToClipboard(offer?.offerId)" style="margin-left: 5px;">
+            <i class="bi bi-copy"></i>
           </button>
-        </td>
+        </td> -->
         <td>{{offer?.offerName}}</td>
         <td>{{offer?.offerType}}</td>
-        <td>{{offer?.flatDiscount || '-'}}</td>
-        <td>{{offer?.discountBypercentage ||'-'}}</td>
+        <td> {{ offer?.flatDiscount != null ? '₹' + offer.flatDiscount : '-' }}</td>
+        <!-- <td> {{'₹'+offer?.flatDiscount || '-'}}</td> -->
+        <!-- <td> {{'₹'+offer?.minOrderAmount || '-'}}</td>
+        <td>{{offer?.discountBypercentage ||'-'}}</td> -->
+        <td>{{ offer?.minOrderAmount != null ? '₹' + offer.minOrderAmount : '-' }}</td>
+        <td>{{ offer?.discountBypercentage != null ? offer.discountBypercentage + '%' : '-' }}</td>
+        <td>{{ offer?.freeItem != null ? productMap.get(offer.freeItem) : '-'}}</td>
         <td>{{offer?.expireDate | date:'MMM,dd-yyyy'}}</td>
         <td>{{offer?.message || '-'}}</td>
         <td>
@@ -77,7 +84,6 @@
         <label for="OfferType" class="form-lable">OfferType:</label>
         <p-dropdown
           id="OfferType"
-          (onChange)="onOfferTypeChange($event)"
           appendTo="body"
           [(ngModel)]="selectOfferType"
           [options]="offerTypes"
@@ -93,10 +99,40 @@
         >
       </div>
 
-      <div class="card-item" *ngIf="selectOfferType?.label ==='Flat Discount' ">
+      <div class="card-item" *ngIf="formGroup.get('offerTypes')?.value?.value === 'FLAT_DISCOUNT'">
         <label for="FlatDiscount" class="form-lable">Flat Discount:</label>
-        <input id="FlatDiscount" type="number" type="text" placeholder="Enter Discount amount" pInputText formControlName="FlatDiscount" />
+        <input id="FlatDiscount" type="number" placeholder="Enter Discount amount" pInputText formControlName="FlatDiscount" />
+        <div style="color: brown;" *ngIf="formGroup.get('flatDiscount')?.touched && formGroup.get('flatDiscount')?.errors?.['required']">
+          Flat Discount is required when selected.
+        </div>
       </div>
+
+      <div class="card-item" *ngIf="formGroup.get('offerTypes')?.value?.value !== 'BOGO' && formGroup.get('offerTypes')?.value?.value !== 'BUY_X_GET_Y' ">
+        <label for="minOrderAmount" class="form-lable">Min Order Amount:</label>
+        <input id="minOrderAmount" type="number"  placeholder="Enter Discount amount" pInputText formControlName="minOrderAmount" />
+        <div style="color: brown;" *ngIf="formGroup.get('minOrderAmount')?.touched && formGroup.get('minOrderAmount')?.errors?.['required']">
+          minOrderAmount is required.
+        </div>
+      </div>
+
+        <div class="card-item"  *ngIf="formGroup.get('offerTypes')?.value?.value === 'BUY_X_GET_Y'">
+        <label for="freeItem" class="form-lable">Select Free Item:</label>
+        <p-dropdown
+          id="freeItem"
+          appendTo="body"
+          [options]="productsList"
+          optionLabel="itemName"
+          formControlName="freeItem"
+          placeholder="Select item..."
+        />
+        <span
+          class="errorMeg"
+          *ngIf="formGroup.controls['freeItem'].errors?.['required'] && (formGroup.controls['freeItem'].touched || formGroup.controls['freeItem'].dirty)"
+          style="color: brown;"
+          >Note:FreeItem is required</span
+        >
+      </div>
+
       <!-- 
       <div class="card-item">
         <label for="offername" class="form-lable">Offer Name:</label>

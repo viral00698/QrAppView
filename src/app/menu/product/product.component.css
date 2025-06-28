@@ -16,12 +16,12 @@
     text-align: end;
 }
 
-:host {
+
     .p-dialog-title {
         font-weight: 500;
         font-size: medium;
     }
-}
+
 
 
 

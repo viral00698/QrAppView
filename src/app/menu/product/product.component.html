@@ -100,7 +100,6 @@
           <span class="errorMeg"  *ngIf="formGroup.controls['itemName'].errors?.['pattern']" style="color: brown;">Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span>
         </div>
       </div>
-      
     </div>
 
     <div class="form_grid">
@@ -182,6 +181,20 @@
       </div>
       <div class="form_item_content">
         <p-inputSwitch class="isVegNoVeg" formControlName="vegNonVeg"></p-inputSwitch>
+      </div>
+    </div>
+      <div class="form_grid">
+      <div class="form_item_titel">
+        <p class="form_label">Offer:</p>
+      </div>
+      <div class="form_item_content">
+        <!-- <input type="text" pInputText placeholder="Enter Offer id..." formControlName="Offer" /> -->
+        <p-dropdown class="inputbox"  formControlName="Offer" [options]="offerList" optionLabel="offerName"  styleClass="inputbox" placeholder="Select a TableType.." />
+
+        <!-- <div *ngIf="formGroup.controls['Offer'].invalid && formGroup.controls['Offer'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['Offer'].errors?.['required']" style="color: brown;">Note:quantity is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['Offer'].errors?.['pattern']" style="color: brown;">Note:Only Digit Allowed.</span>
+        </div> -->
       </div>
     </div>
     <div class="form_grid">

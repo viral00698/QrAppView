@@ -17,8 +17,10 @@ export class TableOrdersComponent implements OnInit {
 
   addTableDialogFlag = false
   formGroup!: FormGroup;
+  formGroup_update!:FormGroup
   searchField: any;
   vender: any;
+  updateDilog:boolean = false
   tableTypes: any;
   tables: any = [];
   tmpTables: any = [];
@@ -27,8 +29,9 @@ export class TableOrdersComponent implements OnInit {
   selectedView: any;
   tableOrder: any
   Order: any
+  viewTableType:boolean = false
   viewOrder: boolean = false
-
+  tableStatuses:any
   constructor(private fb: FormBuilder,
     private storageService: SecureLocalStorageService,
     private messageService: MessageService, private tableOrderService: TableOrderService) {
@@ -40,12 +43,16 @@ export class TableOrdersComponent implements OnInit {
       { name: 'Candle Light', code: 'CND' },
     ];
 
-    this.viewOptions = [
-      { name: 'Table', icon: 'bi bi-tablet' },
-      { name: 'Card', icon: 'bi bi-table' },
-    ];
+    this.tableStatuses = [
+  { label: 'Available', value: 'AVAILABLE' },
+  { label: 'Booked', value: 'BOOKED' },
+  { label: 'Occupied', value: 'OCCUPIED' },
+  { label: 'In Use', value: 'IN_USE' },
+  { label: 'Closed', value: 'CLOSED' },
+  { label: 'Cleaning', value: 'CLEANING' },
+  { label: 'Reserved', value: 'RESERVED' },
+];
 
-    this.selectedView = { name: 'Card', icon: 'bi bi-table' }
   }
   async ngOnInit(): Promise<void> {
     this.addTableFormInit()
@@ -53,12 +60,7 @@ export class TableOrdersComponent implements OnInit {
     await this.getTables()
 
   }
-  addProduct() {
-  }
-  serarchByTokenAndMobile() {
-  }
-
-
+ 
   async getTableOrdes(table: any): Promise<void> {
 
     if(table?.tableStatus !== 'BOOKED' ) return;
@@ -121,6 +123,14 @@ export class TableOrdersComponent implements OnInit {
     }
   }
 
+  updateModel() {
+    if (this.updateDilog === true) {
+      this.updateDilog = false
+    } else {
+      this.updateDilog = true
+    }
+  }
+
 
   onSubmit(): void {
     if (this.formGroup.valid) {
@@ -142,6 +152,23 @@ export class TableOrdersComponent implements OnInit {
         })
       }
     }
+  }
+
+
+  uiView(){
+      if(this.viewTableType === false){
+        this.viewTableType = true
+      }else{
+        this.viewTableType = false
+      }
+  }
+
+  onSubmit_update(){
+
+  }
+
+  updateStatus(item:any){
+
   }
 
   MarkAsCompleted(item: any) { }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/
 import { MessageService } from 'primeng/api';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
+import { OfferService } from 'src/app/services/offer.service';
 import { ProductService } from 'src/app/services/product.service';
 import { RxStompService } from 'src/app/services/rx-stomp.service';
 import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
@@ -28,33 +29,34 @@ export class ProductComponent implements OnInit {
   productId: any;
   tmpProductList: any;
   foodTypes: { key: string; label: string; }[];
+  offerList: any;
   constructor(private rxStompService: RxStompService, private productService: ProductService, private fb: FormBuilder,
-
-    
+    private offerService: OfferService,
     private storageService: SecureLocalStorageService, private messageService: MessageService) {
 
-       this.foodTypes = [
-        { key: 'STARTERS', label: 'Starters' },
-        { key: 'SOUPS', label: 'Soups' },
-        { key: 'SALADS', label: 'Salads' },
-        { key: 'MAIN_COURSE', label: 'Main Course' },
-        { key: 'BREADS', label: 'Breads' },
-        { key: 'RICE_AND_BIRYANI', label: 'Rice & Biryani' },
-        { key: 'DESSERTS', label: 'Desserts' },
-        { key: 'BEVERAGES', label: 'Beverages' },
-        { key: 'COMBO_MEALS', label: 'Combo Meals' },
-        { key: 'KIDS_MENU', label: 'Kids Menu' },
-        { key: 'PIZZA', label: 'Pizza' },
-        { key: 'BURGER', label: 'Burger' },
-        { key: 'CHINESE', label: 'Chinese' }
-      ];
-     }
+    this.foodTypes = [
+      { key: 'STARTERS', label: 'Starters' },
+      { key: 'SOUPS', label: 'Soups' },
+      { key: 'SALADS', label: 'Salads' },
+      { key: 'MAIN_COURSE', label: 'Main Course' },
+      { key: 'BREADS', label: 'Breads' },
+      { key: 'RICE_AND_BIRYANI', label: 'Rice & Biryani' },
+      { key: 'DESSERTS', label: 'Desserts' },
+      { key: 'BEVERAGES', label: 'Beverages' },
+      { key: 'COMBO_MEALS', label: 'Combo Meals' },
+      { key: 'KIDS_MENU', label: 'Kids Menu' },
+      { key: 'PIZZA', label: 'Pizza' },
+      { key: 'BURGER', label: 'Burger' },
+      { key: 'CHINESE', label: 'Chinese' }
+    ];
+  }
 
   ngOnInit(): void {
     // this.getProductList()
     this.getVendorProducts()
     this.addProductFormInit();
     this.getVenderDetails()
+    this.getOfferByVendor()
   }
 
   serarchByTokenAndMobile() {
@@ -101,14 +103,15 @@ export class ProductComponent implements OnInit {
 
   addProductFormInit() {
     this.formGroup = this.fb.group({
-      itemName: [null, [Validators.required , Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
-      amount: [null, [Validators.required , Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
-      quantity: [null, [ Validators.pattern('^[0-9]+$')]],
+      itemName: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
+      amount: [null, [Validators.required, Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
+      quantity: [null, [Validators.pattern('^[0-9]+$')]],
       gram: [null, [Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]],
       jain: [false],
-      foodCategory:[null,[Validators.required]],
+      foodCategory: [null, [Validators.required]],
       vegNonVeg: [false],
-      description: [null, [Validators.required , Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
+      Offer: [null],
+      description: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9()_&*@ ]+$')]],
       // file : [null, [Validators.required, this.fileValidator.bind(this)]],
     })
 
@@ -154,9 +157,9 @@ export class ProductComponent implements OnInit {
       //     // If the image is in the form of data URI, strip the metadata part
       //     this.imageBase64 = this.imageBase64.split(",")[1];
       // }
-   
+
       console.log(this.formGroup.get('foodCategory')?.value);
-      
+
       const obj = {
         "itemName": this.formGroup.get('itemName')?.value,
         "amount": this.formGroup.get('amount')?.value,
@@ -166,10 +169,11 @@ export class ProductComponent implements OnInit {
         "vegNonVeg": this.formGroup.get('vegNonVeg')?.value,
         "description": this.formGroup.get('description')?.value,
         "status": true,
-        "foodCategory":this.formGroup.get('foodCategory')?.value?.key,
+        "foodCategory": this.formGroup.get('foodCategory')?.value?.key,
         "image": this.imageBase64,
-        "vendor": venderData,
-        "productId": this.productId
+        "vendorId": this.vender.vendorId,
+        "productId": this.productId,
+        "offerId":this.formGroup.get('Offer')?.value?.offerId
       }
 
       this.productService.addProduct(obj).subscribe((res: any) => {
@@ -206,16 +210,29 @@ export class ProductComponent implements OnInit {
     this.imageBase64 = null
     this.dialogTitel = "Edit Product";
     this.visible = true
-    this.formGroup.setValue({
-      itemName: product?.itemName,
-      amount: product?.amount,
-      quantity: product.quantity,
-      gram: product?.gram,
-      jain: product?.jain,
-      vegNonVeg: product?.vegNonVeg,
-      description: product?.description,
-      foodCategory: this.foodTypes.find(item => item.key === product.foodCategory)
-    });
+    // this.formGroup.setValue({
+    //   itemName: product?.itemName,
+    //   amount: product?.amount,
+    //   quantity: product.quantity,
+    //   gram: product?.gram,
+    //   jain: product?.jain,
+    //   vegNonVeg: product?.vegNonVeg,
+    //   description: product?.description,
+    //   foodCategory: this.foodTypes.find(item => item.key === product.foodCategory)
+    // });
+    if (product) {
+      this.formGroup.patchValue({
+        itemName: product?.itemName,
+        amount: product?.amount,
+        quantity: product?.quantity,
+        gram: product?.gram,
+        jain: product?.jain,
+        vegNonVeg: product?.vegNonVeg,
+        description: product?.description,
+        foodCategory: this.foodTypes.find(item => item.key === product.foodCategory),
+        Offer: product?.offer  // make sure form control name is `offer`, not `Offer`
+      });
+    }
 
 
     this.tmpImg = product.image
@@ -233,28 +250,29 @@ export class ProductComponent implements OnInit {
 
   onSwitchChange(product: any) {
     if (product.status) {
-
       const data = {
         'status': false,
         'productId': product.productId,
-        'vendor': { 'vendorId': product.vendor }
+        'vendorId': this.vender.vendorId,
       }
       this.productService.updateProductStatus(data).subscribe((res: any) => {
-        
+
         if (res.status === RequestStatus.success) {
           this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
           this.productsList = this.tmpProductList
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated' });
         } else {
-          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status update failed. Please try again.' });
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Product status update failed. Please try again.' });
         }
       })
     } else {
 
+
+
       const data = {
         'status': true,
         'productId': product.productId,
-        'vendor': { 'vendorId': product.vendor }
+        'vendorId': this.vender.vendorId,
       }
 
       this.productService.updateProductStatus(data).subscribe((res: any) => {
@@ -263,7 +281,7 @@ export class ProductComponent implements OnInit {
           this.productsList = this.tmpProductList
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated to In-Active.' });
         } else {
-          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status update failed. Please try again.' });
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Product status update failed. Please try again.' });
         }
       })
     }
@@ -271,10 +289,11 @@ export class ProductComponent implements OnInit {
 
 
   deleteProduct(product: any) {
+
     const data = {
       'status': true,
       'productId': product.productId,
-      'vendor': { 'vendorId': product.vendor }
+      'vendorId': this.vender.vendorId,
     }
 
     this.productService.deleteProductByid(data).subscribe((res: any) => {
@@ -283,11 +302,22 @@ export class ProductComponent implements OnInit {
         this.productsList = this.tmpProductList
         this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res.message });
       } else {
-        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res.message });
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res.message });
       }
     })
   }
 
+  getOfferByVendor() {
+    if (this.vender) {
+
+      this.offerService.getOfferByVendor(this.vender.vendorId).subscribe((res: any) => {
+
+        if (res.status === RequestStatus.success) {
+          this.offerList = res.data;
+        }
+      })
+    }
+  }
 
 
 }

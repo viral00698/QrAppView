@@ -48,19 +48,6 @@ td{
     font-size: medium;
 }
 
-/* #searchInput {
-
-    width: 150%;
-    border: 0;
-    border-radius: 20px;
-    background-image: url(../../../assets/search.svg);
-    background-repeat: no-repeat;
-    background-position: calc(100% - 20px) center;
-    padding-left: 1.5rem;
-    font-weight: 500;
-    font-size: medium;
-} */
-
 .sticky-table .p-datatable-thead > tr > th {
     position: sticky;
     top: 0;
@@ -84,4 +71,9 @@ td{
     color: black;
     /* border: 2px solid black; */
     margin: 0;
+}
+
+#history-head th{
+    background: none;
+    border: none;
 }

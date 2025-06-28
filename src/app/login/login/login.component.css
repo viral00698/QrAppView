@@ -56,7 +56,6 @@
     border-radius: 10px;
 }
 
-:host {
 
     .login_btn {
         width: 100%;
@@ -70,5 +69,4 @@
         border-radius: 10px;
     }
 
-}
 
