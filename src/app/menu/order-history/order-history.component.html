@@ -1,51 +1,71 @@
-<div class="header">
+<!-- <div class="header">
     <div class="header_item_1">
       <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText  placeholder="Search by Token..." />
     </div>
     <div class="header_item_2">
       <button id="cashOrderBtn" pTooltip="Create Order" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
     </div>
+  </div> -->
+
+  <div class="header">
+    <div class="item_A">
+      <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Find order by name or mobile" />
+    </div>
+    <div class="item_B">
+      <!-- <button id="cashOrderBtn" (click)="addProduct()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button> -->
+    </div>
   </div>
 
   <div class="">
-    <!--for scroll-->
     <p-table [value]="tmpOrderList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  s [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
       <ng-template pTemplate="header">
         <tr>
           <th scope="col">Sr.</th>
-       
-          <th scope="col">orderDetails</th>
-          <th scope="col">OrderAmount</th>
-          <th scope="col">CustomerName</th>
+          <th scope="col">Customer Name</th>
           <th scope="col">MobileNo</th>
-          <th scope="col">APP</th>
-          <th scope="col">TableName</th>
+          <th scope="col">Table Name</th>
           <th scope="col">OrderAt</th>
-          <th scope="col">payMode</th>
+          <th scope="col">Payment Mode</th>
           <th scope="col">Status</th>
-
+          <th scope="col">Order Details</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-product let-i="rowIndex">
         <tr>
           <td>{{i+1}}</td>
-          <!-- {{product?.orderDetails}} -->
-          <td> -</td>
-          <td>{{product?.totelAmount}}</td>
-          <td>{{product?.customerName}}</td>
+          <td>{{product?.customerName || '-'}}</td>
           <td>{{product?.customerMobileNo}}</td>
-          <td>{{product?.appType}}</td>
-          <td>{{product?.tableOrder?.tableName}}</td>
+          <td>{{product?.tableOrder?.tableName || '-'}}</td>
           <td>{{product?.orderAt | date:'d MMM y hh:m:a '}}</td>
           <td>{{product?.payment_mode}}</td>
           <td>{{product?.orderStatus}}</td>
-          <!-- <td> -->
-          <!-- <p-inputSwitch [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td> -->
-          <!-- <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td> -->
-          <!-- <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td> -->
-  
-          <!-- Assuming there is a status field -->
+          <td><button  type="button" class="btn order-detils-btn" (click)="getOrderDetails(product)" > <i class="bi bi-box"></i></button></td>
         </tr>
       </ng-template>    
     </p-table>
   </div>
+
+<p-dialog header="Order Details" [modal]="true" [(visible)]="orderDetails" [style]="{'width':'50%'}">
+
+     <p-table [value]="tmpProduct?.orderDetails">
+      <ng-template pTemplate="header">
+        <tr id="history-head">
+          <th scope="col">Sr.</th>
+          <th scope="col">Item</th>
+          <th scope="col">Qty</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Offer</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-i="rowIndex">
+        <tr>
+          <td>{{i+1}}</td>
+          <td>{{product?.customerName || '-'}}</td>
+          <td>{{product?.customerMobileNo}}</td>
+          <td>{{product?.tableOrder?.tableName || '-'}}</td>
+          <td>{{product?.orderAt | date:'d MMM y hh:m:a '}}</td>
+        </tr>
+      </ng-template>    
+    </p-table>
+</p-dialog>
+  

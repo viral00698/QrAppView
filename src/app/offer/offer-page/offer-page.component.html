@@ -1,0 +1,174 @@
+<div class="header">
+  <div></div>
+  <div>
+    <button (click)="showDiloag()" class="add-offer-btn"><i class="bi bi-plus"></i></button>
+  </div>
+</div>
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="offer-container">
+  <p-table
+    [value]="offerList"
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    s
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    [scrollable]="true"
+    scrollHeight="85vh"
+    styleClass="sticky-table"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Sr.</th>
+        <!-- <th scope="col">OfferId</th> -->
+        <th scope="col">Offer Name</th>
+        <th scope="col">Offer Type</th>
+        <th scope="col">Flat Discount</th>
+        <th scope="col">MIN Order Amount</th>
+        <th scope="col">DiscountBy(%)</th>
+        <th scope="col">FreeItem</th>
+        <th scope="col">Expiry Date</th>
+        <th scope="col">Message</th>
+        <th scope="col">Active</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-offer let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <!-- <td>
+          <span style="user-select: text; cursor: text;" title="{{ offer?.offerId }}">
+            {{ offer?.offerId?.substring(0, 7) }}
+          </span>
+          <button class="copyBtn" (click)="copyToClipboard(offer?.offerId)" style="margin-left: 5px;">
+            <i class="bi bi-copy"></i>
+          </button>
+        </td> -->
+        <td>{{offer?.offerName}}</td>
+        <td>{{offer?.offerType}}</td>
+        <td> {{ offer?.flatDiscount != null ? '₹' + offer.flatDiscount : '-' }}</td>
+        <!-- <td> {{'₹'+offer?.flatDiscount || '-'}}</td> -->
+        <!-- <td> {{'₹'+offer?.minOrderAmount || '-'}}</td>
+        <td>{{offer?.discountBypercentage ||'-'}}</td> -->
+        <td>{{ offer?.minOrderAmount != null ? '₹' + offer.minOrderAmount : '-' }}</td>
+        <td>{{ offer?.discountBypercentage != null ? offer.discountBypercentage + '%' : '-' }}</td>
+        <td>{{ offer?.freeItem != null ? productMap.get(offer.freeItem) : '-'}}</td>
+        <td>{{offer?.expireDate | date:'MMM,dd-yyyy'}}</td>
+        <td>{{offer?.message || '-'}}</td>
+        <td>
+          <p-inputSwitch styleClass="custom-switch" [ngModel]="offer.isActive" (onChange)="onSwitchChange(offer)"></p-inputSwitch>
+        </td>
+        <!-- <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td> -->
+        <!-- <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog id="my-dialog" header="Add Offer" [modal]="true" [(visible)]="dilogView" [style]="{width: '50vw'}">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="form-card">
+      <div class="card-item">
+        <label for="offername" class="form-lable">Offer Name:</label>
+        <input id="offername" type="text" placeholder="Enter Offer Name" pInputText formControlName="offerName" />
+        <span class="errorMeg" *ngIf="formGroup.controls['offerName'].errors?.['required'] && (formGroup.controls['offerName'].touched || formGroup.controls['offerName'].dirty)" style="color: brown;"
+          >Note:offerName is required</span
+        >
+      </div>
+
+      <!-- <div class="card-item">
+        <label for="offername" class="form-lable">Offer Name:</label>
+        <input id="offername"   type="text" placeholder="Enter Offer Name" pInputText formControlName="offerName" />
+        <span class="errorMeg" *ngIf="formGroup.controls['offerName'].errors?.['required'] && (formGroup.controls['offerName'].touched || formGroup.controls['offerName'].dirty)" style="color: brown;">Note:offerName is required</span>
+      </div> -->
+
+      <div class="card-item">
+        <label for="OfferType" class="form-lable">OfferType:</label>
+        <p-dropdown
+          id="OfferType"
+          appendTo="body"
+          [(ngModel)]="selectOfferType"
+          [options]="offerTypes"
+          optionLabel="label"
+          formControlName="offerTypes"
+          placeholder="Select OfferType"
+        />
+        <span
+          class="errorMeg"
+          *ngIf="formGroup.controls['offerTypes'].errors?.['required'] && (formGroup.controls['offerTypes'].touched || formGroup.controls['offerTypes'].dirty)"
+          style="color: brown;"
+          >Note:offerTypes is required</span
+        >
+      </div>
+
+      <div class="card-item" *ngIf="formGroup.get('offerTypes')?.value?.value === 'FLAT_DISCOUNT'">
+        <label for="FlatDiscount" class="form-lable">Flat Discount:</label>
+        <input id="FlatDiscount" type="number" placeholder="Enter Discount amount" pInputText formControlName="FlatDiscount" />
+        <div style="color: brown;" *ngIf="formGroup.get('flatDiscount')?.touched && formGroup.get('flatDiscount')?.errors?.['required']">
+          Flat Discount is required when selected.
+        </div>
+      </div>
+
+      <div class="card-item" *ngIf="formGroup.get('offerTypes')?.value?.value !== 'BOGO' && formGroup.get('offerTypes')?.value?.value !== 'BUY_X_GET_Y' ">
+        <label for="minOrderAmount" class="form-lable">Min Order Amount:</label>
+        <input id="minOrderAmount" type="number"  placeholder="Enter Discount amount" pInputText formControlName="minOrderAmount" />
+        <div style="color: brown;" *ngIf="formGroup.get('minOrderAmount')?.touched && formGroup.get('minOrderAmount')?.errors?.['required']">
+          minOrderAmount is required.
+        </div>
+      </div>
+
+        <div class="card-item"  *ngIf="formGroup.get('offerTypes')?.value?.value === 'BUY_X_GET_Y'">
+        <label for="freeItem" class="form-lable">Select Free Item:</label>
+        <p-dropdown
+          id="freeItem"
+          appendTo="body"
+          [options]="productsList"
+          optionLabel="itemName"
+          formControlName="freeItem"
+          placeholder="Select item..."
+        />
+        <span
+          class="errorMeg"
+          *ngIf="formGroup.controls['freeItem'].errors?.['required'] && (formGroup.controls['freeItem'].touched || formGroup.controls['freeItem'].dirty)"
+          style="color: brown;"
+          >Note:FreeItem is required</span
+        >
+      </div>
+
+      <!-- 
+      <div class="card-item">
+        <label for="offername" class="form-lable">Offer Name:</label>
+        <input id="offername" type="number" type="text" placeholder="Enter Offer Name" pInputText formControlName="offerName" />
+      </div> -->
+
+      <!-- <div class="card-item">
+        <label for="SelectProduct" class="form-lable">Product:</label>
+        <p-multiSelect appendTo="body" id="SelectProduct"   formControlName="products" [options]="productsList" optionLabel="itemName" placeholder="Select Product" />
+        <span class="errorMeg" *ngIf="formGroup.controls['products'].errors?.['required'] && (formGroup.controls['products'].touched || formGroup.controls['products'].dirty)" style="color: brown;">Note:Products is required</span>
+      </div> -->
+
+      <div class="card-item">
+        <label for="Expires" class="form-lable">Expires on:</label>
+        <p-calendar appendTo="body" formControlName="Expires" id="Expires" placeholder="Select Expirey Date" />
+        <span class="errorMeg" *ngIf="formGroup.controls['Expires'].errors?.['required'] && (formGroup.controls['Expires'].touched || formGroup.controls['Expires'].dirty)" style="color: brown;"
+          >Note:Expires is required</span
+        >
+      </div>
+
+      <div class="card-item">
+        <label for="textMessage" class="form-lable">Text Message:</label>
+        <textarea id="textMessage" formControlName="message" placeholder="Enter text message" rows="4" cols="40" pInputTextarea></textarea>
+        <span class="errorMeg" *ngIf="formGroup.controls['message'].errors?.['required'] && (formGroup.controls['message'].touched || formGroup.controls['message'].dirty)" style="color: brown;"
+          >Note:message is required</span
+        >
+      </div>
+
+      <div class="card-item">
+        <label for="offer-switch" class="form-lable">Is-Active:</label>
+        <p-inputSwitch id="offer-switch" formControlName="IsActive" />
+      </div>
+
+      <div class="card-item" style="justify-content: center;">
+        <button class="offer-sbmit-btn" type="submit" [disabled]="!formGroup.valid || isSubmitting">Submit</button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

@@ -6,7 +6,7 @@ import { OrderStatus } from '../constent/order-status';
   providedIn: 'root'
 })
 export class OrderServiceService {
-
+ 
   constructor(private http: HttpClient) { }
 
   getWAIT_FOR_APPROVE_Order(vendor_id:any) {
@@ -33,5 +33,28 @@ export class OrderServiceService {
     return this.http.get('Orders/getbyOrdersByVendorId/'+data);
   }
 
+  countOrdersGroupByDay(vendorId: any) {
+    return this.http.get('OrderStatstics/totalOrder/'+vendorId);
+  }
+
+  customerInsides(vendorId: any) {
+    return this.http.get('OrderStatstics/custmerInsides/'+vendorId)
+  }
+
+  revenueByFoodCategory(vendorId: any) {
+    return this.http.get('OrderStatstics/revenueByFoodCategory/'+vendorId)
+  }
+
+  orderStatictics(vendorId: any) {
+    return this.http.get('OrderStatstics/orderStatictics/'+vendorId)
+  }
+
+  getTopSellingItems(vendorId: any) {
+    return this.http.get('OrderStatstics/getTopSellingItems/'+vendorId)
+  }
+
+  getLowestSellingItems(vendorId: any) {
+    return this.http.get('OrderStatstics/getLowestSellingItems/'+vendorId)
+  }
 
 }

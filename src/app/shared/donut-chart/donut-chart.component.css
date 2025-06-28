@@ -1,0 +1,7 @@
+.donut-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* or set a specific height like 300px */
+  }
+  

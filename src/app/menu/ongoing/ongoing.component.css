@@ -115,8 +115,15 @@
     font-weight: 500;
 }
 
-.table_row {
-    padding: 0;
+.table_content {
+    padding: .1rem;
+    font-weight: 400;
+    font-size: medium;
+    text-align: center;
+}
+
+.table_heading {
+    padding: .2rem;
     font-weight: 500;
     font-size: medium;
     text-align: center;
@@ -134,10 +141,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
     /* Creates flexible columns */
-    gap: .5rem;
+    gap: .3rem;
     /* Space between items */
-    padding: .5rem;
-    margin: 2rem;
+    padding: .3rem;
+    margin: .3rem;
 }
 
 /* For larger screens */
@@ -182,7 +189,7 @@
 #searchInput {
 
     width: 150%;
-    border: 0;
+    border: 1px solid black;
     border-radius: 20px;
     background-image: url(../../../assets/search.svg);
     background-repeat: no-repeat;
@@ -215,7 +222,9 @@
 .header {
     display: flex;
     justify-content: space-between;
-    margin: 2rem;
+    margin: 1rem;
+    margin-left: 2rem;
+    
 }
 
 .cancel_btn {

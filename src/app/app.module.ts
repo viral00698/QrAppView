@@ -42,6 +42,14 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
 import { TagModule } from 'primeng/tag';
 import { OrderHistoryComponent } from './menu/order-history/order-history.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { AreaPlotComponent } from './shared/area-plot/area-plot.component';
+import { BarchartComponent } from './shared/barchart/barchart.component';
+import { DonutChartComponent } from './shared/donut-chart/donut-chart.component';
+import { BarGroupchartComponent } from './shared/bar-groupchart/bar-groupchart.component';
+import { OfferPageComponent } from './offer/offer-page/offer-page.component';
+import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +62,12 @@ import { OrderHistoryComponent } from './menu/order-history/order-history.compon
     LoginComponent,
     TableOrdersComponent,
     OrderHistoryComponent,
+    AreaPlotComponent,
+    BarchartComponent,
+    DonutChartComponent,
+    BarGroupchartComponent,
+    OfferPageComponent,
+    FeedbackPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +101,7 @@ import { OrderHistoryComponent } from './menu/order-history/order-history.compon
     TagModule,
     OverlayPanelModule,
     AvatarModule,
+    NgApexchartsModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in

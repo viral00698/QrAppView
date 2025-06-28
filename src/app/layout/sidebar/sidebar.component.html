@@ -1,44 +1,4 @@
-<!-- <div style="display: flex;" >
-  <p-sidebar [showCloseIcon]="false" [modal]="false" [visible]="true">
-    <ng-template pTemplate="header">
-      <div class="flex align-items-center gap-2" style="place-self: center;">
-        <h6>Legion</h6>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="headless">
-      <ul>
-        <li>
-          <p-button label="Secondary" routerLink="test" routerLinkActive="true" class="" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" class="btnSize" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" class="btnSize" severity="secondary" />
-        </li>
-        <li>
-          <p-button label="Secondary" class="btnSize" severity="secondary" />
-        </li>
-      </ul>
-    </ng-template>
-  </p-sidebar>
-</div> -->
-
+<!-- 
 <div class="layout-container">
   <div class="sidebar">
     <h6 class="h6-titel"> <img src="../../../assets/logo-social.png" alt="" class="icon_logo">  Dashboard</h6>
@@ -80,6 +40,27 @@
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
   </div>
+</div> -->
+
+
+<div class="layout-container">
+  <div class="sidebar">
+      <h5 class="titel" style="color: 	#940000;">Dashboard</h5>
+       <!-- <img src="./../../../assets/logo.png" class="logo"> -->
+      <button class="sidebar-btn"  routerLink="menu/order" routerLinkActive="true" >QR Order </button>
+      <button class="sidebar-btn"  routerLink="menu/ongoing" routerLinkActive="true">Ongoing Order</button>
+      <button class="sidebar-btn"  routerLink="menu/product" routerLinkActive="true">Product</button>
+      <button class="sidebar-btn"  routerLink="test" routerLinkActive="true">Create User</button>
+      <button class="sidebar-btn"  routerLink="menu/tableOrder" routerLinkActive="true" >TableOrder</button>
+      <button class="sidebar-btn"  routerLink="menu/offer" routerLinkActive="true" >Create Offer</button>
+      <button class="sidebar-btn"  routerLink="menu/OrderHistory"  routerLinkActive="true" >OrderHistory</button>
+      <button class="sidebar-btn"  routerLink="menu/productAnalytics" routerLinkActive="true" > Analytics</button>
+      <button class="sidebar-btn"  routerLink="menu/Feedback" routerLinkActive="true" >Feedback</button>
+
+
+  </div>
+  <div class="main-content">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
 </div>
-
-
+</div>

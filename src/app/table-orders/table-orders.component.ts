@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { RequestStatus } from '../constent/request-status';
 import { TableOrderService } from '../services/table-order.service';
 import { TableStatus } from '../constent/table-status';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-table-orders',
@@ -16,18 +17,21 @@ export class TableOrdersComponent implements OnInit {
 
   addTableDialogFlag = false
   formGroup!: FormGroup;
+  formGroup_update!:FormGroup
   searchField: any;
   vender: any;
+  updateDilog:boolean = false
   tableTypes: any;
-  tables:any = [];
+  tables: any = [];
   tmpTables: any = [];
-  viewOptions:any=[]
+  viewOptions: any = []
   viewFalg: boolean = false;
-  selectedView:any;
-  tableOrder:any
-  Order:any
-  viewOrder:boolean = false
-
+  selectedView: any;
+  tableOrder: any
+  Order: any
+  viewTableType:boolean = false
+  viewOrder: boolean = false
+  tableStatuses:any
   constructor(private fb: FormBuilder,
     private storageService: SecureLocalStorageService,
     private messageService: MessageService, private tableOrderService: TableOrderService) {
@@ -39,33 +43,41 @@ export class TableOrdersComponent implements OnInit {
       { name: 'Candle Light', code: 'CND' },
     ];
 
-    this.viewOptions = [
-      { name: 'Table', icon: 'bi bi-tablet' },
-      { name: 'Card', icon: 'bi bi-table' },
-    ];
+    this.tableStatuses = [
+  { label: 'Available', value: 'AVAILABLE' },
+  { label: 'Booked', value: 'BOOKED' },
+  { label: 'Occupied', value: 'OCCUPIED' },
+  { label: 'In Use', value: 'IN_USE' },
+  { label: 'Closed', value: 'CLOSED' },
+  { label: 'Cleaning', value: 'CLEANING' },
+  { label: 'Reserved', value: 'RESERVED' },
+];
 
-    this.selectedView={ name: 'Card', icon: 'bi bi-table' }
   }
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.addTableFormInit()
     this.getVenderDetails()
-    this.getTables()
-  }
-  addProduct() {
-  }
-  serarchByTokenAndMobile() {
-  }
+    await this.getTables()
 
+  }
+ 
+  async getTableOrdes(table: any): Promise<void> {
 
-  getTableOrdes(table:any){
-      this.tableOrderService.getbyTableOrders(table.vendorId ,table.tableId).subscribe((res:any)=>{
-        if(res.status === RequestStatus.success){
-          this.Order = res.data[0]
+    if(table?.tableStatus !== 'BOOKED' ) return;
+    try {
+      const res: any = await firstValueFrom(
+        this.tableOrderService.getbyTableOrders(table.vendorId, table.tableId)
+      );
+
+      if (res.status === RequestStatus.success) {
+        this.Order = res.data;
         
-        }
-      }) 
-      this.viewOrder = true
-  
+      }
+
+      this.viewOrder = true;
+    } catch (error) {
+      console.error('Error fetching table orders:', error);
+    }
   }
 
   showDialog() {
@@ -79,15 +91,20 @@ export class TableOrdersComponent implements OnInit {
     }
   }
 
-  getTables(){
-    if(this.vender){
-        this.tableOrderService.getTableByVendor(this.vender.vendorId).subscribe((res:any)=>{
-          if(res.status === RequestStatus.success){
-            this.tables = res.data;
-            this.tmpTables = res.data;
-            
-          }
-        })
+  async getTables(): Promise<void> {
+    if (this.vender) {
+      try {
+        const res: any = await firstValueFrom(
+          this.tableOrderService.getTableByVendor(this.vender.vendorId)
+        );
+
+        if (res.status === RequestStatus.success) {
+          this.tables = res.data;
+          this.tmpTables = res.data;
+        }
+      } catch (error) {
+        console.error('Error fetching tables:', error);
+      }
     }
   }
   addTableFormInit() {
@@ -98,11 +115,19 @@ export class TableOrdersComponent implements OnInit {
 
   }
 
-  viewSelect(event:any){
-    if(event.value === 'Table'){
+  viewSelect(event: any) {
+    if (event.value === 'Table') {
       this.viewFalg = false
-    }else{
+    } else {
       this.viewFalg = true
+    }
+  }
+
+  updateModel() {
+    if (this.updateDilog === true) {
+      this.updateDilog = false
+    } else {
+      this.updateDilog = true
     }
   }
 
@@ -128,5 +153,25 @@ export class TableOrdersComponent implements OnInit {
       }
     }
   }
+
+
+  uiView(){
+      if(this.viewTableType === false){
+        this.viewTableType = true
+      }else{
+        this.viewTableType = false
+      }
+  }
+
+  onSubmit_update(){
+
+  }
+
+  updateStatus(item:any){
+
+  }
+
+  MarkAsCompleted(item: any) { }
+  generateInvoice(item: any) { }
 
 }

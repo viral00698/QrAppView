@@ -1,0 +1,168 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 1rem;
+}
+
+.offer-container{
+   
+}
+
+
+
+.copyBtn {
+  color: gray;
+  border: none;
+  background: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.copyBtn:hover {
+  color: black;
+  transform: scale(1.1); /* optional: slight zoom on hover */
+}
+
+
+.add-offer-btn{
+    border: none;
+    background: black;
+    color: white;
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+.add-offer-btn:hover{
+    background: white;
+    border: 2px solid black;
+    color: black;
+}
+
+.offer-card{
+    max-height: 10%;
+    min-height: 10%;
+    background: #5454;
+    min-width: 20%;
+    max-width: 20%;
+}
+
+
+.gradient-glow {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.flat-blue {
+  background-color: #3498db;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+
+.neon {
+  border: 2px solid #0ff;
+  background-color: #111;
+  color: #0ff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 0 20px #0ff;
+}
+
+.icon-badge {
+  background-color: #f39c12;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  position: relative;
+}
+
+.icon-badge .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.form-card{
+    padding: .5rem;
+}
+
+.card-item{
+  padding: .3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-lable{
+    font-weight: 500;
+    margin: 5px;
+    font-size: small;
+    flex: 1;
+    text-align: start;
+    /* place-self: center; */
+}
+
+.offer-sbmit-btn{
+    border: none;
+    background: black;
+    color: white;
+    border-radius:15px;
+    height: 35px;
+    width: 30%;
+}
+
+.offer-sbmit-btn:hover{
+    border: 2px solid black;
+    background: white;
+    color: black;
+}
+
+.offer-sbmit-btn:disabled{
+    opacity: 0.6;
+}
+
+.errorMeg {
+    font-size: small;
+    font-weight: 500;
+    margin-top: 3px;
+    margin-bottom: .1rem;
+}
+
+.card-item input{
+  width: 50%;
+}
+
+
+th {
+    padding: 5px;
+    text-align: center;
+    align-content: center;
+    font-size: medium;
+    font-weight: 500;
+}
+
+td {
+    padding: 5px;
+    text-align: center;
+    align-content: center;
+    font-size: medium;
+    font-weight: 400;
+}
+
+.sticky-table .p-datatable-thead>tr>th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}

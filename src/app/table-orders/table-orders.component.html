@@ -1,68 +1,6 @@
 <p-toast position="top-center" key="tc"></p-toast>
-<div class="header">
-  <div class="item_A">
-    <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Search by product..." />
-  </div>
-  <div class="item_A">
-    <p-selectButton [options]="viewOptions" [(ngModel)]="selectedView" (onChange)="viewSelect($event)" optionLabel="icon" optionValue="name">
-      <ng-template let-item pTemplate>
-        <i [class]="item.icon"></i>
-      </ng-template>
-    </p-selectButton>
-  </div>
-  <div class="item_B">
-    <button id="cashOrderBtn" (click)="showDialog()" pTooltip="Add Table" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
-  </div>
-</div>
-<div *ngIf="!viewFalg">
-  <div class="small_card">
-    <div class="min_card" *ngFor="let item of tmpTables">
-      <p-card class="item" (click)="getTableOrdes(item)">
-        <p class="state_titel">{{item.tableName}}</p>
-        <p class="state_counter">{{item.tableStatus}}</p>
-      </p-card>
-    </div>
-  </div>
-</div>
 
-<div class="" *ngIf="viewFalg">
-  <!--for scroll-->
-  <p-table [value]="tmpTables" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}" scrollHeight="85vh">
-    <ng-template pTemplate="header">
-      <tr>
-        <th scope="col">Sr.</th>
-        <th scope="col">Table</th>
-        <th scope="col">Status</th>
-        <th scope="col">Delete</th>
-        <!-- <th scope="col"></th> -->
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-table let-i="rowIndex">
-      <tr>
-        <td>{{i+1}}</td>
-        <td>{{table.tableName}}</td>
-        <td>{{table.tableStatus}}</td>
-        <td>
-          <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-        </td>
-        <!-- <td>{{product.itemName}}</td> -->
-        <!-- <td>{{product.description}}</td> -->
-        <!-- <td>{{product.jain ? 'Yes' : 'No'}}</td> -->
-        <!-- <td>{{product.vegNonVeg?'Yes':'No'}}</td> -->
-        <!-- <td>{{product.amount}}</td> -->
-        <td>
-          <!-- <p-inputSwitch [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td> -->
-          <!-- <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td> -->
-          <!-- <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td> -->
-
-          <!-- Assuming there is a status field -->
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-
-<p-dialog header="Add Table" [modal]="true" [(visible)]="addTableDialogFlag" [style]="{ width: '35%','height':'50vh',' border-radius':'5px' }">
+<p-dialog id="my-dialog" header="Add Table" [modal]="true" [(visible)]="addTableDialogFlag" [style]="{ width: '30%','height':'45vh',' border-radius':'5px' }">
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="form_grid">
       <div class="form_item_titel">
@@ -70,7 +8,6 @@
       </div>
       <div class="form_item_content">
         <input type="text" class="inputbox" pInputText placeholder="Enter Table name..." formControlName="tableName" />
-        <!-- Validation message -->
         <div *ngIf="formGroup.controls['tableName'].invalid && formGroup.controls['tableName'].touched" class="error-message">
           <span *ngIf="formGroup.controls['tableName'].errors?.['required']" style="color: brown;">Note:Table name is required.</span>
           <span *ngIf="formGroup.controls['tableName'].errors?.['pattern']" style="color: brown;">Note:Please enter a positive integer.</span>
@@ -82,44 +19,133 @@
         <p class="form_label">TableType:</p>
       </div>
       <div class="form_item_content">
-        <p-dropdown class="inputbox" formControlName="type" [options]="tableTypes" optionLabel="name" styleClass="inputbox" placeholder="Select a TableType.." />
+        <p-dropdown appendTo="body" class="inputbox" formControlName="type" [options]="tableTypes" optionLabel="name" styleClass="inputbox" placeholder="Select a TableType.." />
         <div *ngIf="formGroup.controls['type'].invalid && formGroup.controls['type'].touched" class="error-message">
           <span *ngIf="formGroup.controls['type'].errors?.['required']" style="color: brown;">Note:Type is required.</span>
         </div>
       </div>
     </div>
-    <div class="form_grid form_btn">
-      <button id="cashOrderBtn" type="submit" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+    <div class="form_grid">
+      <button type="submit" class="btn"><i class="bi bi-plus-circle"></i></button>
     </div>
   </form>
 </p-dialog>
-<!-- tableOrder -->
 
-<p-dialog header="Header" [modal]="true" [(visible)]="viewOrder" [style]="{width: '50vw'}">
-  <p-card>
-    <div class="grid-container">
-      <!-- First Section: Large Box -->
-    
-      <div class="large-box" ><p  style="margin-bottom: 0; ">{{ Order?.tableOrder?.tableName}}</p></div>
 
-      <!-- Second Section: 2 elements per row -->
-      <div class="small-box">
-        <p class="cust_detail" style="margin-bottom: 0; ">Name: {{Order?.customerName}}</p>
-        <p class="cust_detail" style="margin-bottom: 0; ">Mobile: {{Order?.customerMobileNo}}</p>
+<div class="header">
+  <input id="searchInput" placeholder="Search..." class="header-items" type="text" />
+  <button class="table-view"><i class="bi bi-justify" (click)="uiView()"></i></button>
+  <button class="header-items header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button>
+</div>
+
+<div>
+  <div class="order-container">
+    <div class="order-table" *ngFor="let item of tmpTables">
+      <div class="table-card" (click)="getTableOrdes(item)">
+        <div *ngIf="item.tableStatus === 'BOOKED' " style="color: green; font-weight: 600;">{{item.tableName}}</div>
+        <div *ngIf="item.tableStatus !== 'BOOKED' ">{{item.tableName}}</div>
+
+        <div *ngIf="item.tableStatus === 'BOOKED' " style="color: green; font-weight: 600;">{{item.tableStatus}}</div>
+        <div *ngIf="item.tableStatus !== 'BOOKED' ">{{item.tableStatus}}</div>
       </div>
-      <div class="small-box" >
-        <div class="center-content">
-          <p-tag severity="success" value="{{Order?.orderStatus}}"></p-tag>
+    </div>
+  </div>
+</div>
+
+<p-dialog id="my-dialog" [header]=" 'Table: '+Order?.tableOrder?.tableName" [modal]="true" [(visible)]="viewOrder">
+  <p-card>
+    <div class="titel"><p class="card_titel">{{ Order?.token_no}}</p></div>
+    <div class="order_detail">
+      <p class="card_bill_detail">OrderID: {{ Order?.orderId| slice:0:7}}</p>
+      <p class="card_bill_detail">Status: {{ Order?.orderStatus}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail" *ngIf=" this.Order?.payment_mode !== 'CASH'">Txn ID: {{ this.Order?.txid}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail">Date: {{ this.Order?.orderAt | date:'dd-MMM-yyyy' }}</p>
+      <p class="card_bill_detail">Mobile: {{ this.Order?.customerMobileNo}}</p>
+    </div>
+    <div class="order_detail">
+      <!-- <p class="card_bill_detail">Payment Mode: {{ this.Order?.payment_mode}}</p> -->
+      <p class="card_bill_detail">Time: {{ this.Order?.orderAt | date:'hh:mm:a' }}</p>
+    </div>
+    <p-table [value]=" this.Order?.orderDetails" [scrollable]="true" scrollHeight="6rem" [style]="{ 'min-height': '5rem', 'max-height': '5rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="table_heading">Sr No.</th>
+          <th scope="col" class="table_heading">Item</th>
+          <th scope="col" class="table_heading">Qty</th>
+          <th scope="col" class="table_heading">Amount</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-index="rowIndex">
+        <tr>
+          <td class="table_content">{{index+1}}</td>
+          <td class="table_content">{{product?.itemName}}</td>
+          <td class="table_content">{{product?.quntity}}</td>
+          <td class="table_content tAmountitem1">{{product?.amount}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template pTemplate="content">
+      <div class="row">
+        <p-divider class="divider"></p-divider>
+        <div class="order_detail">
+          <p class="tAmountitem2 card_titel" style="margin: 0.1rem;">Total Amount:</p>
+          <p class="tAmountitem2 tAmountitem1" style="margin: 0.1rem;">{{ this.Order?.totelAmount |number:'1.2-2'}}</p>
+        </div>
+        <p-divider class="divider"></p-divider>
+        <div class="order_detail">
+          <p class="card_bill_detail"><button (click)="MarkAsCompleted( this.Order)" class="acept_btn">Mark As Completed</button></p>
+          <!-- <p class="card_bill_detail "><button (click)="generateInvoice( this.Order)" class="cancel_btn">Invoice</button></p> -->
         </div>
       </div>
-      <div class="small-box "><p class="cust_detail" style="margin-bottom: 0; ">OrderID:{{Order?.orderId |  slice:0:7}}</p></div>
-      <div class="small-box"></div>
-
-      <!-- Third Section: 2 elements per row -->
-      <div class="small-box"></div>
-      <div class="small-box"><p class="cust_detail" style="margin-bottom: 0; ">{{Order?.orderAt | date:'d, MMM, y '}}</p></div>
-      <div class="small-box"></div>
-      <div class="small-box"><p class="cust_detail" style="margin-bottom: 0; ">{{Order?.orderAt|date:'h:mm:a'}}</p></div>
-    </div>
+    </ng-template>
   </p-card>
+</p-dialog>
+
+<p-dialog header="Table View" id="my-dialog" [modal]="true" [(visible)]="viewTableType" [style]="{'width':'60%'}">
+  <p-table [value]="tables">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Sr.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td>{{ product.tableName }}</td>
+        <td>{{ product.tableStatus }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="updateModel()"><i class="bi bi-pencil-square"></i></button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>
+
+<p-dialog id="my-dialog" [modal]="true" [(visible)]="updateDilog" [style]="{'width':'30%'}">
+  <form [formGroup]="formGroup_update" (ngSubmit)="onSubmit_update()">
+
+    <div class="update-form">
+      <div class="update-form-element">
+        <!-- <label for="dropdown">Select Status</label> -->
+        <p-dropdown id="dropdown" appendTo="body" class="inputbox" formControlName="type" [options]="tableStatuses" optionLabel="value" styleClass="inputbox" placeholder="Select a TableType.." />
+        <div *ngIf="formGroup.controls['type'].invalid && formGroup.controls['type'].touched" class="error-message">
+          <span *ngIf="formGroup.controls['type'].errors?.['required']" style="color: brown;">Note:Type is required.</span>
+        </div>
+      </div>
+        <div class="update-form-element">
+      <button type="submit" class="btn"><i class="bi bi-plus-circle"></i></button>
+    </div> 
+    </div>
+  </form>
 </p-dialog>

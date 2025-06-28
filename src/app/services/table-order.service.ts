@@ -24,4 +24,7 @@ export class TableOrderService {
 getbyTableOrders(vid:any,tid:any){
   return this.http.get('Orders/getbyTableOrder/' + vid+ '/' +tid)
 }
+updateTableStatus(item:any){
+  return this.http.post('api/v1/tableOrder/updateTableStatus' , item);
+}
 }

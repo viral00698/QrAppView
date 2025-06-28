@@ -26,6 +26,23 @@ body {
     /* background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(234,249,249,0.67) 0.1%, rgba(239,249,251,0.63) 90.1% ); */
 }
 
+.custom-switch.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+
+.isJain .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+.isVegNoVeg .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+#offer-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+
 /* Custom scrollbar styles for WebKit browsers (Chrome, Safari) */
 /* ::-webkit-scrollbar {
     width: 12px; 

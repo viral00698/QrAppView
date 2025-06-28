@@ -11,10 +11,11 @@ import { SecureLocalStorageService } from 'src/app/services/secure-local-storage
 })
 export class OrderHistoryComponent implements OnInit{
 
-
+orderDetails:boolean = false
 tmpOrderList!: any[];
 orderList!:any[]
   vender: any;
+  tmpProduct: any;
   
 constructor(private secureLocalStoregeService:SecureLocalStorageService, 
             private orderService:OrderServiceService
@@ -38,7 +39,15 @@ getOrderHistory(){
         this.orderList = res.data
     }
   })
-  debugger
+  
+}
+getOrderDetails(data:any){
+
+  this.tmpProduct = data
+  if(this.orderDetails === false)
+    this.orderDetails = true;
+  else
+    this.orderDetails = false
 }
 serarchByTokenAndMobile() {
 
