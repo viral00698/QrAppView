@@ -1,1 +1,65 @@
-<p>feedback-page works!</p>
+<p-toast position="top-center" key="tc"></p-toast>
+<div class="header">
+  <div class="item_A">
+    <input id="searchInput" [(ngModel)]="searchField" class="inputText" type="text" pInputText placeholder="Search by Question..." />
+  </div>
+  <div class="item_B">
+    <button class="add-q-btn" (click)="dailogVisible()"><i class="pi pi-plus-circle btn-icon"></i></button>
+  </div>
+</div>
+
+<div class="main-container">
+  <p-table
+    [value]="feedbackList"
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    s
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    [scrollable]="true"
+    scrollHeight="85vh"
+    styleClass="sticky-table"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Sr.</th>
+        <th scope="col">Question</th>
+        <th scope="col">Responses</th>
+        <th scope="col">Lowest Rating</th>
+        <th scope="col">Highest Rating</th>
+        <th scope="col">Average Rating</th>
+        <th scope="col">Status</th>
+        <!-- or Active Status -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td>{{product[0]}}</td>
+        <td>{{product[1]}}</td>
+        <td>{{product[2]}}</td>
+        <td>{{product[3]}}</td>
+        <td>{{product[4]}}</td>
+        <td>
+          <p-inputSwitch styleClass="custom-switch" [ngModel]="product[6]" (onChange)="onSwitchChange(product[5] , product[6])"></p-inputSwitch>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Add Question:" [(visible)]="visible" [style]="{width: '50vw'}">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="feedback-from">
+      <label for="question" class="from-label">Question:</label>
+      <input id="question" type="text" pInputText placeholder="Enter Question name..." formControlName="question" />
+      <div *ngIf="formGroup.controls['question'].invalid && formGroup.controls['question'].touched" class="error-message">
+        <span class="errorMeg" *ngIf="formGroup.controls['question'].errors?.['required']" style="color: brown;">Note:Question is required.</span>
+        <span *ngIf="formGroup.controls['question'].errors?.['minlength']" style="color: brown;">
+          Note: Question must be at least {{ formGroup.controls['question'].errors?.['minlength'].requiredLength }} characters.
+        </span>
+      </div>
+    </div>
+    <div class="feedback-from">
+      <button [disabled]="!formGroup.valid" type="submit" class="feedback-submit-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+    </div>
+  </form>
+</p-dialog>

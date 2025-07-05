@@ -17,10 +17,10 @@ export class TableOrdersComponent implements OnInit {
 
   addTableDialogFlag = false
   formGroup!: FormGroup;
-  formGroup_update!:FormGroup
+  formGroup_update!: FormGroup
   searchField: any;
   vender: any;
-  updateDilog:boolean = false
+  updateDilog: boolean = false
   tableTypes: any;
   tables: any = [];
   tmpTables: any = [];
@@ -29,9 +29,10 @@ export class TableOrdersComponent implements OnInit {
   selectedView: any;
   tableOrder: any
   Order: any
-  viewTableType:boolean = false
+  viewTableType: boolean = false
   viewOrder: boolean = false
-  tableStatuses:any
+  tableStatuses: any
+  selectedtable: any;
   constructor(private fb: FormBuilder,
     private storageService: SecureLocalStorageService,
     private messageService: MessageService, private tableOrderService: TableOrderService) {
@@ -44,14 +45,15 @@ export class TableOrdersComponent implements OnInit {
     ];
 
     this.tableStatuses = [
-  { label: 'Available', value: 'AVAILABLE' },
-  { label: 'Booked', value: 'BOOKED' },
-  { label: 'Occupied', value: 'OCCUPIED' },
-  { label: 'In Use', value: 'IN_USE' },
-  { label: 'Closed', value: 'CLOSED' },
-  { label: 'Cleaning', value: 'CLEANING' },
-  { label: 'Reserved', value: 'RESERVED' },
-];
+      { label: 'Available', value: 'AVAILABLE' },
+      { label: 'Booked', value: 'BOOKED' },
+      // { label: 'Occupied', value: 'OCCUPIED' },
+      // { label: 'In Use', value: 'IN_USE' },
+      { label: 'Closed', value: 'CLOSED' },
+      {label:'Remove' , value:'REMOVE'},
+      // { label: 'Cleaning', value: 'CLEANING' },
+      // { label: 'Reserved', value: 'RESERVED' },
+    ];
 
   }
   async ngOnInit(): Promise<void> {
@@ -60,10 +62,10 @@ export class TableOrdersComponent implements OnInit {
     await this.getTables()
 
   }
- 
+
   async getTableOrdes(table: any): Promise<void> {
 
-    if(table?.tableStatus !== 'BOOKED' ) return;
+    if (table?.tableStatus !== 'BOOKED') return;
     try {
       const res: any = await firstValueFrom(
         this.tableOrderService.getbyTableOrders(table.vendorId, table.tableId)
@@ -71,7 +73,7 @@ export class TableOrdersComponent implements OnInit {
 
       if (res.status === RequestStatus.success) {
         this.Order = res.data;
-        
+
       }
 
       this.viewOrder = true;
@@ -113,6 +115,9 @@ export class TableOrdersComponent implements OnInit {
       type: [null, Validators.required],
     })
 
+    this.formGroup_update = this.fb.group({
+      type: [null, Validators.required]
+    })
   }
 
   viewSelect(event: any) {
@@ -123,12 +128,16 @@ export class TableOrdersComponent implements OnInit {
     }
   }
 
-  updateModel() {
+  updateModel(product: any) {
     if (this.updateDilog === true) {
+      this.selectedtable = product
       this.updateDilog = false
     } else {
       this.updateDilog = true
+      this.selectedtable = product
+
     }
+
   }
 
 
@@ -155,20 +164,48 @@ export class TableOrdersComponent implements OnInit {
   }
 
 
-  uiView(){
-      if(this.viewTableType === false){
-        this.viewTableType = true
-      }else{
-        this.viewTableType = false
+  uiView() {
+    if (this.viewTableType === false) {
+      this.viewTableType = true
+    } else {
+      this.viewTableType = false
+    }
+  }
+
+  onSubmit_update() {
+
+    if (this.formGroup_update.valid) {
+      const json = {
+        'tableStatus': this.formGroup_update.get('type')?.value?.value,
+        'vendorId': this.vender.vendorId,
+        'tableId': this.selectedtable?.tableId
       }
+
+      this.tableOrderService.updateTableStatus(json).subscribe((res: any) => {
+
+        if (res?.status === RequestStatus.success) {
+          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
+          this.updateDilog = false
+        } else {
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
+          this.updateDilog = false
+        }
+      })
+
+    }
   }
 
-  onSubmit_update(){
+  deleteTable(table: any) {
 
-  }
-
-  updateStatus(item:any){
-
+    this.tableOrderService.deleteTableByVendor(table?.tableId).subscribe((res: any) => {
+      if (res?.status === RequestStatus.success) {
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
+        this.updateDilog = false
+      } else {
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
+        this.updateDilog = false
+      }
+    })
   }
 
   MarkAsCompleted(item: any) { }

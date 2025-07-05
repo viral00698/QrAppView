@@ -16,4 +16,8 @@ export class OfferService {
   getOfferByVendor(vendorId:any){
     return this.http.get('offer/getOfferByVendor/'+vendorId);
   }
+
+  setOfferStatus(data:any){
+     return this.http.post('offer/setOfferStatus' , data);
+  }
 }

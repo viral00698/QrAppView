@@ -21,7 +21,7 @@ export class SocketConfigService {
       heartbeatIncoming: 0,
       heartbeatOutgoing: 20000,
       reconnectDelay: 200,
-      webSocketFactory: () => new SockJS('http://192.168.16.204:8080/ws'),
+      webSocketFactory: () => new SockJS('http://172.29.186.204:8080/ws'),
       debug: (msg: string): void => {
         console.log(new Date(), msg);
       },

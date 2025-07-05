@@ -13,9 +13,7 @@ import { SecureLocalStorageService } from 'src/app/services/secure-local-storage
   styleUrls: ['./offer-page.component.css']
 })
 export class OfferPageComponent implements OnInit {
-onSwitchChange(_t26: any) {
-throw new Error('Method not implemented.');
-}
+
   colors!: { name: string; code: string; }[];
   formGroup!: FormGroup;
   dilogView: boolean = false
@@ -161,9 +159,6 @@ throw new Error('Method not implemented.');
     }
   }
 
-  // onOfferTypeChange(event: any) {
-  //   console.log(this.selectOfferType);
-  // }
   getOfferByVendor() {
     if (this.vender) {
 
@@ -175,7 +170,18 @@ throw new Error('Method not implemented.');
     }
   }
 
- 
-
-
+  onSwitchChange(offer: any) {
+      const json = { 
+        'isActive':!offer?.isActive,
+        'vendorId':offer?.vendorId,
+        'offerId':offer?.offerId
+      }
+      this.offerService.setOfferStatus(json).subscribe((res:any)=>{
+        if(res?.status === RequestStatus.success){
+          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
+        }else{
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
+        }
+      })
+  }
 }
