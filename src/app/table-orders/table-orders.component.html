@@ -113,7 +113,7 @@
         <th scope="col">Name</th>
         <th scope="col">Status</th>
         <th scope="col">Update</th>
-        <th scope="col">Delete</th>
+        <!-- <th scope="col">Delete</th> -->
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product let-i="rowIndex">
@@ -122,11 +122,11 @@
         <td>{{ product.tableName }}</td>
         <td>{{ product.tableStatus }}</td>
         <td>
-          <button type="button" class="btn btn-primary" (click)="updateModel()"><i class="bi bi-pencil-square"></i></button>
+          <button type="button" class="btn btn-primary" (click)="updateModel(product)"><i class="bi bi-pencil-square"></i></button>
         </td>
-        <td>
-          <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-        </td>
+        <!-- <td>
+          <button type="button" class="btn btn-danger" (click)="deleteTable(product)"><i class="bi bi-trash"></i></button>
+        </td> -->
       </tr>
     </ng-template>
   </p-table>
@@ -137,14 +137,14 @@
 
     <div class="update-form">
       <div class="update-form-element">
-        <!-- <label for="dropdown">Select Status</label> -->
-        <p-dropdown id="dropdown" appendTo="body" class="inputbox" formControlName="type" [options]="tableStatuses" optionLabel="value" styleClass="inputbox" placeholder="Select a TableType.." />
+        <!-- <label for="dropdown" style="margin-bottom: 3px;">Select Table Status:</label> -->
+        <p-dropdown id="dropdown" appendTo="body" class="inputbox" formControlName="type" [options]="tableStatuses" optionLabel="value" styleClass="inputbox" placeholder="Select table status.." />
         <div *ngIf="formGroup.controls['type'].invalid && formGroup.controls['type'].touched" class="error-message">
           <span *ngIf="formGroup.controls['type'].errors?.['required']" style="color: brown;">Note:Type is required.</span>
         </div>
       </div>
         <div class="update-form-element">
-      <button type="submit" class="btn"><i class="bi bi-plus-circle"></i></button>
+      <button type="submit" class="btn" [disabled]="!formGroup_update.valid" ><i class="bi bi-plus-circle"></i></button>
     </div> 
     </div>
   </form>

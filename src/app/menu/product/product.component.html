@@ -74,7 +74,7 @@
         <td>{{product.description}}</td>
         <td>{{product.jain ? 'Yes' : 'No'}}</td>
         <td>{{product.vegNonVeg?'Yes':'No'}}</td>
-        <td>{{product.amount}}</td>
+        <td>₹{{product.amount}}</td>
         <td>
         <p-inputSwitch styleClass="custom-switch" [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td>
         <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td>
