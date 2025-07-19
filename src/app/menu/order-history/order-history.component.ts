@@ -11,11 +11,13 @@ import { SecureLocalStorageService } from 'src/app/services/secure-local-storage
 })
 export class OrderHistoryComponent implements OnInit{
 
+searchField: any;
 orderDetails:boolean = false
 tmpOrderList!: any[];
 orderList!:any[]
   vender: any;
   tmpProduct: any;
+  ProductMap: Map<any,any> = new Map<any,any>();
   
 constructor(private secureLocalStoregeService:SecureLocalStorageService, 
             private orderService:OrderServiceService
@@ -35,8 +37,9 @@ getVenderDetails() {
 getOrderHistory(){
   this.orderService.findByVendorId(this.vender?.vendorId).subscribe((res:any)=>{
     if(res.status === RequestStatus.success){
-        this.tmpOrderList = res.data
-        this.orderList = res.data
+      this.ProductMap = new Map(Object.entries(res.data.product));
+      this.tmpOrderList = res.data?.orders
+      this.orderList = res.data?.orders
     }
   })
   
@@ -52,6 +55,8 @@ getOrderDetails(data:any){
 serarchByTokenAndMobile() {
 
 }
-searchField: any;
+invoice(data:any){
+  
+}
 
 }

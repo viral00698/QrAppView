@@ -80,6 +80,8 @@ th {
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    opacity: 0.8;
+    color: black;
 }
 
 td {
@@ -88,4 +90,7 @@ td {
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black;
+    border-bottom: 1px solid;
+    border-style: ridge;
 }

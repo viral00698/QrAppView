@@ -38,7 +38,16 @@ body {
 .isVegNoVeg .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
     background-color: black !important;
 }
+
 #offer-switch .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+#createCredentials.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background-color: black !important;
+}
+
+#editVendor .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
     background-color: black !important;
 }
 

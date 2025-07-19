@@ -46,6 +46,8 @@ th {
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    color: black;
+    opacity: 0.8;
 }
 
 td {
@@ -54,6 +56,9 @@ td {
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black;
+    border-bottom: 1px solid;
+    border-style: ridge;
 }
 
 .table-container {
@@ -175,3 +180,4 @@ input[type="file"] label {
     cursor: pointer;
   }
   
+ 

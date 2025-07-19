@@ -12,6 +12,9 @@ import { TableOrdersComponent } from './table-orders/table-orders.component';
 import { OrderHistoryComponent } from './menu/order-history/order-history.component';
 import { OfferPageComponent } from './offer/offer-page/offer-page.component';
 import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.component';
+import { CreateVendorComponent } from './admin/create-vendor/create-vendor.component';
+import { ViewVendorsComponent } from './admin/view-vendors/view-vendors.component';
+import { EmployeeComponent } from './vendor/employee/employee.component';
 
 const routes: Routes = [
   {path:'dashboard', component:SidebarComponent,children:[
@@ -23,7 +26,9 @@ const routes: Routes = [
     {path:'menu/OrderHistory',component:OrderHistoryComponent},
     {path:'menu/offer',component:OfferPageComponent},
     {path:'menu/Feedback',component:FeedbackPageComponent},
-
+    {path:'admin/createVendor',component:CreateVendorComponent},
+    {path:'admin/vendors' , component:ViewVendorsComponent},
+    {path:'vendor/employee' , component:EmployeeComponent}
   ],canActivate:[authGuard]},
   {path:'',component:LoginComponent},
 ];

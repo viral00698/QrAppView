@@ -394,6 +394,8 @@ th {
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    opacity: 0.8;
+    color: black;
 }
 
 td {
@@ -402,6 +404,8 @@ td {
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black;
+
 }
 
 .update-form{
@@ -414,6 +418,14 @@ td {
     margin-top: .5rem;
 }
 
-.p-dropdown .p-dropdown-label.p-placeholder{
-    
+
+.tAmountitem1::after {
+    content: " ₹";
+}
+
+
+.tAmountitem2 {
+    place-self: center;
+    font-weight: 600;
+    font-size: medium;
 }

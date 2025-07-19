@@ -1,0 +1,188 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<!-- <div class="header">
+  <div class="item_A">
+    <input id="searchInput" class="inputText" type="text" pInputText placeholder="Search ..." />
+  </div>
+  <div class="item_B">
+    <button class="add-q-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+  </div>
+</div>  -->
+
+<div class="main-container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="from-card">
+      <p>BASIC INFO</p>
+
+      <div class="card-view">
+        <div class="card-item">
+          <label for="restaurant">RESTAURANT NAME:</label>
+          <input id="restaurant" formControlName="restaurant" type="text" pInputText />
+          <div *ngIf="formGroup.controls['restaurant'].invalid && formGroup.controls['restaurant'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['restaurant'].errors?.['required']" style="color: brown;">Note:restaurant is required</span>
+        </div>
+        </div>
+
+        <div class="card-item">
+          <label for="onwer">OWNER NAME:</label>
+          <input id="onwer" formControlName="onwer" type="text" pInputText />
+          <div *ngIf="formGroup.controls['onwer'].invalid && formGroup.controls['restaurant'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['onwer'].errors?.['required']" style="color: brown;">Note:onwer is required</span>
+        </div>
+        </div>
+      </div>
+
+      <div class="card-view">
+        <div class="card-item">
+          <label for="gst">GST NO:</label>
+          <input id="gst" formControlName="gst" type="text" pInputText />
+        <!-- <div *ngIf="formGroup.controls['gst'].invalid && formGroup.controls['gst'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['gst'].errors?.['required']" style="color: brown;">Note:GST is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['gst'].errors?.['minlength']" style="color: brown;">Note: GST number must be at least {{ formGroup.controls['gst'].errors?.['minlength'].requiredLength }} characters</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['gst'].errors?.['maxlength']" style="color: brown;"> Note: GST number must be at most {{ formGroup.controls['gst'].errors?.['maxlength'].requiredLength }} characters</span>
+        </div> -->
+        </div>
+
+        <div class="card-item">
+          <label for="fssi">FSSI No:</label>
+          <input id="fssi" formControlName="fssi" type="text" pInputText />
+          <!-- <div *ngIf="formGroup.controls['fssi'].invalid && formGroup.controls['fssi'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['fssi'].errors?.['required']" style="color: brown;">Note:FSSI is required</span>
+        </div> -->
+        </div>
+      </div>
+
+      <div class="card-view">
+        <div class="card-item">
+          <label for="aadhaar">AADHAAR NO:</label>
+          <input id="aadhaar" formControlName="aadhaar" type="number" pInputText />
+          <div *ngIf="formGroup.controls['aadhaar'].invalid && formGroup.controls['aadhaar'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['aadhaar'].errors?.['required']" style="color: brown;">Note:aadhaar is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['aadhaar'].errors?.['minLength']" style="color: brown;">Note: aadhaar number must be at least 12 characters</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['aadhaar'].errors?.['maxLength']" style="color: brown;"> Note: aadhaar number must be at most 12 characters</span>
+        </div> 
+        </div>
+
+        <div class="card-item">
+          <label for="pan">PAN NO:</label>
+          <input id="pan" formControlName="pan" type="text" pInputText />
+        </div>
+      </div>
+
+      <div class="card-view">
+        <div class="card-item">
+          <label for="upi">UPI ID:</label>
+          <input id="upi" type="text" formControlName="upi" pInputText />
+          <div *ngIf="formGroup.controls['upi'].invalid && formGroup.controls['upi'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['upi'].errors?.['required']" style="color: brown;">Note:UPI is required</span>
+        </div> 
+        </div>
+        <div class="card-item">
+          <label for="mobile">MOBILE NO:</label>
+          <input id="mobile" formControlName="mobile" type="number" pInputText />
+           <div *ngIf="formGroup.controls['mobile'].invalid && formGroup.controls['mobile'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['mobile'].errors?.['required']" style="color: brown;">Note:Mobile is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['mobile'].errors?.['minLength']" style="color: brown;">Note: Mobile number must be at least 10 characters</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['mobile'].errors?.['maxLength']" style="color: brown;"> Note: Mobile number must be at most 10 characters</span>
+        </div> 
+        </div>
+      </div>
+
+      <div class="card-view">
+        <div class="card-item">
+          <label for="RAZORPAY_KEY">RAZORPAY_KEY:</label>
+          <input id="RAZORPAY_KEY" formControlName="rk" type="text" pInputText />
+        </div>
+
+        <div class="card-item">
+          <label for="RAZORPAY_SECRET_KEY">RAZORPAY_SECRET_KEY:</label>
+          <input id="RAZORPAY_SECRET_KEY" formControlName="rsk" type="text" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="from-card">
+      <p>ADDRESS INFO</p>
+      <div class="card-view">
+        <div class="card-item">
+          <label for="state">STATE:</label>
+          <input id="state" type="text" formControlName="state" pInputText />
+             <div *ngIf="formGroup.controls['state'].invalid && formGroup.controls['state'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['state'].errors?.['required']" style="color: brown;">Note:state is required</span>
+        </div> 
+          <!-- <p-dropdown id="state" class="inputbox"  formControlName="foodCategory" [options]="jsonData" optionLabel="state"  styleClass="inputbox" placeholder="Select a TableType.." /> -->
+        </div>
+
+        <div class="card-item">
+          <label for="district">DISTRICT:</label>
+          <input id="district" formControlName="district" type="text" pInputText />
+           <div *ngIf="formGroup.controls['district'].invalid && formGroup.controls['district'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['district'].errors?.['required']" style="color: brown;">Note:District is required</span>
+        </div> 
+
+          <!-- <p-dropdown id="district" class="inputbox"  formControlName="foodCategory" optionLabel="label"  styleClass="inputbox" placeholder="Select a TableType.." /> -->
+        </div>
+        <div class="card-item">
+          <label for="taluka">TALUKA:</label>
+          <input id="taluka" formControlName="taluka" type="text" pInputText />
+           <div *ngIf="formGroup.controls['taluka'].invalid && formGroup.controls['taluka'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['taluka'].errors?.['required']" style="color: brown;">Note:UPI is required</span>
+        </div> 
+          <!-- <p-dropdown id="taluka" class="inputbox"  formControlName="foodCategory" optionLabel="label"  styleClass="inputbox" placeholder="Select a TableType.." /> -->
+        </div>
+      </div>
+      <div class="card-view">
+        <div class="card-item">
+          <label for="street">STREET:</label>
+          <input id="street" formControlName="street" type="text" pInputText />
+           <div *ngIf="formGroup.controls['street'].invalid && formGroup.controls['street'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['street'].errors?.['required']" style="color: brown;">Note:street is required</span>
+        </div> 
+        </div>
+
+        <div class="card-item">
+          <label for="pincode">PINCODE:</label>
+          <input id="pincode" formControlName="pincode" type="number" pInputText />
+           <div *ngIf="formGroup.controls['pincode'].invalid && formGroup.controls['pincode'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="formGroup.controls['pincode'].errors?.['required']" style="color: brown;">Note:pincode is required</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['pincode'].errors?.['minLength']" style="color: brown;">Note: pincode number must be at least 6 characters</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['pincode'].errors?.['maxLength']" style="color: brown;"> Note: pincode number must be at most 6 characters</span>
+        </div> 
+          <!-- <p-dropdown id="state" class="inputbox"  formControlName="foodCategory" [options]="jsonData" optionLabel="state"  styleClass="inputbox" placeholder="Select a TableType.." /> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="from-card">
+      <p>DOCUMENTS INFO</p>
+      <div class="card-view">
+        <div class="card-item">
+          <label for="RESTRO_IMAGE">RESTAURANT IMAGE:</label>
+          <input id="RESTRO_IMAGE" type="file" (change)="onUpload($event , 'RESTAURANT')" class="custom-file-upload" accept="image/*" pInputText />
+        </div>
+        <div class="card-item">
+          <label for="aadhaar_IMAGE">AADHAAR IMAGE:</label>
+          <input id="aadhaar_IMAGE" type="file" (change)="onUpload($event , 'AADHAAR')" class="custom-file-upload" accept="image/*" pInputText />
+        </div>
+
+        <div class="card-item">
+          <label for="pan_IMAGE">PAN IMAGE:</label>
+          <input id="pan_IMAGE" type="file" (change)="onUpload($event , 'PAN')" class="custom-file-upload" accept="image/*" pInputText />
+        </div>
+      </div>
+      <div class="card-view">
+        <div class="card-item">
+          <label for="RESTRO_IMAGE">GST IMAGE:</label>
+          <input id="RESTRO_IMAGE" type="file" (change)="onUpload($event , 'GST')" class="custom-file-upload" accept="image/*" pInputText />
+        </div>
+        <div class="card-item">
+          <label for="aadhaar_IMAGE">FSSI IMAGE:</label>
+          <input id="aadhaar_IMAGE" type="file" (change)="onUpload($event , 'FSSI')" class="custom-file-upload" accept="image/*" pInputText />
+        </div>
+      </div>
+    </div>
+    <div class="from-card">
+      <div class="card-btn">
+          <button [disabled]="!formGroup.valid" id="submit-btn" type="submit" class="p-btn">SUBMIT</button>
+      </div>
+    </div>
+  </form>
+</div>

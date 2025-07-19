@@ -10,16 +10,19 @@ th{
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    color: black;
+    opacity: 0.8;
 }
 td{
     /* padding: .8rem; */
     padding: 5px;
-
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 400;
-
+    color: black;
+    border-bottom: 1px solid;
+    border-style: ridge;
 }
 
 .item_A {
@@ -76,4 +79,84 @@ td{
 #history-head th{
     background: none;
     border: none;
+}
+
+
+
+ .table_heading {
+     padding: .1rem;
+     font-weight: 500;
+     font-size: medium;
+     text-align: center;
+ }
+
+ .table_content {
+     padding: 0;
+     font-weight: 400;
+     font-size: medium;
+     padding: .1rem;
+     text-align: center;
+ }
+
+ .card_bill_detail {
+
+     padding: .2rem;
+     font-size: small;
+     font-weight: 500;
+     margin: 0;
+
+ }
+
+
+ .total_amount {
+     display: flex;
+     justify-content: flex-end;
+     font-size: medium;
+     font-weight: 500;
+     margin: .2rem;
+ }
+
+ .order_detail {
+     display: flex;
+     justify-content: space-between;
+ }
+
+
+ .titel {
+     display: flex;
+     justify-content: center;
+ }
+
+ .card_titel {
+     font-size: medium;
+     font-weight: 500;
+ }
+ .header {
+     display: flex;
+     justify-content: space-between;
+     margin: 1rem;
+ }
+
+
+.tAmountitem1::after {
+    content: " ₹";
+}
+.tAmountitem2 {
+    place-self: center;
+    font-weight: 600;
+    font-size: medium;
+}
+
+.invoicBtn{
+    border: none;
+    padding: .5rem;
+    border-radius: 8px;
+    background: black;
+    color: white;
+}
+
+.invoicBtn:hover{
+    background:white;
+    color: black;
+    border: 1px solid black;
 }

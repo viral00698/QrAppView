@@ -36,7 +36,7 @@ import { SocketConfigService } from './services/socket-config.service';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InplaceModule } from 'primeng/inplace';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
@@ -49,7 +49,10 @@ import { DonutChartComponent } from './shared/donut-chart/donut-chart.component'
 import { BarGroupchartComponent } from './shared/bar-groupchart/bar-groupchart.component';
 import { OfferPageComponent } from './offer/offer-page/offer-page.component';
 import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.component';
-
+import { CreateVendorComponent } from './admin/create-vendor/create-vendor.component';
+import { ViewVendorsComponent } from './admin/view-vendors/view-vendors.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { EmployeeComponent } from './vendor/employee/employee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +71,9 @@ import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.co
     BarGroupchartComponent,
     OfferPageComponent,
     FeedbackPageComponent,
+    CreateVendorComponent,
+    ViewVendorsComponent,
+    EmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +108,7 @@ import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.co
     OverlayPanelModule,
     AvatarModule,
     NgApexchartsModule,
+    ConfirmDialogModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in
@@ -113,6 +120,7 @@ import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.co
     MessageService,
     RxStompService,
     SocketConfigService,
+    ConfirmationService,
     {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}
     
   ],

@@ -45,10 +45,16 @@
   </p-table>
 </div> -->
 
-
-
 <div class="">
-  <p-table  [value]="tmpProductList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  s [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
+  <p-table
+    [value]="tmpProductList"
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    s
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    [scrollable]="true"
+    scrollHeight="85vh"
+    styleClass="sticky-table"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th scope="col">Sr.</th>
@@ -67,8 +73,8 @@
     <ng-template pTemplate="body" let-product let-i="rowIndex">
       <tr>
         <td>{{i+1}}</td>
-        <td *ngIf="product.image===null"> <p-avatar label="{{product.itemName.charAt(0)}}" size="normal"></p-avatar></td>
-        <td *ngIf="product.image !==null" style="width: 10rem"><img src="{{product.image}}" class="product_img" alt="A"></td>
+        <td *ngIf="product.image===null"><p-avatar label="{{product.itemName.charAt(0)}}" size="normal"></p-avatar></td>
+        <td *ngIf="product.image !==null" style="width: 10rem;"><img src="{{product.image}}" class="product_img" alt="A" /></td>
         <td>{{product.itemName}}</td>
         <td>{{product.foodCategory}}</td>
         <td>{{product.description}}</td>
@@ -76,16 +82,18 @@
         <td>{{product.vegNonVeg?'Yes':'No'}}</td>
         <td>₹{{product.amount}}</td>
         <td>
-        <p-inputSwitch styleClass="custom-switch" [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch></td>
-        <td><button  type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button></td>
-        <td><button  type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button></td>
+          <p-inputSwitch styleClass="custom-switch" [ngModel]="product.status" (onChange)="onSwitchChange(product)"></p-inputSwitch>
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="editProduct(product)"><i class="bi bi-pencil-square"></i></button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="deleteProduct(product)"><i class="bi bi-trash"></i></button>
+        </td>
       </tr>
-    </ng-template>    
+    </ng-template>
   </p-table>
 </div>
-
-
-
 
 <p-dialog header="{{dialogTitel}}" [(visible)]="visible" [style]="{width: '50vw'}">
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
@@ -97,7 +105,9 @@
         <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" />
         <div *ngIf="formGroup.controls['itemName'].invalid && formGroup.controls['itemName'].touched" class="error-message">
           <span class="errorMeg" *ngIf="formGroup.controls['itemName'].errors?.['required']" style="color: brown;">Note:Item name is required.</span>
-          <span class="errorMeg"  *ngIf="formGroup.controls['itemName'].errors?.['pattern']" style="color: brown;">Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span>
+          <span class="errorMeg" *ngIf="formGroup.controls['itemName'].errors?.['pattern']" style="color: brown;"
+            >Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span
+          >
         </div>
       </div>
     </div>
@@ -107,14 +117,13 @@
         <p class="form_label">FoodCategory:</p>
       </div>
       <div class="form_item_content">
-        <p-dropdown class="inputbox"  formControlName="foodCategory" [options]="foodTypes" optionLabel="label"  styleClass="inputbox" placeholder="Select a TableType.." />
+        <p-dropdown class="inputbox" formControlName="foodCategory" [options]="foodTypes" optionLabel="label" styleClass="inputbox" placeholder="Select a TableType.." />
         <!-- <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" /> -->
         <div *ngIf="formGroup.controls['foodCategory'].invalid && formGroup.controls['foodCategory'].touched" class="error-message">
           <span class="errorMeg" *ngIf="formGroup.controls['foodCategory'].errors?.['required']" style="color: brown;">Note:Item name is required.</span>
           <!-- <span class="errorMeg"  *ngIf="formGroup.controls['foodCategory'].errors?.['pattern']" style="color: brown;">Note:Item Name can only contain letters, numbers, and the symbols: ()_&*."&#64;"</span> -->
         </div>
       </div>
-      
     </div>
 
     <div class="form_grid">
@@ -128,7 +137,6 @@
           <span class="errorMeg" *ngIf="formGroup.controls['description'].errors?.['pattern']" style="color: brown;">Note:only contain letters, numbers, and the symbols: ()_&*."&#64;"</span>
         </div>
       </div>
-      
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
@@ -183,13 +191,13 @@
         <p-inputSwitch class="isVegNoVeg" formControlName="vegNonVeg"></p-inputSwitch>
       </div>
     </div>
-      <div class="form_grid">
+    <div class="form_grid">
       <div class="form_item_titel">
         <p class="form_label">Offer:</p>
       </div>
       <div class="form_item_content">
         <!-- <input type="text" pInputText placeholder="Enter Offer id..." formControlName="Offer" /> -->
-        <p-dropdown class="inputbox"  formControlName="Offer" [options]="offerList" optionLabel="offerName"  styleClass="inputbox" placeholder="Select a TableType.." />
+        <p-dropdown class="inputbox" formControlName="Offer" [options]="offerList" optionLabel="offerName" styleClass="inputbox" placeholder="Select a TableType.." />
 
         <!-- <div *ngIf="formGroup.controls['Offer'].invalid && formGroup.controls['Offer'].touched" class="error-message">
           <span class="errorMeg" *ngIf="formGroup.controls['Offer'].errors?.['required']" style="color: brown;">Note:quantity is required</span>
@@ -202,10 +210,9 @@
         <p class="form_label">Upload Image:</p>
       </div>
       <div class="form_item_content custom-file-upload">
-       <input  id="fileUpload" type="file" (change)="onUpload($event)"  class="custom-file-upload" name="file" accept="image/*">
-       <img *ngIf="dialogTitel == 'Add Product'"[src]="imageBase64" style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A" >
-       <img *ngIf="dialogTitel == 'Edit Product'" [(src)]="tmpImg"  style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A">
-
+        <input id="fileUpload" type="file" (change)="onUpload($event)" class="custom-file-upload" name="file" accept="image/*" />
+        <img *ngIf="dialogTitel == 'Add Product'" [src]="imageBase64" style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A" />
+        <img *ngIf="dialogTitel == 'Edit Product'" [(src)]="tmpImg" style="height: 6rem; width: 5rem; border-radius: 5px;" alt="A" />
       </div>
     </div>
     <div class="form_grid form_btn">
