@@ -1,16 +1,20 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="header">
   <div class="item_A">
-    <input id="searchInput" [(ngModel)]="searchField" class="inputText" type="text" pInputText placeholder="Search Employee..." />
+    <input id="searchInput" [(ngModel)]="searchField"  (input)="serarchByTokenAndMobile()"  class="inputText" type="text" pInputText placeholder="Search Employee..." />
   </div>
   <div class="item_B">
     <button class="add-q-btn" (click)="dailogVisible()"><i class="pi pi-plus-circle btn-icon"></i></button>
   </div>
 </div>
 
-<div class="main-container">
+<div *ngIf="!tmpEmployee">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="main-container" *ngIf="tmpEmployee">
   <p-table
-    [value]="employees"
+    [value]="tmpEmployee"
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
     s
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"

@@ -80,3 +80,28 @@
     padding: 0;
 } */
 
+
+.header-group-btn{
+    display: flex;
+    flex-direction: row;
+    padding: .1rem;
+   /* justify-content: center; */
+}
+.header-group-btn .header-group-item-btn{
+    border: 1px solid black;
+    border-radius:15px;
+    margin:.5rem;
+    background: white;
+    color: black;
+    margin: .3rem;
+    padding: .3rem;
+    
+    height: 2rem;
+    width: 6rem;
+    font-size: small;
+}
+
+.header-group-btn .header-group-item-btn:hover {
+    background:black;
+    color: white;
+}

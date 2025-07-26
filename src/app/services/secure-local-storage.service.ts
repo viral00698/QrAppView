@@ -7,7 +7,7 @@ import * as CryptoJS from 'crypto-js';
 export class SecureLocalStorageService {
 
   private secretKey: string = 'jhqekjlhfnkewnhkhncmlrugierljfgdoierlug98798742($8594$^%TBHGJHGJR$RYTFGBGHVFGGJBGNJHG #$%EYghfhgfghfhgfhgfvghfff!!^&%@)(+__'; // Use a strong key
-
+  private allowedRole:any;
   constructor() { }
 
   encriptAndSave(data: any, key: any) {
@@ -23,6 +23,13 @@ export class SecureLocalStorageService {
       return decryptedData
     }
     return null;
+  }
+
+  setRole(data:any){
+    this.allowedRole = data
+  }
+  hasRole(role: string): boolean {
+    return this.allowedRole.includes(role);
   }
 
 

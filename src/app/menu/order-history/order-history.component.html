@@ -16,7 +16,11 @@
     </div>
   </div>
 
-  <div class="">
+<div *ngIf="!tmpOrderList">
+  <app-notfound></app-notfound>
+</div>
+
+  <div class="" *ngIf="tmpOrderList">
     <p-table [value]="tmpOrderList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  s [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
       <ng-template pTemplate="header">
         <tr>

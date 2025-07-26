@@ -17,6 +17,7 @@ export class FeedbackPageComponent implements OnInit{
   formGroup!: FormGroup
   vender: any;
   feedbackList:any =[]
+  tmpFeedback: any;
 
 
 
@@ -69,6 +70,7 @@ export class FeedbackPageComponent implements OnInit{
     getFeedback(){
         this.feedbackService.getFeedback(this.vender?.vendorId).subscribe((res:any)=>{
           this.feedbackList = res?.data
+          this.tmpFeedback = this.feedbackList
         })
     }
 
@@ -88,5 +90,20 @@ export class FeedbackPageComponent implements OnInit{
         })
     }
 
+  serarchInFeedBack(){
 
+    if (this.searchField) {
+      const search = this.searchField.toLowerCase();
+      this.tmpFeedback = this.feedbackList.filter((item: any) => {
+        return item[0]?.toLowerCase().includes(search)
+      })
+    } else {
+      this.tmpFeedback = this.feedbackList;
+    }
+
+    if (this.tmpFeedback === null) {
+      this.tmpFeedback = this.feedbackList;
+    }
+
+  }
 }

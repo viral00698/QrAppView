@@ -34,11 +34,15 @@
 
 <div class="header">
   <input id="searchInput" placeholder="Search..." class="header-items" type="text" />
-  <button class="table-view"><i class="bi bi-justify" (click)="uiView()"></i></button>
+  <button *ngIf="tmpTables" class="table-view"><i class="bi bi-justify" (click)="uiView()"></i></button>
   <button class="header-items header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button>
 </div>
 
-<div>
+<div *ngIf="!tmpTables">
+  <app-notfound></app-notfound>
+</div>
+
+<div  *ngIf="tmpTables">
   <div class="order-container">
     <div class="order-table" *ngFor="let item of tmpTables">
       <div class="table-card" (click)="getTableOrdes(item)">

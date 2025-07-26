@@ -44,26 +44,51 @@
 
 
 <div class="layout-container">
-  <div class="sidebar">
+  
+  <div class="sidebar" *ngIf="!this.roleSet.has('COOK')">
       <h5 class="titel" style="color: 	#940000;">Dashboard</h5>
        <!-- <img src="./../../../assets/logo.png" class="logo"> -->
-      <button class="sidebar-btn"  routerLink="admin/createVendor" routerLinkActive="true">Create Vendor</button>
-      <button class="sidebar-btn"  routerLink="admin/vendors" routerLinkActive="true" >Vendors</button>
-      <button class="sidebar-btn"  routerLink="vendor/employee" routerLinkActive="true" >Employee</button>
+      <button [ngClass]="{ 'selected': selectedItem === 'Create Vendor' }"
+              (click)="selectedItem = 'Create Vendor'" class="sidebar-btn" *ngIf="roleSet.has('ADMIN')"  routerLink="admin/createVendor" routerLinkActive="true">Create Vendor</button>
 
-      <button class="sidebar-btn"  routerLink="menu/order" routerLinkActive="true" >QR Order </button>
-      <button class="sidebar-btn"  routerLink="menu/ongoing" routerLinkActive="true">Ongoing Order</button>
-      <button class="sidebar-btn"  routerLink="menu/product" routerLinkActive="true">Product</button>
-      <button class="sidebar-btn"  routerLink="menu/tableOrder" routerLinkActive="true" >TableOrder</button>
-      <button class="sidebar-btn"  routerLink="menu/offer" routerLinkActive="true" >Create Offer</button>
-      <button class="sidebar-btn"  routerLink="menu/OrderHistory"  routerLinkActive="true" >OrderHistory</button>
-      <button class="sidebar-btn"  routerLink="menu/productAnalytics" routerLinkActive="true" > Analytics</button>
-      <button class="sidebar-btn"  routerLink="menu/Feedback" routerLinkActive="true" >Feedback</button>
+      <button [ngClass]="{ 'selected': selectedItem === 'vendors' }"
+              (click)="selectedItem = 'vendors'" class="sidebar-btn" *ngIf="roleSet.has('ADMIN')" routerLink="admin/vendors" routerLinkActive="true" >Vendors</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'employee' }"
+              (click)="selectedItem = 'employee'" class="sidebar-btn" *ngIf="roleSet.has('VENDER')" routerLink="vendor/employee" routerLinkActive="true" >Employee</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'QR Order' }"
+              (click)="selectedItem = 'QR Order'"class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER')"  routerLink="menu/order" routerLinkActive="true" >QR Order </button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Ongoing Order' }"
+              (click)="selectedItem = 'Ongoing Order'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/ongoing" routerLinkActive="true">Ongoing Order</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Product' }"
+              (click)="selectedItem = 'Product'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/product" routerLinkActive="true">Product</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'TableOrder' }"
+              (click)="selectedItem = 'TableOrder'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/tableOrder" routerLinkActive="true" >TableOrder</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Create Offer' }"
+              (click)="selectedItem = 'Create Offer'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/offer" routerLinkActive="true" >Create Offer</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'OrderHistory' }"
+              (click)="selectedItem = 'OrderHistory'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/OrderHistory"  routerLinkActive="true" >OrderHistory</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Analytics' }"
+              (click)="selectedItem = 'Analytics'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') "routerLink="menu/productAnalytics" routerLinkActive="true" > Analytics</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Feedback' }"
+              (click)="selectedItem = 'Feedback'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('MANAGER') "routerLink="menu/Feedback" routerLinkActive="true" >Feedback</button>
+
+      <button [ngClass]="{ 'selected': selectedItem === 'Kitchen' }"
+              (click)="selectedItem = 'Kitchen'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('COOK')" routerLink="cook/kitchen" routerLinkActive="true" >Kitchen</button>
 
 
   </div>
   <div class="main-content">
     <app-navbar></app-navbar>
+    <app-loader [isLoading]="(isLoading | async) ?? false"></app-loader>
     <router-outlet></router-outlet>
 </div>
 </div>

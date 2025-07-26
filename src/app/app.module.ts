@@ -53,6 +53,12 @@ import { CreateVendorComponent } from './admin/create-vendor/create-vendor.compo
 import { ViewVendorsComponent } from './admin/view-vendors/view-vendors.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { EmployeeComponent } from './vendor/employee/employee.component';
+import { KitchenComponent } from './kds/kitchen/kitchen.component';
+import { NotfoundComponent } from './error/notfound/notfound.component';
+import { InvalidAccessComponent } from './error/invalid-access/invalid-access.component';
+import { LoaderComponent } from './custom-loader/loader/loader.component';
+import { HttpLoaderInterceptor } from './auth/http-loader.interceptor';
+import { RatingComponent } from './custom-componets/rating/rating.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +80,12 @@ import { EmployeeComponent } from './vendor/employee/employee.component';
     CreateVendorComponent,
     ViewVendorsComponent,
     EmployeeComponent,
+    KitchenComponent,
+    NotfoundComponent,
+    InvalidAccessComponent,
+    LoaderComponent,
+    RatingComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -109,6 +121,7 @@ import { EmployeeComponent } from './vendor/employee/employee.component';
     AvatarModule,
     NgApexchartsModule,
     ConfirmDialogModule,
+    
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',  // Name of the cookie with the CSRF token
       headerName: 'X-XSRF-TOKEN'  // Name of the header to send the token in
@@ -121,7 +134,8 @@ import { EmployeeComponent } from './vendor/employee/employee.component';
     RxStompService,
     SocketConfigService,
     ConfirmationService,
-    {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true}
+    {provide:HTTP_INTERCEPTORS , useClass:BaseUrlInterceptor ,multi:true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpLoaderInterceptor,multi: true}
     
   ],
   bootstrap: [AppComponent]

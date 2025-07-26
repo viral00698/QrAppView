@@ -6,7 +6,11 @@
 </div>
 <p-toast position="top-center" key="tc"></p-toast>
 
-<div class="offer-container">
+<div *ngIf="!offerList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="offer-container" *ngIf="offerList">
   <p-table
     [value]="offerList"
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"

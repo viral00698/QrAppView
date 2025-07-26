@@ -1,14 +1,19 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="header">
   <div class="item_A">
-    <input id="searchInput" [(ngModel)]="searchField" class="inputText" type="text" pInputText placeholder="Search by Question..." />
+    <input id="searchInput" [(ngModel)]="searchField"  (input)="serarchInFeedBack()" class="inputText" type="text" pInputText placeholder="Search by Question..." />
   </div>
   <div class="item_B">
     <button class="add-q-btn" (click)="dailogVisible()"><i class="pi pi-plus-circle btn-icon"></i></button>
   </div>
 </div>
 
-<div class="main-container">
+
+<div *ngIf="!feedbackList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="main-container" *ngIf="feedbackList">
   <p-table
     [value]="feedbackList"
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
@@ -35,9 +40,9 @@
         <td>{{i+1}}</td>
         <td>{{product[0]}}</td>
         <td>{{product[1]}}</td>
-        <td>{{product[2]}}</td>
-        <td>{{product[3]}}</td>
-        <td>{{product[4]}}</td>
+        <td>{{product[2]}}<app-rating [rating]="product[2]" [maxStars]="5"></app-rating></td>
+        <td>{{product[3]}}<app-rating [rating]="product[3]" [maxStars]="5"></app-rating></td>
+        <td>{{product[4]}}<app-rating [rating]="product[4]" [maxStars]="5"></app-rating> </td>
         <td>
           <p-inputSwitch styleClass="custom-switch" [ngModel]="product[6]" (onChange)="onSwitchChange(product[5] , product[6])"></p-inputSwitch>
         </td>

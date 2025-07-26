@@ -4,7 +4,7 @@
     <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Search by product..." />
   </div>
   <div class="item_B">
-    <button id="cashOrderBtn" (click)="addProduct()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
+    <button id="cashOrderBtn" *ngIf="tmpProductList" (click)="addProduct()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
   </div>
 </div>
 
@@ -45,7 +45,11 @@
   </p-table>
 </div> -->
 
-<div class="">
+<div *ngIf="!tmpProductList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="" *ngIf="tmpProductList">
   <p-table
     [value]="tmpProductList"
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"

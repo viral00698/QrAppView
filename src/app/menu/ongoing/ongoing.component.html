@@ -24,7 +24,11 @@
   </div>
 </div>
 
-<div class="cardGrid scroll" >
+<div *ngIf="!tmpOrderList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="cardGrid scroll" *ngIf="tmpOrderList">
   <!-- [style]="{'width':'50%'}" -->
   <p-card *ngFor="let item of tmpOrderList" styleClass="background:white" >
     <div class="titel"><p class="card_titel"> {{item.token_no}}</p></div>

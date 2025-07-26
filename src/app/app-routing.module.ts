@@ -5,7 +5,6 @@ import { ProductComponent } from './menu/product/product.component';
 import { OngoingComponent } from './menu/ongoing/ongoing.component';
 import { ProductAnalyticsComponent } from './menu/product-analytics/product-analytics.component';
 import { LoginComponent } from './login/login/login.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
 import { authGuard } from './gard/auth.guard';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { TableOrdersComponent } from './table-orders/table-orders.component';
@@ -15,22 +14,29 @@ import { FeedbackPageComponent } from './feedback/feedback-page/feedback-page.co
 import { CreateVendorComponent } from './admin/create-vendor/create-vendor.component';
 import { ViewVendorsComponent } from './admin/view-vendors/view-vendors.component';
 import { EmployeeComponent } from './vendor/employee/employee.component';
+import { roleWiseGuard } from './auth/role-wise.guard';
+import { KitchenComponent } from './kds/kitchen/kitchen.component';
+import { InvalidAccessComponent } from './error/invalid-access/invalid-access.component';
 
 const routes: Routes = [
   {path:'dashboard', component:SidebarComponent,children:[
-    {path:'menu/order',component:OrderComponent},
-    {path:'menu/product',component:ProductComponent},
-    {path:'menu/ongoing',component:OngoingComponent},
-    {path:'menu/productAnalytics',component:ProductAnalyticsComponent},
-    {path:'menu/tableOrder',component:TableOrdersComponent},
-    {path:'menu/OrderHistory',component:OrderHistoryComponent},
-    {path:'menu/offer',component:OfferPageComponent},
-    {path:'menu/Feedback',component:FeedbackPageComponent},
-    {path:'admin/createVendor',component:CreateVendorComponent},
-    {path:'admin/vendors' , component:ViewVendorsComponent},
-    {path:'vendor/employee' , component:EmployeeComponent}
+
+    {path:'menu/order',component:OrderComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] } },
+    {path:'menu/product',component:ProductComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'menu/ongoing',component:OngoingComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'menu/productAnalytics',component:ProductAnalyticsComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER'] }},
+    {path:'menu/tableOrder',component:TableOrdersComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'menu/OrderHistory',component:OrderHistoryComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'menu/offer',component:OfferPageComponent, canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'menu/Feedback',component:FeedbackPageComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER','MANAGER'] }},
+    {path:'admin/createVendor',component:CreateVendorComponent ,canActivate:[roleWiseGuard], data: { roles: ['ADMIN'] }},
+    {path:'admin/vendors' , component:ViewVendorsComponent , canActivate:[roleWiseGuard], data: { roles: ['ADMIN'] }},
+    {path:'vendor/employee' , component:EmployeeComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER'] }},
+    {path:'cook/kitchen' , component:KitchenComponent ,canActivate:[roleWiseGuard], data: { roles: ['VENDER','COOK'] }}
+
   ],canActivate:[authGuard]},
   {path:'',component:LoginComponent},
+  {path:'unauthorized', component:InvalidAccessComponent}
 ];
 
 @NgModule({

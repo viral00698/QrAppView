@@ -7,5 +7,6 @@ export enum StorageKey {
      USER="edfbhj dfhjghkjb hkjgbnkghbjk hj khtkjhkgjch !!*890 j hg kjt hgkmllgjlk",
      JWT_TOKEN="ekjndshukghnfhjrvgkfjhmglfkhlvklfg",
      CUST_NAME="hdsjwrrv",
-     CUST_MOBILE="weniukfnyhwf"
+     CUST_MOBILE="weniukfnyhwf",
+     ROLE="dxcfvgbj^&hn698^%"
 }

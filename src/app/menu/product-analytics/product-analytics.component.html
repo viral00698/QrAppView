@@ -43,7 +43,16 @@
 </div>
  -->
 
-<div class="main-container">  
+<div class="main-container"> 
+  <div class="header-group-btn">
+    <button class="header-group-item-btn">Last7Days</button>
+    <button class="header-group-item-btn">Last90Days</button>
+    <button class="header-group-item-btn">Last30Days</button>
+    <button class="header-group-item-btn">Yearly</button>
+    <button class="header-group-item-btn">Today</button>
+    <button class="header-group-item-btn">Hourly</button>
+
+  </div> 
   <div class="card-group-1">
     <div class="items">
       <app-area-plot *ngIf="dataForArea" [data]="this.dataForArea"></app-area-plot>

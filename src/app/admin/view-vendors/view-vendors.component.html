@@ -3,7 +3,11 @@
   <!-- <p-toast /> -->
   <p-confirmDialog></p-confirmDialog>
 </div>
-<div class="main-container">
+
+<div *ngIf="!vendors">
+  <app-notfound></app-notfound>
+</div>
+<div class="main-container" *ngIf="vendors">
   <p-table
     [value]="vendors"
     [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"

@@ -41,14 +41,16 @@ export class EmployeeComponent implements OnInit {
   visibleCredentials: boolean = false;
   userRole: any
   employee: any;
+  tmpEmployee: any;
   constructor(private employeeService: EmployeeService,
     private fb: FormBuilder,
     private fileUpload: FileUploadService,
     private messageService: MessageService,
     private userService: UserService,
     private storageService: SecureLocalStorageService) {
-      this.formInit()
-      this.forgotCredentialsFormInit()
+
+    this.formInit()
+    this.forgotCredentialsFormInit()
 
     this.userRole = [
       { label: 'MANAGER', value: 'MANAGER' },
@@ -81,9 +83,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   formInit() {
-
-
-
 
     this.formGroup = this.fb.group({
       name: [null, Validators.required],
@@ -179,6 +178,7 @@ export class EmployeeComponent implements OnInit {
     vendor.vendorId = this.vender?.vendorId
     this.employeeService.getEmployeeByVendor(vendor).subscribe((res: any) => {
       this.employees = res?.data
+      this.tmpEmployee = this.employees
     })
   }
 
@@ -228,6 +228,7 @@ export class EmployeeComponent implements OnInit {
     try {
       const res: any = await firstValueFrom(this.employeeService.getEmployeeAddress(employee));
       this.employeeAddress = res.data;
+
     } catch (error) {
       console.error('Failed to fetch employee address:', error);
     }
@@ -252,6 +253,7 @@ export class EmployeeComponent implements OnInit {
       
       this.userService.createUser(json).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
+          this.visibleCredentials = false
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
         } else {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
@@ -282,6 +284,7 @@ export class EmployeeComponent implements OnInit {
 
       this.userService.forgotPassword(json).subscribe((res:any)=>{
         if (res.status === RequestStatus.success) {
+            this.forgotPasswordVisible = false
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
         } else {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
@@ -291,6 +294,24 @@ export class EmployeeComponent implements OnInit {
   }
   forgotPassword(){
       this.forgotPasswordVisible = !this.forgotPasswordVisible
+  }
+
+
+  serarchByTokenAndMobile() {
+    if (this.searchField) {
+      debugger
+      const search = this.searchField.toLowerCase();
+      this.tmpEmployee = this.employees.filter((item: any) => {
+        return item.name.toLowerCase().includes(search) || item.mobileNo.toLowerCase().includes(search)
+      })
+    } else {
+      this.tmpEmployee = this.employees;
+    }
+
+    if (this.tmpEmployee === null) {
+      this.tmpEmployee = this.employees;
+    }
+
   }
 
   viewProfile(){

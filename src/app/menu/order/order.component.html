@@ -24,7 +24,11 @@
   </div>
 </div>
 
-<div class="cardGrid scroll" >
+<div *ngIf="!tmpcashOrderList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="cardGrid scroll" *ngIf="tmpcashOrderList">
   <p-card *ngFor="let item of tmpcashOrderList">
     <div class="titel"><p class="card_titel"> {{item.token_no}}</p></div>
     <div class="order_detail">
