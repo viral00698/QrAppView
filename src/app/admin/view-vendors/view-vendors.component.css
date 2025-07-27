@@ -3,24 +3,24 @@
 }
 
 th {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 500;
     color: black;
-    opacity: 0.8;
+    opacity: 0.8; */
 }
 
 td {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 400;
     color: black;
     border-bottom: 1px solid;
-    border-style: ridge;
+    border-style: ridge; */
 }
 
 

@@ -54,7 +54,7 @@
 <p-dialog header="Add Question:" [(visible)]="visible" [style]="{width: '50vw'}">
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="feedback-from">
-      <label for="question" class="from-label">Question:</label>
+      <label for="question" class="form-label">Question:</label>
       <input id="question" type="text" pInputText placeholder="Enter Question name..." formControlName="question" />
       <div *ngIf="formGroup.controls['question'].invalid && formGroup.controls['question'].touched" class="error-message">
         <span class="errorMeg" *ngIf="formGroup.controls['question'].errors?.['required']" style="color: brown;">Note:Question is required.</span>

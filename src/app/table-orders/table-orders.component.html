@@ -4,7 +4,7 @@
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Table Name:</p>
+        <p class="form-label">Table Name:</p>
       </div>
       <div class="form_item_content">
         <input type="text" class="inputbox" pInputText placeholder="Enter Table name..." formControlName="tableName" />
@@ -16,7 +16,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">TableType:</p>
+        <p class="form-label">TableType:</p>
       </div>
       <div class="form_item_content">
         <p-dropdown appendTo="body" class="inputbox" formControlName="type" [options]="tableTypes" optionLabel="name" styleClass="inputbox" placeholder="Select a TableType.." />

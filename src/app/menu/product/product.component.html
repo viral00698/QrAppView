@@ -103,7 +103,7 @@
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Product Name:</p>
+        <p class="form-label">Product Name:</p>
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter product name..." formControlName="itemName" />
@@ -118,7 +118,7 @@
 
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">FoodCategory:</p>
+        <p class="form-label">FoodCategory:</p>
       </div>
       <div class="form_item_content">
         <p-dropdown class="inputbox" formControlName="foodCategory" [options]="foodTypes" optionLabel="label" styleClass="inputbox" placeholder="Select a TableType.." />
@@ -132,7 +132,7 @@
 
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Description:</p>
+        <p class="form-label">Description:</p>
       </div>
       <div class="form_item_content">
         <textarea rows="2" cols="40" placeholder="Enter product description..." pInputTextarea formControlName="description"></textarea>
@@ -144,7 +144,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Amount:</p>
+        <p class="form-label">Amount:</p>
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter Amount..." formControlName="amount" />
@@ -156,7 +156,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Gram:</p>
+        <p class="form-label">Gram:</p>
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter gramOrMl..." formControlName="gram" />
@@ -168,7 +168,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Quantity:</p>
+        <p class="form-label">Quantity:</p>
       </div>
       <div class="form_item_content">
         <input type="text" pInputText placeholder="Enter quantity..." formControlName="quantity" />
@@ -180,7 +180,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Jain:</p>
+        <p class="form-label">Jain:</p>
       </div>
       <div class="form_item_content">
         <p-inputSwitch class="isJain" formControlName="jain"></p-inputSwitch>
@@ -189,7 +189,7 @@
 
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Veg/Non-Veg:</p>
+        <p class="form-label">Veg/Non-Veg:</p>
       </div>
       <div class="form_item_content">
         <p-inputSwitch class="isVegNoVeg" formControlName="vegNonVeg"></p-inputSwitch>
@@ -197,7 +197,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Offer:</p>
+        <p class="form-label">Offer:</p>
       </div>
       <div class="form_item_content">
         <!-- <input type="text" pInputText placeholder="Enter Offer id..." formControlName="Offer" /> -->
@@ -211,7 +211,7 @@
     </div>
     <div class="form_grid">
       <div class="form_item_titel">
-        <p class="form_label">Upload Image:</p>
+        <p class="form-label">Upload Image:</p>
       </div>
       <div class="form_item_content custom-file-upload">
         <input id="fileUpload" type="file" (change)="onUpload($event)" class="custom-file-upload" name="file" accept="image/*" />

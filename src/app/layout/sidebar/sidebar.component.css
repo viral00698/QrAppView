@@ -140,6 +140,7 @@ li {
     font-weight: 400;
     color:black;
     background: none;
+    text-align: left;
 }
 
 .sidebar-btn:hover{

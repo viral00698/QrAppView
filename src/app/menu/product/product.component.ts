@@ -16,7 +16,7 @@ import { SecureLocalStorageService } from 'src/app/services/secure-local-storage
 })
 export class ProductComponent implements OnInit {
 
-  dialogTitel = "Add Product"
+  dialogTitel = "New Product Entry"
   searchField: any;
   products: any = []
   formGroup!: FormGroup;
