@@ -1,0 +1,36 @@
+<p-toast></p-toast>
+
+<div *ngIf="!OrderList">
+  <app-notfound></app-notfound>
+</div>
+
+<div class="main-container" *ngIf="OrderList">
+    <div class="card" *ngFor="let item of OrderList">
+        <div class="card-head">
+            <p>{{item?.tableOrder?.tableName}} </p>
+            <p>{{item?.orderAt | date:'hh:mm:a'}}</p>
+            <p>{{item?.orderStatus}}</p>
+        </div>
+        <div class="card-content" style="background: yellow;">
+           <div class="content-item">
+            <p>Dive In</p>
+           </div>
+        </div>
+        <div class="card-content" style="opacity: 0.8;">
+           <div class="content-item">
+            <p>item</p>
+           </div>
+           <div class="content-item">
+            <p>Qty</p>
+           </div>
+        </div>
+         <div class="card-content" *ngFor="let product of item?.orderDetails">
+           <div class="content-item">
+            <p>{{product?.itemName}}</p>
+           </div>
+           <div class="content-item">
+            <p>{{product?.quntity}}</p>
+           </div>
+        </div>
+    </div>
+</div>

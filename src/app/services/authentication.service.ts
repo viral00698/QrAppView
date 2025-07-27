@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from '../model/login';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { SecureLocalStorageService } from './secure-local-storage.service';
 import { RequestStatus } from '../constent/request-status';
@@ -12,13 +12,14 @@ import { StorageKey } from '../constent/storage-key';
 })
 export class AuthenticationService {
 
-
+  private rollArray:any=[]
   private isSocketSecure:boolean = false
   private jwtToken: string | undefined
   private isLogedIn: boolean = true;
 
   private loginResponse: any;
   xsrfToken: any;
+  roleSet:Set<string> = new Set()
   constructor(private http: HttpClient, private router: Router , private localStrorage:SecureLocalStorageService) { }
   login(data: Login) {
     const header = new HttpHeaders({
@@ -28,29 +29,59 @@ export class AuthenticationService {
       map(response => {
         const authToken = response.headers.get('Authorization');
         if (authToken) {
-debugger
           this.localStrorage.encriptAndSave(authToken,StorageKey.JWT_TOKEN)
           this.jwtToken = authToken;
           this.isLogedIn = true;
-          this.router.navigate(['dashboard/menu/order'])
+          // this.router.navigate(['dashboard/menu/order'])
+          // this.router.navigate(['dashboard/menu/order'])
         }
 
-        if(response?.body && response.status === 200){
+        if(response?.body && response?.status === 200){
           const tmp = response?.body as { data: any };
           if(tmp){
-            debugger
-            this.localStrorage.encriptAndSave(tmp?.data?.vendorDetails , StorageKey.USER);
+            
+            for(let role of tmp?.data?.role){
+              this.rollArray.push(role?.userType)
+              this.roleSet.add(role?.userType)
+            }
+
+            this.localStrorage.setRole(this.rollArray);
+            let updateValu = tmp?.data?.vendorDetails
+        
+            if(updateValu === null || updateValu === undefined){
+              updateValu = {
+                'role': this.rollArray
+              }
+            }
+            
+            updateValu['role'] = this.rollArray;
+        
+            this.localStrorage.encriptAndSave(updateValu , StorageKey.USER);
+            
+            if(this.roleSet.has('ADMIN') || this.roleSet.has('SUPER')){
+              this.router.navigate(['dashboard/admin/vendors'])
+            }
+            else if(this.roleSet.has('COOK'))
+             this.router.navigate(['dashboard/cook/kitchen'])
+            else{
+              this.router.navigate(['dashboard/menu/order'])
+            }
           } else{
             this.logout()
           }
+        }else{
+          alert(response)
         }
-    
-        debugger
+
       }),
-      
-      catchError(this.handleError)
-    ).subscribe((res: any) => { 
-     
+
+    catchError((error: HttpErrorResponse) => {
+    alert("Login failed 😔 Please check your username and password and try again.");
+    this.logout(); // Optional: clear session
+    return of(null); // Return a default observable to complete the stream
+  })
+    
+    ).subscribe((res: any) => {  
      });
   }
 
@@ -72,11 +103,12 @@ debugger
 
   logout(){
     this.http.get('logout').subscribe((res:any)=>{
-        if(res.status == 'success'){
+        if(res?.status == 'success'){
           this.jwtToken = undefined;
           localStorage.removeItem(StorageKey.VENDER)
           localStorage.removeItem(StorageKey.USER)
-          this.router.navigate(['/login'])
+          localStorage.removeItem(StorageKey.ROLE)
+          this.router.navigate([''])
         }
     })
   }

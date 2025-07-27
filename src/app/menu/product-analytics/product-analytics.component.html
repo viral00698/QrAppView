@@ -43,7 +43,16 @@
 </div>
  -->
 
-<div class="main-container">  
+<div class="main-container"> 
+  <div class="header-group-btn">
+    <button class="header-group-item-btn" (click)="last7Days()">Last7Days</button>
+    <button class="header-group-item-btn" (click)="last90days()">Last90Days</button>
+    <button class="header-group-item-btn" (click)="last30Days()">Last30Days</button>
+    <button class="header-group-item-btn" (click)="yearly()">Yearly</button>
+    <button class="header-group-item-btn">Today</button>
+    <button class="header-group-item-btn">Hourly</button>
+
+  </div> 
   <div class="card-group-1">
     <div class="items">
       <app-area-plot *ngIf="dataForArea" [data]="this.dataForArea"></app-area-plot>
@@ -97,8 +106,8 @@
     </div>
     
     <div class="items">
-      <app-bar-groupchart></app-bar-groupchart>
-      
+      <!-- <app-bar-groupchart></app-bar-groupchart> -->
+      <p style="padding: 1rem;">Get ready! ✨ Coming soon!</p>
       <!-- <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart> -->
     </div>
 

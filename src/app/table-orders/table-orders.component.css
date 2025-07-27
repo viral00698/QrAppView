@@ -104,7 +104,7 @@
      margin-bottom: 5px;
  }
 
- .form_label {
+ .form-label {
      margin: 0;
  }
 
@@ -238,7 +238,7 @@
      text-align: center;
      place-self: center;
      font-size: small;
-     font-weight: 500;
+     font-weight: 600;
  }
 
 
@@ -389,19 +389,23 @@
 } 
 
 th {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    opacity: 0.8;
+    color: black; */
 }
 
 td {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black; */
+
 }
 
 .update-form{
@@ -414,6 +418,14 @@ td {
     margin-top: .5rem;
 }
 
-.p-dropdown .p-dropdown-label.p-placeholder{
-    
+
+.tAmountitem1::after {
+    content: " ₹";
+}
+
+
+.tAmountitem2 {
+    place-self: center;
+    font-weight: 600;
+    font-size: medium;
 }

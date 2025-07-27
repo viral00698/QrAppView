@@ -16,7 +16,11 @@
     </div>
   </div>
 
-  <div class="">
+<div *ngIf="!tmpOrderList">
+  <app-notfound></app-notfound>
+</div>
+
+  <div class="" *ngIf="tmpOrderList">
     <p-table [value]="tmpOrderList" [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  s [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
       <ng-template pTemplate="header">
         <tr>
@@ -45,9 +49,9 @@
     </p-table>
   </div>
 
-<p-dialog header="Order Details" [modal]="true" [(visible)]="orderDetails" [style]="{'width':'50%'}">
-
-     <p-table [value]="tmpProduct?.orderDetails">
+<p-dialog header="Order Details" [modal]="true" [(visible)]="orderDetails" [style]="{'width':'30%'}">
+    
+     <!-- <p-table [value]="tmpProduct?.orderDetails">
       <ng-template pTemplate="header">
         <tr id="history-head">
           <th scope="col">Sr.</th>
@@ -60,12 +64,77 @@
       <ng-template pTemplate="body" let-product let-i="rowIndex">
         <tr>
           <td>{{i+1}}</td>
-          <td>{{product?.customerName || '-'}}</td>
-          <td>{{product?.customerMobileNo}}</td>
-          <td>{{product?.tableOrder?.tableName || '-'}}</td>
-          <td>{{product?.orderAt | date:'d MMM y hh:m:a '}}</td>
+          <td>{{ProductMap.get(product?.productId) || '-'}}</td>
+          <td>{{product?.quntity}}</td>
+          <td>{{product?.amount || '-'}}</td>
+          <td>{{product?.offerApplied || '-'}} {{product?.offerType}}</td>
         </tr>
-      </ng-template>    
+      </ng-template> 
+        
+    </p-table> -->
+
+  <p-card>
+    <div class="titel"><p class="card_titel">{{ tmpProduct?.token_no}}</p></div>
+    <div class="order_detail">
+      <p class="card_bill_detail">OrderID: {{ tmpProduct?.orderId| slice:0:7}}</p>
+      <p class="card_bill_detail">Status: {{ tmpProduct?.orderStatus}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail" *ngIf=" this.tmpProduct?.payment_mode !== 'CASH'">Txn ID: {{ this.tmpProduct?.txid}}</p>
+    </div>
+    <div class="order_detail">
+      <p class="card_bill_detail">Date: {{ this.tmpProduct?.orderAt | date:'dd-MMM-yyyy' }}</p>
+      <p class="card_bill_detail">Mobile: {{ this.tmpProduct?.customerMobileNo}}</p>
+    </div>
+    <div class="order_detail">
+      <!-- <p class="card_bill_detail">Payment Mode: {{ this.Order?.payment_mode}}</p> -->
+      <p class="card_bill_detail">Time: {{ this.tmpProduct?.orderAt | date:'hh:mm:a' }}</p>
+    </div>
+    <p-table [value]=" this.tmpProduct?.orderDetails" [scrollable]="true" scrollHeight="8rem" [style]="{ 'min-height': '8rem', 'max-height': '8rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="table_heading">Sr No.</th>
+          <th scope="col" class="table_heading">Item</th>
+          <th scope="col" class="table_heading">Qty</th>
+          <th scope="col" class="table_heading">Amount</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product let-index="rowIndex">
+        <tr>
+          <td class="table_content">{{index+1}}</td>
+          <td class="table_content">{{ProductMap.get(product?.productId) || '-'}}</td>
+          <td class="table_content">{{product?.quntity}}</td>
+          <td class="table_content tAmountitem1">{{product?.amount}}</td>
+        </tr>
+      </ng-template>
     </p-table>
+    <ng-template pTemplate="content">
+      <div class="row">
+        <p-divider></p-divider>
+        <div class="order_detail"  *ngIf="this.tmpProduct?.gst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">GST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ this.tmpProduct?.gst |number:'1.2-2'}}</p>
+        </div>
+         <div class="order_detail" *ngIf="this.tmpProduct?.sgst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">SGST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ this.tmpProduct?.sgst |number:'1.2-2'}}</p>
+        </div>
+         <div class="order_detail"  *ngIf="this.tmpProduct?.restaurantsCharge > 0">
+          <p class="card_titel " style="margin: 0.1rem;">Restro Charge:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ this.tmpProduct?.restaurantsCharge |number:'1.2-2'}}</p>
+        </div>
+        <div class="order_detail">
+          <p class="card_titel " style="margin: 0.1rem;">Total Amount:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ this.tmpProduct?.totelAmount |number:'1.2-2'}}</p>
+        </div>
+        <p-divider></p-divider>
+        <div style="text-align: center;">
+          <p style="margin: 0;"><button (click)="invoice(this.tmpProduct)" class="invoicBtn">Invoice</button></p>
+          <!-- <p class="card_bill_detail "><button (click)="generateInvoice( this.Order)" class="cancel_btn">Invoice</button></p> -->
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
 </p-dialog>
+
   

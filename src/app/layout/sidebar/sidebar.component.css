@@ -129,6 +129,7 @@ li {
     flex-grow: 1;
     width: 85%;
     overflow-y: auto;
+    /* background:	#f1f0f0; */
     background:	#f6f6f6;
 
 }
@@ -139,6 +140,7 @@ li {
     font-weight: 400;
     color:black;
     background: none;
+    text-align: left;
 }
 
 .sidebar-btn:hover{
@@ -158,4 +160,9 @@ li {
 .logo{
     height: 25px;
     width: 25px;
+}
+
+.sidebar-btn.selected {
+  background-color: #000;
+  color: #fff;
 }

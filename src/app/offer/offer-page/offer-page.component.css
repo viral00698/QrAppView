@@ -102,12 +102,12 @@
   flex-direction: column;
 }
 
-.form-lable{
-    font-weight: 500;
+.form-label{
+    /* font-weight: 500;
     margin: 5px;
-    font-size: small;
+    font-size: small; */
     flex: 1;
-    text-align: start;
+    /* text-align: start; */
     /* place-self: center; */
 }
 
@@ -143,19 +143,31 @@
 
 
 th {
-    padding: 5px;
+    /* padding: .5rem;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    color: black;
+    opacity: 0.9;
+    background: white;
+    border-bottom: 1px solid;
+    border-style: ridge;
+    padding: .5rem; */
+
+
 }
 
 td {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black;
+    border-bottom: 1px solid;
+    border-style: ridge; */
+
 }
 
 .sticky-table .p-datatable-thead>tr>th {
@@ -166,3 +178,4 @@ td {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
 }
+

@@ -1,0 +1,151 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<div class="card flex justify-center gap-2">
+  <!-- <p-toast /> -->
+  <p-confirmDialog></p-confirmDialog>
+</div>
+
+<div *ngIf="!vendors">
+  <app-notfound></app-notfound>
+</div>
+<div class="main-container" *ngIf="vendors">
+  <p-table
+    [value]="vendors"
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    s
+    [tableStyle]="{ 'width':'99%', 'margin-left':'0.3rem','margin-right':'0.3rem'}"
+    [scrollable]="true"
+    scrollHeight="85vh"
+    styleClass="sticky-table"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Sr.</th>
+        <th scope="col">Store Name</th>
+        <th scope="col">Onwer Name</th>
+        <th scope="col">Mobile No:</th>
+        <th scope="col">UPI ID</th>
+        <th scope="col">CreateAt</th>
+        <th scope="col">Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col">CreateLogin</th>
+        <th scope="col">Forgot Password</th>
+        <th scope="col">View Profile</th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-vendor let-i="rowIndex">
+      <tr>
+        <td>{{i+1}}</td>
+        <td>{{vendor.storeName}}</td>
+        <td>{{vendor.ownerName}}</td>
+        <td>{{vendor.mobileNo || '-'}}</td>
+        <td>{{vendor.upa|| '-'}}</td>
+        <td>{{vendor.createAt | date:'dd-MMM-yyyy' }}</td>
+        <td>
+          <p-inputSwitch styleClass="custom-switch" [ngModel]="vendor.status" (onChange)="changeStatus(vendor)"></p-inputSwitch>
+        </td>
+        <td>
+          <button id="editVendor" type="button" class="btn btn-primary" (click)="editVendor(vendor)"><i class="bi bi-pencil-square"></i></button>
+        </td>
+        <td>
+          <button id="createCredentials" type="button" class="btn btn-primary" (click)="createCredentials(vendor)"><i class="bi bi-person-add"></i></button>
+        </td>
+          <td>
+          <button id="createCredentials" type="button" class="btn btn-primary" (click)="forgotPassword()"><i class="bi bi-person-add"></i></button>
+        </td>
+         <td>
+          <button id="createCredentials" type="button" class="btn btn-primary" (click)="viewProfile()"><i class="bi bi-person"></i></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Create Login" [(visible)]="visible" [style]="{width: '30vw'}">
+  <form [formGroup]="fromGroup" (ngSubmit)="onSubmit()">
+    <div class="from">
+      <div class="from-item">
+        <label for="name">name:</label>
+        <input id="name" pInputText type="text" formControlName="name" placeholder="name" />
+        <div *ngIf="fromGroup.controls['name'].invalid && fromGroup.controls['name'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="fromGroup.controls['name'].errors?.['required']" style="color: brown;">Note:name is required</span>
+        </div>
+      </div>
+      <div class="from-item">
+        <label for="username">username:</label>
+        <input id="username" pInputText type="text" formControlName="username" placeholder="username" />
+        <div *ngIf="fromGroup.controls['username'].invalid && fromGroup.controls['username'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="fromGroup.controls['username'].errors?.['required']" style="color: brown;">Note:username is required</span>
+          <span class="errorMeg" *ngIf="fromGroup.controls['username'].errors?.['minLength']" style="color: brown;">Note: username number must be at least 5 characters</span>
+          <span class="errorMeg" *ngIf="fromGroup.controls['username'].errors?.['maxLength']" style="color: brown;"> Note: username number must be at most 10 characters</span>
+        </div>
+      </div>
+      <div class="from-item">
+        <label for="password">password:</label>
+        <input id="password" pInputText type="text" formControlName="password" placeholder="password" />
+        <div *ngIf="fromGroup.controls['password'].invalid && fromGroup.controls['password'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="fromGroup.controls['password'].errors?.['required']" style="color: brown;">Note:password is required</span>
+          <span class="errorMeg" *ngIf="fromGroup.controls['password'].errors?.['minLength']" style="color: brown;">Note: password number must be at least 5 characters</span>
+          <span class="errorMeg" *ngIf="fromGroup.get('password')?.errors?.['pattern']" style="color: brown;">
+            Note:Password must include uppercase, lowercase, number, and special character.
+          </span>
+        </div>
+      </div>
+      <div class="from-item">
+        <label for="Conform_password">Conform password:</label>
+        <input id="Conform_password" pInputText type="text" formControlName="Conform_password" placeholder="Conform password" />
+        <div *ngIf="fromGroup.controls['Conform_password'].invalid && fromGroup.controls['Conform_password'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="fromGroup.controls['Conform_password'].errors?.['required']" style="color: brown;">Note:Conform_password is required</span>
+          <span class="errorMeg" *ngIf="fromGroup.controls['Conform_password'].errors?.['passwordMismatch'] && fromGroup.controls['Conform_password'].touched" style="color: brown;">
+            Note: Passwords do not match
+          </span>
+        </div>
+      </div>
+      <div class="from-btn">
+        <button [disabled]="!fromGroup.valid" type="submit">submit</button>
+      </div>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog header="Forgot Password" [(visible)]="forgotPasswordVisible" [style]="{width: '30vw'}">
+  <form [formGroup]="forgotPasswordFrom" (ngSubmit)="forgotCredentials()">
+    <div class="from">
+    
+      <div class="from-item">
+        <label for="username">username:</label>
+        <input id="username" pInputText type="text" formControlName="username" placeholder="username" />
+        <div *ngIf="forgotPasswordFrom.controls['username'].invalid && forgotPasswordFrom.controls['username'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['username'].errors?.['required']" style="color: brown;">Note:username is required</span>
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['username'].errors?.['minLength']" style="color: brown;">Note: username number must be at least 5 characters</span>
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['username'].errors?.['maxLength']" style="color: brown;"> Note: username number must be at most 10 characters</span>
+        </div>
+      </div>
+
+      <div class="from-item">
+        <label for="password">password:</label>
+        <input id="password" pInputText type="password" formControlName="password" placeholder="password" toggleMask="true" />
+        <div *ngIf="forgotPasswordFrom.controls['password'].invalid && forgotPasswordFrom.controls['password'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['password'].errors?.['required']" style="color: brown;">Note:password is required</span>
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['password'].errors?.['minLength']" style="color: brown;">Note: password number must be at least 5 characters</span>
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.get('password')?.errors?.['pattern']" style="color: brown;">
+            Note:Password must include uppercase, lowercase, number, and special character.
+          </span>
+        </div>
+      </div>
+      <div class="from-item">
+        <label for="Conform_password">Conform password:</label>
+        <input id="Conform_password" pInputText type="password" formControlName="Conform_password" placeholder="Conform password" />
+        <div *ngIf="forgotPasswordFrom.controls['Conform_password'].invalid && forgotPasswordFrom.controls['Conform_password'].touched" class="error-message">
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['Conform_password'].errors?.['required']" style="color: brown;">Note:Conform_password is required</span>
+          <span class="errorMeg" *ngIf="forgotPasswordFrom.controls['Conform_password'].errors?.['passwordMismatch'] && forgotPasswordFrom.controls['Conform_password'].touched" style="color: brown;">
+            Note: Passwords do not match
+          </span>
+        </div>
+      </div>
+      <div class="from-btn">
+        <button [disabled]="!forgotPasswordFrom.valid" type="submit">submit</button>
+      </div>
+    </div>
+  </form>
+</p-dialog>

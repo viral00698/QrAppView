@@ -73,10 +73,10 @@ export class ProductAnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getVenderDetails()
-    this.countOrdersGroupByDay();
+    this.countOrdersGroupByDay('last7Days');
     this.custmerInsides(1)
     this.revenueByFoodCategory(0);
-    this.orderStatictics()
+    this.orderStatictics('WEEKLY')
     this.getLowestSellingItems()
     this.getTopSellingItems()
     
@@ -89,11 +89,11 @@ export class ProductAnalyticsComponent implements OnInit {
     }
   }
 
-  countOrdersGroupByDay() {
+  countOrdersGroupByDay(filter:any) {
     this.orderService.countOrdersGroupByDay(this.vender?.vendorId).subscribe((res: any) => {
       let map: any = new Map<string, number>()
 
-      map = this.filter.filterOrders('last30Days', res?.data)
+      map = this.filter.filterOrders(filter, res?.data)
       let tmpLabel: string[] = [];
       let tmpValue: number[] = [];
 
@@ -124,16 +124,16 @@ export class ProductAnalyticsComponent implements OnInit {
   revenueByFoodCategory(filter:any){
     this.orderService.revenueByFoodCategory(this.vender?.vendorId).subscribe((res: any) => {
         if(res.status === RequestStatus.success){
-          this.revenueByFoodCetegoryFiter= this.revenueByFoodCetegory.applyCategoryFilter('yearly' , res?.data)
+          this.revenueByFoodCetegoryFiter= this.revenueByFoodCetegory.applyCategoryFilter(filter , res?.data)
         }
        
     })
   }
 
-  orderStatictics(){
+  orderStatictics(filter:any){
       this.orderService.orderStatictics(this.vender?.vendorId).subscribe((res:any)=>{
         if(res.status === RequestStatus.success){
-        this.orderStates = this.orderStaticticsService.filterAndSummarize('Today' , res.data);     
+        this.orderStates = this.orderStaticticsService.filterAndSummarize(filter , res.data);     
         }
       })
   }
@@ -152,6 +152,32 @@ export class ProductAnalyticsComponent implements OnInit {
          this.LowestSellingItems =  this.topAndLowestSellingService.transform(res.data);
         }
       })
+  }
+
+
+  last7Days(){
+    this.countOrdersGroupByDay('last7Days');
+    this.revenueByFoodCategory('weekly')
+    this.orderStatictics('WEEKLY')
+  }
+
+  last30Days(){
+    this.countOrdersGroupByDay('monthly');
+    this.revenueByFoodCategory('monthly')
+    this.orderStatictics('MONTHLY')
+    // custmerInsides()
+  }
+
+  last90days(){
+    this.countOrdersGroupByDay('last90Days');
+    this.revenueByFoodCategory('90days')
+    this.orderStatictics('NINETY_DAYS')
+  }
+
+  yearly(){
+    this.countOrdersGroupByDay('yearly');
+    this.revenueByFoodCategory('yearly')
+    this.orderStatictics('YEARLY')
   }
 
 

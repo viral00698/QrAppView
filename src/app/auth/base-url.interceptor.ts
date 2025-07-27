@@ -59,20 +59,23 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders
+  HttpHeaders,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environments';
 import { AuthenticationService } from '../services/authentication.service';
 import { SecureLocalStorageService } from '../services/secure-local-storage.service';
 import { StorageKey } from '../constent/storage-key';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthenticationService,
-    private localStorage: SecureLocalStorageService
+    private localStorage: SecureLocalStorageService,
+    private router:Router
   ) { }
 
   jwt_Token: any;
@@ -86,7 +89,6 @@ export class BaseUrlInterceptor implements HttpInterceptor {
       : request.clone({ url: `${environment.apiUrl}/${request.url}` });
 
     if (request.url.startsWith('login')) {
-      debugger
       return next.handle(apiReq);
     }
     // Retrieve JWT token from secure local storage.
@@ -112,10 +114,38 @@ export class BaseUrlInterceptor implements HttpInterceptor {
       console.log('JWT token found, request modified with Authorization header.');
 
       return next.handle(jwtReq);
+    }else{
+       this.router.navigate(['']);
     }
 
-    console.log('No JWT token found, sending request without Authorization header.');
-    return next.handle(apiReq);
+      // 👇 Handle token expiry / unauthorized error
+    return next.handle(apiReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        // 👉 Token expired or invalid
+        console.warn("JWT token expired or invalid.");
+
+        // Optional: clear token, show alert, redirect to login
+        localStorage.removeItem(StorageKey.JWT_TOKEN)
+        localStorage.removeItem(StorageKey.ROLE)
+        localStorage.removeItem(StorageKey.VENDER)
+        localStorage.removeItem(StorageKey.MENU)
+        localStorage.removeItem(StorageKey.ITEMS)
+        localStorage.removeItem(StorageKey.USERID)
+        localStorage.removeItem(StorageKey.USER)
+
+        alert("Session expired. Please log in again.");
+        this.router.navigate(['']); // inject Router in constructor
+
+        return throwError(() => error);
+      }
+
+      return throwError(() => error);
+    })
+  );
+
+    // console.log('No JWT token found, sending request without Authorization header.');
+    // return next.handle(apiReq);
   }
 }
 

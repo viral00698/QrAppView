@@ -53,11 +53,11 @@
     width: 50%;
 }
 
-.from-label{
+/* .form-label{
     font-size: small;
     font-weight: 500;
     padding: .1rem;
-}
+} */
 
 .feedback-submit-btn{
     width: 20%;
@@ -75,17 +75,22 @@
     border: 2px solid black;
 }
 th {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 500;
+    opacity: 0.8;
+    color: black; */
 }
 
 td {
-    padding: 5px;
+    /* padding: 5px;
     text-align: center;
     align-content: center;
     font-size: medium;
     font-weight: 400;
+    color: black;
+    border-bottom: 1px solid;
+    border-style: ridge; */
 }

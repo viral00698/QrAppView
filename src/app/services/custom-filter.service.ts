@@ -216,9 +216,56 @@ export class CustomFilterService {
   
     return hourMap;
   }
+
+
+  groupBylast90Days(data: any) {
+    
+    const dayMap = new Map<string, number>();
+  
+    const now = new Date();
+    const istOffsetMinutes = 330; // IST is UTC +5:30
+    const todayIST = new Date(now.getTime() + istOffsetMinutes * 60 * 1000);
+    
+    const thirtyDaysAgoIST = new Date(todayIST.getTime());
+    thirtyDaysAgoIST.setDate(todayIST.getDate() - 29); // Includes today
+  
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  
+    for (let i of data) {
+      const dateStr = i[1];
+      const count = i[2];
+  
+      if (!dateStr || isNaN(new Date(dateStr).getTime())) {
+        console.warn('Invalid date entry found:', i);
+        continue;
+      }
+  
+      // Convert to IST
+      const utcDate = new Date(dateStr);
+      const istDate = new Date(utcDate.getTime() + istOffsetMinutes * 60 * 1000);
+  
+      // Filter dates within the last 30 days in IST
+      if (istDate < thirtyDaysAgoIST || istDate > todayIST) continue;
+  
+      const day = istDate.getDate().toString().padStart(2, '0');
+      const month = monthNames[istDate.getMonth()];
+      const key = `${day}-${month}`; // Example: 03-Apr
+  
+      if (dayMap.has(key)) {
+        dayMap.set(key, dayMap.get(key)! + count);
+      } else {
+        dayMap.set(key, count);
+      }
+    }
+  
+    return dayMap;
+
+
+  }
   
   
-  filterOrders(type: 'daily' | 'last7Days' | 'monthly' | 'yearly' | 'hourly'|'last30Days', orderStats: any) {
+  filterOrders(type: 'daily' | 'last7Days' | 'monthly' | 'yearly' | 'hourly'|'last30Days'|'last90Days', orderStats: any) {
     switch (type) {
       case 'daily':
         return this.groupByDay(orderStats);
@@ -232,8 +279,12 @@ export class CustomFilterService {
         return this.groupByLast24Hours(orderStats);
       case 'last30Days':
         return this.groupByLast30Days(orderStats);
+      case 'last90Days':
+        return this.groupBylast90Days(orderStats)
+
     }
   }
+ 
 
 
 
