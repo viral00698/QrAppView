@@ -134,11 +134,15 @@ export class OfferPageComponent implements OnInit {
         }
       }
 
+
+      const selectedDate = new Date(this.formGroup.get('Expires')?.value);
+      selectedDate.setHours(23, 59, 59, 999);
+      const expireDate = selectedDate.getTime();
       const obj = {
         "offerName": this.formGroup.get('offerName')?.value,
         "isActive": this.formGroup.get('IsActive')?.value,
         "offerType": this.formGroup.get('offerTypes')?.value?.value,
-        "expireDate": new Date(this.formGroup.get('Expires')?.value).getTime(),
+        "expireDate": expireDate,
         "flatDiscount": this.formGroup.get('FlatDiscount')?.value,
         "message": this.formGroup.get('message')?.value,
         "vendorId": this.vender.vendorId,
