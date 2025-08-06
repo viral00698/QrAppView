@@ -1,12 +1,22 @@
-<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>.
+
 <div class="header">
+  <div class="header-item-1">
+   <input class="searchBox" placeholder="Search Table..." [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" type="text" />
+  </div>
+  <div class="header-item-2">
+  <button class="header-btn" *ngIf="tmpProductList" (click)="addProduct()"><i class="pi pi-plus-circle btn-icon"></i></button> 
+  </div>
+</div>
+
+<!-- <div class="header">
   <div class="item_A">
     <input id="searchInput" [(ngModel)]="searchField" (input)="serarchByTokenAndMobile()" class="inputText" type="text" pInputText placeholder="Search by product..." />
   </div>
   <div class="item_B">
     <button id="cashOrderBtn" *ngIf="tmpProductList" (click)="addProduct()" class="btn btn-light p-btn"><i class="pi pi-plus-circle btn-icon"></i></button>
   </div>
-</div>
+</div> -->
 
 <!-- <div class="table-container">
   <p-table [value]="tmpProductList" [tableStyle]="{ 'width':'87%', 'margin-left':'0.4rem','margin-right':'0.4rem' , 'margin-top':'0.4rem'}"  [scrollable]="true" scrollHeight="85vh" styleClass="sticky-table">
