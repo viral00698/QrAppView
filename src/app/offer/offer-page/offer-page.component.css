@@ -140,7 +140,20 @@
 .card-item input{
   width: 50%;
 }
+.adjustExpiry{
+  border: none;
+  color:white;
+  background: black;
+  width: 40%;
+  padding: .3rem;
+  border-radius: 5px;
+}
 
+.adjustExpiry:hover{
+  border: 1px solid black;
+  color:black;
+  background: white;
+}
 
 th {
     /* padding: .5rem;

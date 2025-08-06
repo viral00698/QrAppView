@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
+import { Offer } from 'src/app/model/offer';
 import { OfferService } from 'src/app/services/offer.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
@@ -14,8 +15,10 @@ import { SecureLocalStorageService } from 'src/app/services/secure-local-storage
 })
 export class OfferPageComponent implements OnInit {
 
+  extendExpiryVisible:boolean = false
   colors!: { name: string; code: string; }[];
   formGroup!: FormGroup;
+  extendExpirey!:FormGroup
   dilogView: boolean = false
   offerTypes: { label: string; value: string; }[];
   vender: any;
@@ -23,9 +26,18 @@ export class OfferPageComponent implements OnInit {
   tmpProductList: any;
   selectOfferType: any
   isSubmitting = false;
-  offerList: any;
+  offerList: any =[]
+  offerSet: Map<any,any> = new Map();
+
   productMap:Map<any,any> = new Map()
-  constructor(private fb: FormBuilder, private productService: ProductService, private storageService: SecureLocalStorageService, private offerService: OfferService, private messageService: MessageService) {
+  updateExperyObject: any;
+  constructor(private fb: FormBuilder,
+    private productService: ProductService,
+    private storageService: SecureLocalStorageService,
+    private offerService: OfferService,
+    private messageService: MessageService,
+    private cdr:ChangeDetectorRef
+  ) {
 
   
     this.offerTypes = [
@@ -43,6 +55,7 @@ export class OfferPageComponent implements OnInit {
     this.addOfferInit()
     this.getVendorProducts();
     this.getOfferByVendor();
+    this.extendExpiryFromInit()
   }
 
 
@@ -168,7 +181,8 @@ export class OfferPageComponent implements OnInit {
 
       this.offerService.getOfferByVendor(this.vender.vendorId).subscribe((res: any) => {
         if(res.status === RequestStatus.success){
-          this.offerList = res.data;         
+          this.offerList = res.data;   
+        
         }
       })
     }
@@ -187,5 +201,47 @@ export class OfferPageComponent implements OnInit {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
         }
       })
+  }
+
+  extendExpiryModel(offer:any){
+    this.extendExpiryVisible = !this.extendExpiryVisible
+    this.updateExperyObject = offer
+  }
+
+  extendExpiryFromInit(){
+    this.extendExpirey = this.fb.group({
+      'expireyDate':[null , Validators.required],
+      'message':[null , Validators.required]
+    })
+  }
+  extendExpiryonSubmit(){
+
+    if(this.extendExpirey.valid){
+      const expDate = new Date(this.extendExpirey.get('expireyDate')?.value).getTime()
+      const message = this.extendExpirey.get('message')?.value
+      const json = new Offer();
+      json.expireDate = expDate,
+      json.message = message,
+      json.offerId = this.updateExperyObject?.offerId
+
+
+      this.offerService.updateExpierydate(json).subscribe((res:any)=>{
+        if(res?.status === RequestStatus.success){
+          this.cdr.detectChanges()
+          for(let i of  this.offerList){
+            if(i?.offerId === this.updateExperyObject?.offerId){
+              i.expireDate = expDate
+              i.message = message
+              break;
+            }
+          }
+
+          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
+          this.extendExpiryVisible = false
+        }else{
+          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
+        }
+      })
+    }
   }
 }
