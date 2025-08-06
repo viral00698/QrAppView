@@ -1,52 +1,124 @@
-.main-container{
+.main-container {
     display: flex;
     flex-direction: row;
     gap: .3rem;
     width: 100%;
-    overflow: hidden;
+    flex-wrap: wrap;
+    /* overflow: hidden; */
     max-width: 100%;
-}       
+}
 
-.card{
-
-    flex: 0 0 auto; 
+.card {
+    flex: 0 0 auto;
     width: 20vw;
     margin: 5px 5px;
     border-style: dotted;
     border-radius: 5px;
-    color: black;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.card-head{
-    display: flexbox;
+.card-head {
+    display: flex;
     flex-direction: column;
     border-radius: 5px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    padding: .3rem;
-     background-color: #c66722;
+    padding-left: .5rem;
+    background-color: rgb(244 114 110);
+
 }
 
-
-.card-head p{
-    margin: 0;
-    padding: 0.2rem;
-    font-size: medium;
-    font-weight: 500;
-}
-
-.card-content{
+.card-heading{
     display: flex;
-    padding: .5rem;
-     font-size: medium;
-    font-weight: 600;
-    color: black;
+    flex-direction: row;
+    justify-content: space-between;
+    /* padding: .5rem .5rem; */
 }
-.content-item{
-    flex: 1;
+.card-heading p{
+ font-size: medium;
+    padding-top: .2rem;
+    padding-right: .3rem;
+    /* color: rgb(26 51 65); */
+    margin: 0;
+    font-weight: 700;
+    color: #222234;
+}
+.card .card-head .table-name{
+    font-size: medium;
+    /* padding-top: .5rem; */
+    /* color: rgb(26 51 65); */
+    margin: 0;
+    font-weight: 700;
+    color: #222234;
+    /* text-align: center; */
+}
+.card .card-head .orderAt{
+    font-size: smaller;
+    color: white;
+    font-family: 700;
+    margin: 0;
 }
 
-.content-item p {
+.orderType{
+    text-align: center;
+    font-size: medium;
+    font-weight: 800;
+    background-color: #f3f3f3;
+    padding: .8rem;
+}
+
+.order-content{
+    display: flex;
+    flex-direction: row;
+    padding: .5rem 1rem;
+    color:  rgb(26 51 65) ;
+    font-weight: 700;
+}
+
+.order-content .order-item-1{
+    flex: 11;
     margin: 0;
-    padding: 0rem 0.5rem;
+    text-align: start;
+}
+.order-content .order-item-2{
+    flex: 1;
+    text-align: end;
+    margin: 0;
+    vertical-align: center;
+}
+
+
+.icon {
+  width: 20px;
+  height: 15px;
+  margin-right: 5px;
+  vertical-align: middle;
+  place-self: center;
+}
+
+
+
+.delivery-toggle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  color: white;
+}
+
+.delivery-toggle.delivered {
+  background-color: #28a745; /* Green background */
+  border-color: #28a745;
+}
+
+.tick {
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
 }

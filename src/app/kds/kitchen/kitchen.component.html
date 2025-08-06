@@ -5,32 +5,39 @@
 </div>
 
 <div class="main-container" *ngIf="OrderList">
-    <div class="card" *ngFor="let item of OrderList">
-        <div class="card-head">
-            <p>{{item?.tableOrder?.tableName}} </p>
-            <p>{{item?.orderAt | date:'hh:mm:a'}}</p>
-            <p>{{item?.orderStatus}}</p>
-        </div>
-        <div class="card-content" style="background: yellow;">
-           <div class="content-item">
-            <p>Dive In</p>
-           </div>
-        </div>
-        <div class="card-content" style="opacity: 0.8;">
-           <div class="content-item">
-            <p>item</p>
-           </div>
-           <div class="content-item">
-            <p>Qty</p>
-           </div>
-        </div>
-         <div class="card-content" *ngFor="let product of item?.orderDetails">
-           <div class="content-item">
-            <p>{{product?.itemName}}</p>
-           </div>
-           <div class="content-item">
-            <p>{{product?.quntity}}</p>
-           </div>
-        </div>
+  <div class="card" *ngFor="let item of OrderList">
+    <div class="card-head">
+      <div class="card-heading">
+        <p class="table-name" *ngIf="item?.tableOrder?.tableName">{{item?.tableOrder?.tableName}}</p>
+        <p class="orderAt">{{item?.orderAt | date:'hh:mm:a'}}</p>
+
+      </div>
+      <p class="table-name"  *ngIf="item?.token_no">#{{item?.token_no}}</p>
     </div>
+    <div class="orderType">Dive In </div>
+
+    <div class="order-content" *ngFor="let product of item?.orderDetails">
+      <p class="order-item-1" *ngIf="product?.isJain">{{product?.quntity}} x {{product?.itemName}} <img src="../../../assets/jainism.png" alt="Jain Icon" class="icon" /></p>
+      <p class="order-item-1" *ngIf="!product?.isJain">{{product?.quntity}} x {{product?.itemName}}</p>
+      <p class="order-item-2">
+        <span class="delivery-toggle" [class.delivered]="product?.isDelivered" (click)="updateItemStatus(product , item,item?.orderDetails)">
+          <span *ngIf="product?.isDelivered" class="tick">&#10003;</span>
+        </span>
+      </p>
+      <!-- <p class="order-item-2"><input class="checkbox" [checked]="product?.isDelivered" (change)="updateItemStatus(product)" type="checkbox"></p> -->
+    </div>
+  </div>
 </div>
+
+<!-- rgb(242 182 93) -->
+<!-- rgb(244 114 110) -->
+<!-- rgb(26 51 65) -->
+
+<!-- <div class="card-content-2" *ngFor="let product of item?.orderDetails">
+           <div class="content-item">
+            <p>{{product?.quntity}} X {{product?.itemName}}</p>
+           </div>
+            <div class="content-item">
+            <p>Y</p>
+           </div>
+        </div> -->
