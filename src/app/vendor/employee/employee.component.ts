@@ -128,8 +128,8 @@ export class EmployeeComponent implements OnInit {
         emp.aadharNo = this.formGroup.get('aadhaar')?.value
       emp.designation = this.formGroup.get('designation')?.value
       emp.empImage = this.employeeImage,
-        emp.panDoc = this.panFile,
-        emp.panNo = this.formGroup.get('pan')?.value
+      emp.panDoc = this.panFile,
+      emp.panNo = this.formGroup.get('pan')?.value
       emp.employmentType = this.formGroup.get('employmentType')?.value
       emp.name = this.formGroup.get('name')?.value
       emp.mobileNo = this.formGroup.get('mobile')?.value
@@ -140,7 +140,21 @@ export class EmployeeComponent implements OnInit {
 
       this.employeeService.createEmployee(emp).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
+
+          let flag = false
+          for(let i = 0; i < this.tmpEmployee.length;i++){  
+          
+            if(this.tmpEmployee[i]?.empId === res?.data?.empId){
+              this.tmpEmployee[i] = res?.data;
+              flag = true;
+              break
+            }
+          }
+          if(!flag){
+            this.tmpEmployee.push(res?.data);
+          }
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
+          this.visible = false;
         } else {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
         }
@@ -178,6 +192,7 @@ export class EmployeeComponent implements OnInit {
     vendor.vendorId = this.vender?.vendorId
     this.employeeService.getEmployeeByVendor(vendor).subscribe((res: any) => {
       this.employees = res?.data
+      
       this.tmpEmployee = this.employees
     })
   }
@@ -198,12 +213,12 @@ export class EmployeeComponent implements OnInit {
   }
 
 
-  editVendor(employee: any) {
+  async editVendor(employee: any) {
     this.visible = !this.visible
 
 
     if (this.visible) {
-      this.fetchEmployeeAddress(employee);
+    await this.fetchEmployeeAddress(employee);
       this.seletedEmployee = employee;
       this.formGroup.patchValue({
         name: employee?.name,
@@ -218,7 +233,7 @@ export class EmployeeComponent implements OnInit {
         village: this.employeeAddress?.villageStreet,
         pincode: this.employeeAddress?.pincode,
         aadhaar: employee?.aadharNo,
-        pan: employee?.panNo
+        pan: employee?.panNo,
 
       })
     }
@@ -299,7 +314,6 @@ export class EmployeeComponent implements OnInit {
 
   serarchByTokenAndMobile() {
     if (this.searchField) {
-      debugger
       const search = this.searchField.toLowerCase();
       this.tmpEmployee = this.employees.filter((item: any) => {
         return item.name.toLowerCase().includes(search) || item.mobileNo.toLowerCase().includes(search)
