@@ -6,4 +6,5 @@ export class OrderDetails{
   isJain?: boolean;
   quantity?: number;
   orderId?: string; // UUID as string
+  isDelivered: any;
 }

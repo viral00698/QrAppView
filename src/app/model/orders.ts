@@ -17,4 +17,5 @@ export class Orders{
     sgst?: number; // in Rs.
     restaurantsCharge?: number; // in Rs.
     orderStatus?: OrderStatus;
+    tableOrder?:any
 }
