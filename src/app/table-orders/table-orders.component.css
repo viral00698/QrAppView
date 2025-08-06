@@ -167,29 +167,36 @@
  }
 
 
- .header {
-     display: flex;
-     flex-direction: row;
+.header {
+    display: flex;
  }
 
- .header .header-items {
-     width: 30%;
-     margin: 0.4rem;
+  .header .header-item-1 {
+    flex: 1;
+    text-align: start;
  }
 
- #searchInput {
-     border: 1;
-     border-radius: 15px;
-     /* background-image: url(../../../assets/search.svg); */
-     background-repeat: no-repeat;
-     background-position: calc(100% - 20px) center;
-     padding-left: 1.5rem;
-     font-weight: 500;
-     font-size: medium;
+  .header .header-item-2 {
+    flex: 1;
+    text-align: end;
+ }
+.searchBox {
+    border-radius: 15px;
+    border: 2px solid black;
+    padding: .4rem 1rem;
+    border-radius: 15px;
+    font-weight: 400;
+    margin-right: .5rem;
+    width: 40%;
+    background-image: url('../../assets/search.svg'); /* ✅ Use valid path */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) center;
+    background-size: 16px 16px; /* or adjust as needed */
+    
  }
 
- .header .header-btn {
-     width: 10%;
+ .header .header-item-2 .header-btn {
+     width: 15%;
      border: none;
      padding: .5rem;
      background: black;
@@ -198,11 +205,20 @@
 
  }
 
- .header .header-btn:hover {
+ .header .header-item-2 .header-btn:hover {
      border: 1px solid black;
      background: white;
      color: black;
 
+ }
+
+ .uiView{
+    border: none;
+    color: white;
+    background: black;
+    border-radius: 5px;
+    padding: .3rem;
+    width: 10%;
  }
 
  .order-container {
@@ -253,6 +269,7 @@
  .card_titel {
      font-size: medium;
      font-weight: 500;
+     color: black;
  }
 
  .table_heading {

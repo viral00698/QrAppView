@@ -33,9 +33,17 @@
 
 
 <div class="header">
-  <input id="searchInput" placeholder="Search..." class="header-items" type="text" />
+  <div class="header-item-1">
+   <input class="searchBox" placeholder="Search Table..." [(ngModel)]="searchField" (input)="serarchByTable()" type="text" />
+   <button *ngIf="tmpTables" class="uiView"><i class="bi bi-justify" (click)="uiView()"></i></button>
+  </div>
+  <div class="header-item-2">
+  <button class="header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button> 
+  </div>
+  <!-- <input id="searchInput" placeholder="Search..." [(ngModel)]="searchField" (input)="serarchByTable()" class="header-items" type="text" />
   <button *ngIf="tmpTables" class="table-view"><i class="bi bi-justify" (click)="uiView()"></i></button>
-  <button class="header-items header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button>
+   <button *ngIf="tmpTables" class=""><i class="bi bi-justify" (click)="uiView()"></i></button>
+  <button class="header-items header-btn" (click)="showDialog()"><i class="bi bi-plus-circle"></i></button> -->
 </div>
 
 <div *ngIf="!tmpTables">
@@ -44,8 +52,8 @@
 
 <div  *ngIf="tmpTables">
   <div class="order-container">
-    <div class="order-table" *ngFor="let item of tmpTables">
-      <div class="table-card" (click)="getTableOrdes(item)">
+    <div class="order-table" *ngFor="let item of tmpTables"  (click)="getTableOrdes(item)">
+      <div class="table-card">
         <div *ngIf="item.tableStatus === 'BOOKED' " style="color: green; font-weight: 600;">{{item.tableName}}</div>
         <div *ngIf="item.tableStatus !== 'BOOKED' ">{{item.tableName}}</div>
 

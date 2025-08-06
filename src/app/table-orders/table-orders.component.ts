@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SecureLocalStorageService } from '../services/secure-local-storage.service';
 import { StorageKey } from '../constent/storage-key';
@@ -35,7 +35,7 @@ export class TableOrdersComponent implements OnInit {
   selectedtable: any;
   constructor(private fb: FormBuilder,
     private storageService: SecureLocalStorageService,
-    private messageService: MessageService, private tableOrderService: TableOrderService) {
+    private messageService: MessageService, private tableOrderService: TableOrderService , private changeDetectorRef: ChangeDetectorRef,) {
 
     this.tableTypes = [
       { name: 'AC', code: 'AC' },
@@ -206,6 +206,24 @@ export class TableOrdersComponent implements OnInit {
         this.updateDilog = false
       }
     })
+  }
+
+  serarchByTable(){
+    
+    const searchByItem = this.searchField?.toLowerCase().trim();
+
+    if (searchByItem) {
+      this.tmpTables = this.tmpTables.filter((item: any) => {
+        const itemName = item.tableName?.toLowerCase();
+        return (
+          (searchByItem && itemName.includes(searchByItem))
+        );
+      });
+    } else {
+      this.tmpTables = this.tables
+    }
+
+    this.changeDetectorRef.detectChanges();
   }
 
   MarkAsCompleted(item: any) { }
