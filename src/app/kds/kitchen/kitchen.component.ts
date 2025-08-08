@@ -37,7 +37,7 @@ export class KitchenComponent {
 
     this.rxStompService.watch('/queue/' + this.vender?.vendorId + '/messages').subscribe((res: any) => {
       const tmp = JSON.parse(res.body)
-      debugger
+      
       this.messageService.add({
         severity: 'info',         // Notification type (success, info, warn, error)
         summary: 'New item Added',

@@ -76,7 +76,7 @@
         </div>
         <div class="avg-order-items">
           <p class="avg-heading">
-              {{ (orderStates?.totalOrders || 0) - (orderStates?.ongoingOrders || 0) }}
+              {{ (orderStates.totalOrders || 0) - (orderStates.ongoingOrders || 0) }}
           </p>
           <p class="avg-content">Total Orders</p>
           <p class="avg-content" style="border-bottom: 2px solid rgb(51, 50, 50); margin-left: 40%; margin-right: 40%; margin-top: 1%;"></p>
@@ -84,7 +84,7 @@
 
         </div>
         <div class="avg-order-items">
-          <p class="avg-heading">{{ orderStates?.ongoingOrders || 0 }}</p>
+          <p class="avg-heading">{{ orderStates.ongoingOrders || 0 }}</p>
           <p class="avg-content">Active Orders</p>
           <p class="avg-content" style="border-bottom: 2px solid rgb(51, 50, 50); margin-left: 40%; margin-right: 40%; margin-top: 1%; opacity: 0.8;"></p>
 
