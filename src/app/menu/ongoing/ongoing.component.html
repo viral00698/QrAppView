@@ -54,14 +54,31 @@
       <div class="row">
         <p-divider class="divider"></p-divider>
         <div class="order_detail">
-          <p class="tAmountitem2 card_titel" style="margin: .1rem;">Total Amount:</p>
-          <p class="tAmountitem2 tAmountitem1" style="margin: .1rem;">{{item.totelAmount |number:'1.2-2'}}</p>
+          <p class="tAmountitem2 card_titel" style="margin: .1rem;">Amount:</p>
+          <p class="tAmountitem2 tAmountitem1" style="margin: .1rem;">{{item?.billingDtos?.amount |number:'1.2-2'}}</p>
         </div>
-        <p-divider class="divider"></p-divider>
-        <div class="order_detail">
+        <!-- <p-divider class="divider"></p-divider> -->
+         <div class="order_detail"  *ngIf="item?.billingDtos?.gst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">GST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ item?.billingDtos?.gst |number:'1.2-2'}}</p>
+        </div>
+          <div class="order_detail"  *ngIf="item?.billingDtos?.sgst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">GST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ item?.billingDtos?.sgst |number:'1.2-2'}}</p>
+        </div>
+           <div class="order_detail"  *ngIf="item?.billingDtos?.restaurantsCharge > 0">
+          <p class="card_titel " style="margin: 0.1rem;">Restro Charge:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ item?.billingDtos?.resturentCharge |number:'1.2-2'}}</p>
+        </div>
+        <div class="total_amount">
+          <p class="card_titel " style="margin: 0.1rem;">Total Amount:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ item?.billingDtos?.totalAmount |number:'1.2-2'}}</p>
+        </div>
+      
+        <!-- <div class="order_detail">
           <p class="card_bill_detail "><button (click)="MarkAsCompleted(item)" class="acept_btn">Mark As Completed</button></p>
-          <!-- <p class="card_bill_detail "><button (click)="generateInvoice(item)" class="cancel_btn">Invoice</button></p> -->
-        </div>
+          <p class="card_bill_detail "><button (click)="generateInvoice(item)" class="cancel_btn">Invoice</button></p>
+        </div> -->
       </div>
     </ng-template>
   </p-card>

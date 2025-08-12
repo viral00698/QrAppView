@@ -64,7 +64,7 @@
   </div>
 </div>
 
-<p-dialog id="my-dialog" [header]=" 'Table: '+Order?.tableOrder?.tableName" [modal]="true" [(visible)]="viewOrder">
+<p-dialog id="my-dialog" [header]=" 'Table: '+Order?.tableOrder?.tableName" [modal]="true" [(visible)]="viewOrder" [style]="{'width':'40%'}">
   <p-card>
     <div class="titel"><p class="card_titel">{{ Order?.token_no}}</p></div>
     <div class="order_detail">
@@ -100,18 +100,34 @@
         </tr>
       </ng-template>
     </p-table>
+    <p-divider class="divider"></p-divider>
     <ng-template pTemplate="content">
       <div class="row">
-        <p-divider class="divider"></p-divider>
         <div class="order_detail">
-          <p class="tAmountitem2 card_titel" style="margin: 0.1rem;">Total Amount:</p>
-          <p class="tAmountitem2 tAmountitem1" style="margin: 0.1rem;">{{ this.Order?.totelAmount |number:'1.2-2'}}</p>
+          <p class="tAmountitem2 card_titel" style="margin: 0.1rem;">Amount:</p>
+          <p class="tAmountitem2 tAmountitem1" style="margin: 0.1rem;">{{ this.Order?.billingDtos?.amount |number:'1.2-2'}}</p>
         </div>
-        <p-divider class="divider"></p-divider>
-        <div class="order_detail">
+         <div class="order_detail"  *ngIf="Order?.billingDtos?.gst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">GST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ Order?.billingDtos?.gst |number:'1.2-2'}}</p>
+        </div>
+          <div class="order_detail"  *ngIf="Order?.billingDtos?.sgst > 0">
+          <p class="card_titel " style="margin: 0.1rem;">GST:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ Order?.billingDtos?.sgst |number:'1.2-2'}}</p>
+        </div>
+           <div class="order_detail"  *ngIf="Order?.billingDtos?.resturentCharge > 0">
+          <p class="card_titel " style="margin: 0.1rem;">Restro Charge:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ Order?.billingDtos?.resturentCharge |number:'1.2-2'}}</p>
+        </div>
+        <div class="total_amount">
+          <p class="card_titel " style="margin: 0.1rem;">Total Amount:</p>
+          <p class="tAmountitem1 tAmountitem2" style="margin: 0.1rem;">{{ Order?.billingDtos?.totalAmount |number:'1.2-2'}}</p>
+        </div>
+        <!-- <p-divider class="divider"></p-divider> -->
+        <!-- <div class="order_detail">
           <p class="card_bill_detail"><button (click)="MarkAsCompleted( this.Order)" class="acept_btn">Mark As Completed</button></p>
-          <!-- <p class="card_bill_detail "><button (click)="generateInvoice( this.Order)" class="cancel_btn">Invoice</button></p> -->
-        </div>
+          <p class="card_bill_detail "><button (click)="generateInvoice( this.Order)" class="cancel_btn">Invoice</button></p>
+        </div> -->
       </div>
     </ng-template>
   </p-card>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Sidebar } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { SecureLocalStorageService } from 'src/app/services/secure-local-storage.service';
@@ -17,28 +17,31 @@ export class SidebarComponent implements OnInit {
   @ViewChild('sidebarRef') sidebarRef!: Sidebar;
 
 
-
-  sidebarItems = [
-    {label:'Create Vendor'},
-    {label:'Vendors'},
-    {label:'Employee'}, 
-    {label:'QR Order'},
-    {label:'Ongoing Order'},
-    {label:'Product'},
-    {label:'TableOrder'},
-    {label:'Create Offer'},
-    {label:'OrderHistory'},
-    {label:'Analytics'},
-    {label:'Feedback'},
-    {label:'Kitchen'}
-  ];
+  // sidebarItems = [
+  //   {label:'Create Vendor'},
+  //   {label:'Vendors'},
+  //   {label:'Employee'}, 
+  //   {label:'QR Order'},
+  //   {label:'Ongoing Order'},
+  //   {label:'Product'},
+  //   {label:'TableOrder'},
+  //   {label:'Create Offer'},
+  //   {label:'OrderHistory'},
+  //   {label:'Analytics'},
+  //   {label:'Feedback'},
+  //   {label:'Kitchen'}
+  // ];
 
 
 
   selectedItem: string | null = null;
-  constructor(private localStorage: SecureLocalStorageService, private loaderService: LoaderService) { }
+  constructor(private localStorage: SecureLocalStorageService, private loaderService: LoaderService , private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+
+  setTimeout(() => {
+    this.isLoading = this.loaderService.isLoading;
+  });
 
     let user = JSON.parse(this.localStorage.decryptAndGet(StorageKey.USER) || 'null')
     if (user) {
@@ -60,6 +63,9 @@ export class SidebarComponent implements OnInit {
   //   this.sidebarRef.close(e);
   // }
 
+  ngAfterViewInit() {
+  this.cdRef.detectChanges(); // Force change detection after view init
+}
 
 
 
