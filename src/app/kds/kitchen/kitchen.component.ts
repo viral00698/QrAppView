@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnChanges, SimpleChanges } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { OrderStatus } from 'src/app/constent/order-status';
 import { RequestStatus } from 'src/app/constent/request-status';
 import { StorageKey } from 'src/app/constent/storage-key';
+import { TableStatus } from 'src/app/constent/table-status';
 import { OrderDetails } from 'src/app/model/OrderDetails';
 import { OrderServiceService } from 'src/app/services/order-service.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -37,11 +39,18 @@ export class KitchenComponent {
 
     this.rxStompService.watch('/queue/' + this.vender?.vendorId + '/messages').subscribe((res: any) => {
       const tmp = JSON.parse(res.body)
-      
+      let m = ''
+      if(tmp?.tableOrder?.tableName){
+        if(tmp?.tableOrder?.tableStatus === TableStatus.AVAILABLE){
+          return;
+        }
+        m + 'at Table :'+tmp?.tableOrder?.tableName
+      }
+
       this.messageService.add({
         severity: 'info',         // Notification type (success, info, warn, error)
         summary: 'New item Added',
-        detail: 'New Item Added at Table:  ' + tmp?.tableOrder?.tableName,
+        detail: 'New Item Added' + m,
         sticky: true              // Keeps the notification visible until manually closed
       });
 
@@ -73,6 +82,11 @@ export class KitchenComponent {
 
 
   updateOrderList(newOrder: any) {
+
+    if(newOrder?.orderStatus !== OrderStatus.Ongoing || newOrder?.orderStatus === OrderStatus.WaitForApprove){
+      return;
+    }
+
     this.OrdersMap.set(newOrder?.orderId, newOrder);
     this.OrderList = Array.from(this.OrdersMap.values());  
     this.cdr.detectChanges();
