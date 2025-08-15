@@ -23,9 +23,9 @@ import { UserService } from 'src/app/services/user.service';
 export class EmployeeComponent implements OnInit {
   employeeAddress: any;
   seletedEmployee: any;
-  forgotPasswordVisible:boolean = false
+  forgotPasswordVisible: boolean = false
   employeeForm!: FormGroup
-  forgotPasswordFrom!:FormGroup
+  forgotPasswordFrom!: FormGroup
   searchField: any;
   visible: boolean = false;
   formGroup!: FormGroup;
@@ -42,6 +42,8 @@ export class EmployeeComponent implements OnInit {
   userRole: any
   employee: any;
   tmpEmployee: any;
+  emailMap: any = new Map<string, string>;
+  empUser: any;
   constructor(private employeeService: EmployeeService,
     private fb: FormBuilder,
     private fileUpload: FileUploadService,
@@ -63,6 +65,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.getVenderDetails()
     this.getEmployeeByVendor()
+    this.getEmailByVid();
   }
 
   dailogVisible() {
@@ -128,8 +131,8 @@ export class EmployeeComponent implements OnInit {
         emp.aadharNo = this.formGroup.get('aadhaar')?.value
       emp.designation = this.formGroup.get('designation')?.value
       emp.empImage = this.employeeImage,
-      emp.panDoc = this.panFile,
-      emp.panNo = this.formGroup.get('pan')?.value
+        emp.panDoc = this.panFile,
+        emp.panNo = this.formGroup.get('pan')?.value
       emp.employmentType = this.formGroup.get('employmentType')?.value
       emp.name = this.formGroup.get('name')?.value
       emp.mobileNo = this.formGroup.get('mobile')?.value
@@ -142,15 +145,15 @@ export class EmployeeComponent implements OnInit {
         if (res.status === RequestStatus.success) {
 
           let flag = false
-          for(let i = 0; i < this.tmpEmployee.length;i++){  
-          
-            if(this.tmpEmployee[i]?.empId === res?.data?.empId){
+          for (let i = 0; i < this.tmpEmployee.length; i++) {
+
+            if (this.tmpEmployee[i]?.empId === res?.data?.empId) {
               this.tmpEmployee[i] = res?.data;
               flag = true;
               break
             }
           }
-          if(!flag){
+          if (!flag) {
             this.tmpEmployee.push(res?.data);
           }
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
@@ -192,7 +195,7 @@ export class EmployeeComponent implements OnInit {
     vendor.vendorId = this.vender?.vendorId
     this.employeeService.getEmployeeByVendor(vendor).subscribe((res: any) => {
       this.employees = res?.data
-      
+
       this.tmpEmployee = this.employees
     })
   }
@@ -218,7 +221,7 @@ export class EmployeeComponent implements OnInit {
 
 
     if (this.visible) {
-    await this.fetchEmployeeAddress(employee);
+      await this.fetchEmployeeAddress(employee);
       this.seletedEmployee = employee;
       this.formGroup.patchValue({
         name: employee?.name,
@@ -249,7 +252,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  createCredentialsModel(employee:any) {
+  createCredentialsModel(employee: any) {
     this.employee = employee
     this.visibleCredentials = !this.visibleCredentials
   }
@@ -260,12 +263,12 @@ export class EmployeeComponent implements OnInit {
         this.employeeForm.get('username')?.value,
         this.employeeForm.get('password')?.value,
         this.employeeForm.get('name')?.value,
-       [ this.employeeForm.get('role')?.value?.value],
+        [this.employeeForm.get('role')?.value?.value],
         this.vender?.vendorId,
         this.employee?.empId
-        
+
       )
-      
+
       this.userService.createUser(json).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
           this.visibleCredentials = false
@@ -277,7 +280,7 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-  forgotCredentialsFormInit(){
+  forgotCredentialsFormInit() {
     this.forgotPasswordFrom = this.fb.group({
       'username': [null, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
       'password': [null, [Validators.required, Validators.minLength(10), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]).+$/)]],
@@ -285,9 +288,9 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
-  forgotCredentials(){
-    
-    if(this.forgotPasswordFrom.value){
+  forgotCredentials() {
+
+    if (this.forgotPasswordFrom.value) {
       const json = new Signup(
         this.forgotPasswordFrom.get('username')?.value,
         this.forgotPasswordFrom.get('Conform_password')?.value,
@@ -297,9 +300,9 @@ export class EmployeeComponent implements OnInit {
         'NULL'
       )
 
-      this.userService.forgotPassword(json).subscribe((res:any)=>{
+      this.userService.forgotPassword(json).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
-            this.forgotPasswordVisible = false
+          this.forgotPasswordVisible = false
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res?.message });
         } else {
           this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res?.message });
@@ -307,8 +310,12 @@ export class EmployeeComponent implements OnInit {
       })
     }
   }
-  forgotPassword(){
-      this.forgotPasswordVisible = !this.forgotPasswordVisible
+  forgotPassword(emp:any) {
+    this.forgotPasswordVisible = !this.forgotPasswordVisible
+    this.empUser = this.emailMap.get(emp?.empId)
+    this.forgotPasswordFrom.patchValue({
+      'username':this.empUser
+    })
   }
 
 
@@ -328,8 +335,19 @@ export class EmployeeComponent implements OnInit {
 
   }
 
-  viewProfile(){
-    
+  viewProfile() {
+
+  }
+
+  getEmailByVid() {
+
+    this.employeeService.getEmailByVid(this.vender?.vendorId).subscribe((res: any) => {
+      if (res.status === RequestStatus.success) {
+        this.emailMap = new Map<string, string>(
+          Object.entries(res.data) // Converts { key: value } → [[key, value], ...]
+        );
+      }
+    })
   }
 }
 
