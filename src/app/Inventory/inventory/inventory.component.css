@@ -1,0 +1,11 @@
+.coming-soon {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #555;
+  background: #f9f9f9;
+  border: 1px dashed #aaa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 20px;
+}

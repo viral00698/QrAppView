@@ -59,6 +59,7 @@ import { InvalidAccessComponent } from './error/invalid-access/invalid-access.co
 import { LoaderComponent } from './custom-loader/loader/loader.component';
 import { HttpLoaderInterceptor } from './auth/http-loader.interceptor';
 import { RatingComponent } from './custom-componets/rating/rating.component';
+import { InventoryComponent } from './Inventory/inventory/inventory.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +86,7 @@ import { RatingComponent } from './custom-componets/rating/rating.component';
     InvalidAccessComponent,
     LoaderComponent,
     RatingComponent,
+    InventoryComponent,
     
   ],
   imports: [
