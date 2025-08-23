@@ -4,8 +4,8 @@ import SockJS from 'sockjs-client';
 
 export const myRxStompConfig: RxStompConfig = {
   // Which server?
-  brokerURL: 'ws://172.29.186.2041:8080/ws',
-
+  brokerURL: 'wss://back.vitts.in/app/ws',
+// https://back.vitts.in/app/
   // Headers
   // Typical keys: login, passcode, host
   // How often to heartbeat?
@@ -16,12 +16,12 @@ export const myRxStompConfig: RxStompConfig = {
   // Wait in milliseconds before attempting auto reconnect
   // Set to 0 to disable
   // Typical value 500 (500 milli seconds)  
-  reconnectDelay: 200,
+  reconnectDelay: 10000,
 
   // Will log diagnostics on console
   // It can be quite verbose, not recommended in production
   // Skip this key to stop logging to console
-  webSocketFactory: () => new SockJS('http://172.29.186.2041:8080/ws'),
+  webSocketFactory: () => new SockJS('https://back.vitts.in/app/ws'),
   debug: (msg: string): void => {
     console.log(new Date(), msg);
   },

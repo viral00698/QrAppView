@@ -9,19 +9,20 @@ import { AuthenticationService } from './authentication.service';
 export class SocketConfigService {
   jwtToken:string | undefined;
   constructor(private authService: AuthenticationService) {
-    console.log(authService.getJwtToken);
     this.jwtToken = this.authService.getJwtToken(); 
   }
 
  
   getRxStompConfig(): RxStompConfig {
     return {
-      brokerURL: 'ws://192.168.253.90:8080/ws',
+      brokerURL: 'wss://back.vitts.in/app/ws',
+
+      // brokerURL: 'ws://https://back.vitts.in/app/:8080/ws',
 
       heartbeatIncoming: 0,
       heartbeatOutgoing: 20000,
-      reconnectDelay: 200,
-      webSocketFactory: () => new SockJS('http://172.29.186.204:8080/ws'),
+      reconnectDelay: 10000,
+      webSocketFactory: () => new SockJS('https://back.vitts.in/app/ws'),
       debug: (msg: string): void => {
         console.log(new Date(), msg);
       },
