@@ -1,113 +1,9 @@
-/* .container-fluid {
-    margin-top: 2rem;
-}
 
-.inputText {
-    width: 60%;
-    border-radius: 25px;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 0;
-    padding: .5rem;
-    background-color: white;
-    padding-left: 2rem !important;
-
-    background-image: url(../../../assets/search.svg);
-    background-repeat: no-repeat;
-  
-    background-position: 20rem;
-
-} */
-
-/* .p-btn {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    padding: .5rem;
-    border-radius: 1rem;
-    padding: .5rem;
-    width: 10rem;
-}
-.btn-icon{
-    font-size: x-large;
-}
-
-::ng-deep .p-card{
-    padding: .2rem;
-}
-
-::ng-deep .p-card-title{
-    display: flex;
-    justify-content: center;
-    font-size: medium !important;
-    font-weight: 600 !important;
-} */
-
-/* .order_detail{
-    margin-bottom: 0rem;
-    margin: 1px;
-}
-
-.table_row{
-  
-    padding: 0rem;
-    text-align: center;
-} */
-
-/* .total_amount{
-    font-size: medium;
-    font-weight: 500;
-    margin: .2rem;
-}
-.token_content{
-    padding-left: .5rem;
-    margin: .2rem;
-    font-size: small;
-}
-.token_content_right{
-   
-    margin: .2rem;
-    font-size: small;
-} */
-
-/* ::ng-deep .confrom_btn {
-    
-} */
-/* ::ng-deep .p-button{
-    border-radius: 20rem !important;
-    background: #f4f4f4 !important;
-    color: black;
-    
-}  */
-
-
-/* ::ng-deep .custom-scroll-panel{
-    max-height: 60vh;
-    overflow-y: auto;
-    scroll-behavior: smooth; 
-} */
-
-/* ::ng-deep .confrom_btn{
-    background-color: #f4f4f4;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-} */
-
-/* .confrom_btn:hover{
-    color: black;
-    background-color: rgb(164, 9, 9);
-    transition: background-color 0.3s, color 0.3s
-} */
-
-/* ::ng-deep .p-panel{
-    overflow-y: hidden !important;
-} */
 
 .titel {
     display: flex;
     justify-content: center;
+    color: black;
 }
 
 .card_titel {
@@ -202,10 +98,10 @@
 
 .total_amount {
     display: flex;
-    justify-content: flex-end;
+    justify-content:space-between;
     font-size: medium;
     font-weight: 500;
-    margin: .2rem;
+    margin: 0rem;
 }
 
 .order_detail {
@@ -257,10 +153,35 @@
     content: " ₹";
 }
 
-.tAmountitem2 {
+.order_detail .card_titel{
+    color: black;
     place-self: center;
     font-weight: 500;
+    opacity: 0.9;
+    font-size: small;
+} 
+
+.total_amount .card_titel{
+    color: black;
+    place-self: center;
+    font-weight: 600;
+    opacity: 0.9;
     font-size: medium;
+}
+.total_amount .tAmountitem2{
+    color: black;
+    place-self: center;
+    font-weight: 600;
+    opacity: 0.9;
+    font-size: medium;
+}
+
+.tAmountitem2 {
+    color: black;
+    place-self: center;
+    font-weight: 500;
+    opacity: 0.9;
+    font-size: small;
 }
 
 

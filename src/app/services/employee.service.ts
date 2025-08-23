@@ -27,4 +27,8 @@ export class EmployeeService {
     return this.http.get('employee/getAddress/'+empId);
   }
 
+  getEmailByVid(vid:string){
+     return this.http.get('employee/getEmail/'+vid);
+  }
+
 }

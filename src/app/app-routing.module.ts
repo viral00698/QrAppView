@@ -17,6 +17,7 @@ import { EmployeeComponent } from './vendor/employee/employee.component';
 import { roleWiseGuard } from './auth/role-wise.guard';
 import { KitchenComponent } from './kds/kitchen/kitchen.component';
 import { InvalidAccessComponent } from './error/invalid-access/invalid-access.component';
+import { InventoryComponent } from './Inventory/inventory/inventory.component';
 
 const routes: Routes = [
   {path:'dashboard', component:SidebarComponent,children:[
@@ -32,7 +33,9 @@ const routes: Routes = [
     {path:'admin/createVendor',component:CreateVendorComponent ,canActivate:[roleWiseGuard], data: { roles: ['ADMIN'] }},
     {path:'admin/vendors' , component:ViewVendorsComponent , canActivate:[roleWiseGuard], data: { roles: ['ADMIN'] }},
     {path:'vendor/employee' , component:EmployeeComponent , canActivate:[roleWiseGuard], data: { roles: ['VENDER'] }},
-    {path:'cook/kitchen' , component:KitchenComponent ,canActivate:[roleWiseGuard], data: { roles: ['VENDER','COOK'] }}
+    {path:'cook/kitchen' , component:KitchenComponent ,canActivate:[roleWiseGuard], data: { roles: ['VENDER','COOK'] }},
+    {path:'inventory/view' , component:InventoryComponent ,canActivate:[roleWiseGuard], data: { roles: ['VENDER'] }}
+
 
   ],canActivate:[authGuard]},
   {path:'',component:LoginComponent},

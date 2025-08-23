@@ -53,8 +53,13 @@ export class OrderStaticticsService {
     ongoingOrders += active_orders;
   });
 
-  totalAmount = totalAmount /(totalOrders - ongoingOrders)
-
+  
+  if(totalAmount > 0){
+       totalAmount = totalAmount /(totalOrders - ongoingOrders)
+  }
+  if(totalAmount === Infinity){
+    totalAmount = 0;
+  }
   console.log({
     totalAmount,
     totalOrders,

@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Offer } from '../model/offer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
+  
 
   constructor(private http:HttpClient) { }
 
@@ -19,5 +21,9 @@ export class OfferService {
 
   setOfferStatus(data:any){
      return this.http.post('offer/setOfferStatus' , data);
+  }
+
+  updateExpierydate(json: Offer) {
+    return this.http.post('offer/updateExpieryDate', json);
   }
 }

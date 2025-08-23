@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OrderDetails } from '../model/OrderDetails';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+ 
 
   constructor(private http:HttpClient) { }
 
@@ -26,5 +28,9 @@ export class ProductService {
 
   deleteProductByid(data:any){
     return this.http.post('product/deleteProductByid',data);
+  }
+
+   updateItemStatus(data: OrderDetails) {
+    return this.http.post('Orders/updateItemStatus' , data);
   }
 }

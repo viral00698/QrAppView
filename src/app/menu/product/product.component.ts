@@ -173,12 +173,25 @@ export class ProductComponent implements OnInit {
         "image": this.imageBase64,
         "vendorId": this.vender.vendorId,
         "productId": this.productId,
-        "offerId":this.formGroup.get('Offer')?.value?.offerId
+        "offerId": this.formGroup.get('Offer')?.value?.offerId
       }
 
       this.productService.addProduct(obj).subscribe((res: any) => {
         if (res.status === RequestStatus.success) {
-          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== obj.productId);
+         
+          let flag = false;
+          for (let i = 0; i < this.tmpProductList.length; i++) {
+            if (this.tmpProductList[i]?.productId === res?.data?.productId) {
+              this.tmpProductList[i] = res.data; // ✅ Replace the object
+              flag = true;
+              break;
+            }
+          }
+          
+          if (!flag) {
+            this.tmpProductList.push(res?.data?.productId)
+          }
+
           this.productsList = this.tmpProductList
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product added successfully' });
           this.visible = false
@@ -210,16 +223,7 @@ export class ProductComponent implements OnInit {
     this.imageBase64 = null
     this.dialogTitel = "Edit Product";
     this.visible = true
-    // this.formGroup.setValue({
-    //   itemName: product?.itemName,
-    //   amount: product?.amount,
-    //   quantity: product.quantity,
-    //   gram: product?.gram,
-    //   jain: product?.jain,
-    //   vegNonVeg: product?.vegNonVeg,
-    //   description: product?.description,
-    //   foodCategory: this.foodTypes.find(item => item.key === product.foodCategory)
-    // });
+
     if (product) {
       this.formGroup.patchValue({
         itemName: product?.itemName,
@@ -249,42 +253,28 @@ export class ProductComponent implements OnInit {
   }
 
   onSwitchChange(product: any) {
-    if (product.status) {
-      const data = {
-        'status': false,
-        'productId': product.productId,
-        'vendorId': this.vender.vendorId,
-      }
-      this.productService.updateProductStatus(data).subscribe((res: any) => {
 
-        if (res.status === RequestStatus.success) {
-          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
-          this.productsList = this.tmpProductList
-          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated' });
-        } else {
-          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Product status update failed. Please try again.' });
-        }
-      })
-    } else {
-
-
-
-      const data = {
-        'status': true,
-        'productId': product.productId,
-        'vendorId': this.vender.vendorId,
-      }
-
-      this.productService.updateProductStatus(data).subscribe((res: any) => {
-        if (res.status === RequestStatus.success) {
-          this.tmpProductList = this.productsList.filter((p: { productId: any; }) => p.productId !== product.productId);
-          this.productsList = this.tmpProductList
-          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Product status successfully updated to In-Active.' });
-        } else {
-          this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Product status update failed. Please try again.' });
-        }
-      })
+    const data = {
+      'status': !product.status,
+      'productId': product.productId,
+      'vendorId': this.vender.vendorId,
     }
+    this.productService.updateProductStatus(data).subscribe((res: any) => {
+
+      if (res.status === RequestStatus.success) {
+        for (let i of this.tmpProductList) {
+          if (product.productId === i.productId) {
+            i.status = !product.status
+            break;
+          }
+        }
+        this.productsList = this.tmpProductList
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: res.message });
+      } else {
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: res.message });
+      }
+    })
+
   }
 
 

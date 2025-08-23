@@ -48,17 +48,18 @@ export class BarGroupchartComponent {
   } as any;
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes['data'] && this.data?.revenue && this.data?.category ) {
       this.chartOptions = {
         series: [
           {
             name: 'Revenue (₹)',
-            data: this.data.revenue,
+            data: this.data?.revenue,
             
           },
           {
             name: 'Total Orders',
-            data: this.data.count,
+            data: this.data?.count,
           }
         ],
         chart: {
@@ -83,9 +84,9 @@ export class BarGroupchartComponent {
           position: 'top'
         },
         xaxis: {
-          categories: this.data.category,
+          categories: this.data?.category,
         },
-        
+
         fill: {
           opacity: 1
         },
@@ -100,24 +101,24 @@ export class BarGroupchartComponent {
     }
 
 
-    if(changes['Topselling'] && this.Topselling?.itemNames && this.Topselling?.itemCounts){
+    if (changes['Topselling'] && this.Topselling?.item && this.Topselling?.totalQuantity) {
 
- this.chartOptions = {
+      this.chartOptions = {
         series: [
           {
             name: 'Revenue (₹)',
-            data: this.Topselling.totalAmounts,
-            
+            data: this.Topselling.totalRevenue,
+
           },
           {
             name: 'Total Orders',
-            data: this.Topselling.itemCounts,
+            data: this.Topselling.totalQuantity,
           }
         ],
         chart: {
           type: 'bar',
-          height: 350, 
-          stacked: true,       
+          height: 350,
+          stacked: true,
         },
         stroke: {
           width: [0, 1] // bar has 0 width stroke, line has 4
@@ -126,7 +127,7 @@ export class BarGroupchartComponent {
           bar: {
             horizontal: true,
             borderRadius: 2,
-             barHeight: '40%'
+            barHeight: '40%'
           }
         },
         dataLabels: {
@@ -136,9 +137,9 @@ export class BarGroupchartComponent {
           position: 'top'
         },
         xaxis: {
-          categories: this.Topselling.itemNames,
+          categories: this.Topselling.item,
         },
-        
+
         fill: {
           opacity: 1
         },

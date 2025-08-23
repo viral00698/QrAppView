@@ -159,8 +159,17 @@ export class ViewVendorsComponent implements OnInit {
       })
     }
   }
-  forgotPassword(){
+  forgotPassword(vendor:any){
       this.forgotPasswordVisible = !this.forgotPasswordVisible
+
+      this.userService.getEmailbyMobile(vendor?.mobileNo , vendor?.vendorId).subscribe((res:any)=>{
+        
+        if(res.status === RequestStatus.success){
+          this.forgotPasswordFrom.patchValue({
+            'username':res?.data?.email
+          })
+        } 
+      })
   }
 
   viewProfile(){

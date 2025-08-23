@@ -18,4 +18,8 @@ export class UserService {
   forgotPassword(json: Signup) {
     return this.http.post('forgotPassword',json)
   }
+
+  getEmailbyMobile(mobile:string , vid:string) {
+    return this.http.get('cv/getEmailbyMobile/'+mobile+"/"+vid)
+  }
 }

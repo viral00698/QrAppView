@@ -84,7 +84,8 @@
       <button [ngClass]="{ 'selected': selectedItem === 'Kitchen' }"
               (click)="selectedItem = 'Kitchen'" class="sidebar-btn" *ngIf="roleSet.has('VENDER') || roleSet.has('COOK')" routerLink="cook/kitchen" routerLinkActive="true"> <i class="bi bi-egg-fried"></i> Kitchen</button>
 
-
+       <button [ngClass]="{ 'selected': selectedItem === 'inventory' }"
+              (click)="selectedItem = 'inventory'" class="sidebar-btn" *ngIf="roleSet.has('VENDER')" routerLink="inventory/view" routerLinkActive="true"><i class="bi bi-cart4"></i>Inventory</button>
   </div>
   <div class="main-content">
     <app-navbar></app-navbar>

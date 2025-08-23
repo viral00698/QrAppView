@@ -88,9 +88,9 @@ export class OrderComponent implements OnInit {
     if (status === 'Approved') {
       data.orderId = object.orderId;
       data.vendorId = object.vendorId;
-      data.customerUUID = object.customerUUID
-      data.orderStatus = OrderStatus.Confirmed;
-
+      data.customerUUID = object.customerUUID;
+      data.orderStatus = OrderStatus.Ongoing;
+      data.customerMobileNo = object.customerMobileNo;
       this.updateCashOrderList(object);
       this.rxStompService.publish({ destination: '/app/orderStatus', body: JSON.stringify(data) })
     } else if (status === 'NotApproved') {
@@ -98,6 +98,7 @@ export class OrderComponent implements OnInit {
       data.vendorId = object?.vendorId;
       data.customerUUID = object.customerUUID
       data.orderStatus = OrderStatus.NotApproved
+      data.customerMobileNo = object.customerMobileNo;
       this.updateCashOrderList(object);
 
       this.rxStompService.publish({ destination: '/app/orderStatus', body: JSON.stringify(data) })

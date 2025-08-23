@@ -45,12 +45,13 @@
 
 <div class="main-container"> 
   <div class="header-group-btn">
-    <button class="header-group-item-btn" (click)="last7Days()">Last7Days</button>
-    <button class="header-group-item-btn" (click)="last90days()">Last90Days</button>
-    <button class="header-group-item-btn" (click)="last30Days()">Last30Days</button>
-    <button class="header-group-item-btn" (click)="yearly()">Yearly</button>
-    <button class="header-group-item-btn">Today</button>
-    <button class="header-group-item-btn">Hourly</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'last7Days' }" (click)="last7Days()">Last7Days</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'last90Days' }" (click)="last90days()">Last90Days</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'last30Days' }" (click)="last30Days()">Last30Days</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'last180Days' }" (click)="last180Days()">Last180Days</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'yearly' }" (click)="yearly()">Yearly</button>
+    <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'today' }" (click)="today()">Today</button>
+    <!-- <button class="header-group-item-btn"  [ngClass]="{ 'selected': selected === 'Hourly' }" >Hourly</button> -->
 
   </div> 
   <div class="card-group-1">
@@ -58,7 +59,7 @@
       <app-area-plot *ngIf="dataForArea" [data]="this.dataForArea"></app-area-plot>
     </div>
     <div class="items">
-      <app-donut-chart *ngIf="dataForArea" ></app-donut-chart>
+      <app-donut-chart *ngIf="dataForArea" [data]="paymentMethodInsides" ></app-donut-chart>
     </div>
     <div class="items">
       <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart>
@@ -66,29 +67,30 @@
     <div class="items">
       <div class="avg-order">
         <div class="avg-order-items" >
-          <p class="avg-heading" *ngIf="!orderStates.totalAmount">-</p>
-          <p class="avg-heading" *ngIf="orderStates.totalAmount > 0">₹{{orderStates.totalAmount | number:'2.0-0' }}</p>
+          <p class="avg-heading" *ngIf="!orderStates?.totalAmount">-</p>
+          <p class="avg-heading" *ngIf="orderStates && orderStates.totalAmount > 0">₹{{orderStates.totalAmount | number:'2.0-0' }}</p>
           <p class="avg-content">Avg. Order(₹)</p>
           <p class="avg-content" style="border-bottom: 2px solid rgb(51, 50, 50); margin-left: 40%; margin-right: 40%; margin-top: 1%;"></p>
 
 
         </div>
         <div class="avg-order-items">
-          <p class="avg-heading">{{orderStates.totalOrders-orderStates.ongoingOrders}}</p>
+          <p class="avg-heading">
+              {{ (orderStates.totalOrders || 0) - (orderStates.ongoingOrders || 0) }}
+          </p>
           <p class="avg-content">Total Orders</p>
           <p class="avg-content" style="border-bottom: 2px solid rgb(51, 50, 50); margin-left: 40%; margin-right: 40%; margin-top: 1%;"></p>
           
 
         </div>
         <div class="avg-order-items">
-          <p class="avg-heading">{{orderStates.ongoingOrders}}</p>
+          <p class="avg-heading">{{ orderStates.ongoingOrders || 0 }}</p>
           <p class="avg-content">Active Orders</p>
           <p class="avg-content" style="border-bottom: 2px solid rgb(51, 50, 50); margin-left: 40%; margin-right: 40%; margin-top: 1%; opacity: 0.8;"></p>
 
         </div>
 
       </div>
-      <!-- <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart> -->
     </div>
   </div>
 
@@ -96,21 +98,15 @@
   
     <div class="items">
       <app-bar-groupchart *ngIf="this.revenueByFoodCetegoryFiter" [data] = "this.revenueByFoodCetegoryFiter"></app-bar-groupchart>
-      <!-- <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart> -->
     </div>
 
     <div class="items">
-      <app-bar-groupchart *ngIf="TopSellingItems" [Topselling]="this.TopSellingItems" ></app-bar-groupchart>
-      
-      <!-- <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart> -->
+      <app-bar-groupchart *ngIf="this.TopSellingItems"  [Topselling]="this.TopSellingItems" ></app-bar-groupchart>
     </div>
     
     <div class="items">
-      <!-- <app-bar-groupchart></app-bar-groupchart> -->
       <p style="padding: 1rem;">Get ready! ✨ Coming soon!</p>
-      <!-- <app-barchart *ngIf="this.barChartData" [data]="this.barChartData"></app-barchart> -->
     </div>
-
 
   </div>
 </div>

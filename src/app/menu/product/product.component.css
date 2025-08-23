@@ -1,4 +1,4 @@
-.header {
+/* .header {
     display: flex;
     margin: 1rem 1rem 1rem 1rem;
 }
@@ -14,17 +14,57 @@
     flex: 1;
     padding: .1rem;
     text-align: end;
+} */
+.header {
+    display: flex;
+    padding: .5rem;
+ }
+  .header .header-item-1 {
+    flex: 1;
+    text-align: start;
+ }
+
+  .header .header-item-2 {
+    flex: 1;
+    text-align: end;
+ }
+.searchBox {
+    border-radius: 15px;
+    border: 2px solid black;
+    padding: .4rem 1rem;
+    border-radius: 15px;
+    font-weight: 400;
+    margin-right: .5rem;
+    width: 40%;
+    background-image: url('../../../assets/search.svg'); /* ✅ Use valid path */
+    background-repeat: no-repeat;
+    background-position: calc(100% - 20px) center;
+    background-size: 16px 16px; /* or adjust as needed */
+    
+ }
+
+ .header .header-item-2 .header-btn {
+     width: 15%;
+     border: none;
+     padding: .5rem;
+     background: black;
+     color: white;
+     border-radius: 15px;
+
+ }
+
+ .header .header-item-2 .header-btn:hover {
+     border: 1px solid black;
+     background: white;
+     color: black;
+    
+ }
+
+
+.p-dialog-title {
+    font-weight: 500;
+    font-size: medium;
 }
-
-
-    .p-dialog-title {
-        font-weight: 500;
-        font-size: medium;
-    }
-
-
-
-
 
 #cashOrderBtn {
     width: 8vw;
@@ -67,7 +107,7 @@ td {
     background-color: white;
 }
 
-#searchInput {
+/* #searchInput {
 
     width: 50%;
     border: 1px solid black;
@@ -78,7 +118,7 @@ td {
     padding-left: 1.5rem;
     font-weight: 500;
     font-size: medium;
-}
+} */
 
 .btn-primary {
     background-color: black;
@@ -94,7 +134,7 @@ td {
     color: black;
     /* border: 1px solid black; */
 }
- 
+
 .btn-danger {
     background-color: black;
     color: white;
@@ -108,7 +148,7 @@ td {
     background-color: white;
     color: black;
     /* border: 2px solid black; */
-}  
+}
 
 input[type="file"] label {
     background-color: green;
@@ -170,14 +210,12 @@ input[type="file"] label {
     padding: 8px;
     cursor: pointer;
   } */
-  
-  .custom-file-upload::file-selector-button {
+
+.custom-file-upload::file-selector-button {
     background-color: black;
     color: white;
     border: none;
     border-radius: 8px;
     padding: 8px 12px;
     cursor: pointer;
-  }
-  
- 
+}

@@ -6,7 +6,7 @@ import { OrderStatus } from '../constent/order-status';
   providedIn: 'root'
 })
 export class OrderServiceService {
- 
+
   constructor(private http: HttpClient) { }
 
   getWAIT_FOR_APPROVE_Order(vendor_id:any) {
@@ -56,5 +56,10 @@ export class OrderServiceService {
   getLowestSellingItems(vendorId: any) {
     return this.http.get('OrderStatstics/getLowestSellingItems/'+vendorId)
   }
+
+  getPaymentMethodUsed(vendorId: any) {
+    return this.http.get('OrderStatstics/getPaymentMethodUsed/' + vendorId)
+  }
+ 
 
 }
