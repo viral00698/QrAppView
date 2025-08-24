@@ -13,10 +13,16 @@ import { SocketConfigService } from './services/socket-config.service';
 export class AppComponent {
 
   flag: boolean = false
-  title = 'MyQrApp';
-  constructor(private stompService: RxStompService,private stompConfigService: SocketConfigService) {
-    this.stompService.configure(this.stompConfigService.getRxStompConfig());
-    this.stompService.activate();
+  title = 'Vitts.in';
+  constructor(private stompService: RxStompService, private stompConfigService: SocketConfigService) {
+    // this.stompService.configure(this.stompConfigService.getRxStompConfig());
+    // this.stompService.activate();
+
+    // Configure only once
+    this.stompService.configureOnce(this.stompConfigService.getRxStompConfig());
+
+    // Connect only if not already connected
+    this.stompService.connectIfNeeded();
   }
 
 }

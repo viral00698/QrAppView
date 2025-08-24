@@ -15,13 +15,13 @@ export class SocketConfigService {
  
   getRxStompConfig(): RxStompConfig {
     return {
-      brokerURL: 'wss://back.vitts.in/app/ws',
+      // brokerURL: 'wss://back.vitts.in/app/ws',
 
       // brokerURL: 'ws://https://back.vitts.in/app/:8080/ws',
 
       heartbeatIncoming: 0,
-      heartbeatOutgoing: 20000,
-      reconnectDelay: 10000,
+      heartbeatOutgoing: 300000,
+      reconnectDelay: 300000,
       webSocketFactory: () => new SockJS('https://back.vitts.in/app/ws'),
       debug: (msg: string): void => {
         console.log(new Date(), msg);
